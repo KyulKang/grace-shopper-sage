@@ -26,6 +26,7 @@ router.post('/', async (req, res, next) => {
     next(err);
   }
 });
+
 // {
 // 	"order": {"shippingFirstName": "test","shippingLastName": "test","shippingAddress1": "test","shippingAddress2": "test","shippingCity": "test","shippingState": "test","shippingZip": "test","phoneNumber": "test","billingFirstName": "test","billingLastName": "test","billingAddress1": "test","billingAddress2": "test","billingCity": "test","billingState": "test","billingZip": "test"},
 //  "cart": [{"productId":1, "quantity":1, "price":50}]
