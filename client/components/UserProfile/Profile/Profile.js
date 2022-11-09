@@ -1,21 +1,46 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fetchUser } from "../../../store";
+import AdminProfile from "../../Admin/AdminProfile";
+import Login from "../Login/Login";
 
 const Profile = (props) => {
-  const { user } = props;
+  const { getUser, user } = props;
 
-  return (
-    <div>
-      <di>{user.imageUrl}</di>
-      <di>{user.firstName}</di>
-      <di>{user.lastName}</di>
-      <di>{user.email}</di>
-      <di>{user.username}</di>
-      <Link path={`/user/${user.id}/orders`} >Order History</Link>
-      <EditProfileButton />
-    </div>
-  );
+  const [admin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    const checkAdmin = async () => {
+      if (user) {
+        try {
+          const user = await getUser(user.id);
+          user.isAdmin ? setAdmin(true) : setAdmin(false);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    };
+
+    checkAdmin();
+  }, []);
+
+  if (!admin) {
+    return (
+      <div>
+        <div>{user.imageUrl}</div>
+        <div>{user.firstName}</div>
+        <div>{user.lastName}</div>
+        <div>{user.email}</div>
+        <div>{user.username}</div>
+        <Link path={`/user/${user.id}/orders`}>Order History</Link>
+        <EditProfileButton />
+      </div>
+    );
+  } else if (admin) {
+    return <AdminProfile user={user} />;
+  } else {
+    return <Login />;
+  }
 };
 
 const mapState = (state) => {

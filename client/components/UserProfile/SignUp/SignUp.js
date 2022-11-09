@@ -8,7 +8,6 @@ const SignUp = (props) => {
   const [formInfo, setFormInfo] = useState({
     name: "",
     email: "",
-    username: "",
     password: "",
   });
 
@@ -48,14 +47,6 @@ const SignUp = (props) => {
           name="email"
           type="text"
           value={formInfo.email}
-          onChange={onChangeHandler}
-          required
-        />
-        <label>Username</label>
-        <input
-          name="username"
-          type="text"
-          value={formInfo.username}
           onChange={onChangeHandler}
           required
         />

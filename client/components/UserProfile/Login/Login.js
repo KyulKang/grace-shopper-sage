@@ -6,7 +6,7 @@ const Login = (props) => {
   const { authenticate } = props;
 
   const [formInfo, setFormInfo] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -33,7 +33,7 @@ const Login = (props) => {
   return (
     <div>
       <form onSubmit={onSubmitHandler}>
-        <label>Username</label>
+        <label>Email</label>
         <input name="username" type="text" onChange={onChangeHandler} />
         <label>Password</label>
         <input name="password" type="text" onChange={onChangeHandler} />

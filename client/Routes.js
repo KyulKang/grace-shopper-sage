@@ -14,18 +14,17 @@ import SignUp from "./components/UserProfile/SignUp/SignUp";
 import Complete from "./components/Pages/Complete/Complete";
 import Profile from "./components/UserProfile/Profile/Profile";
 import OrderHistory from "./components/UserProfile/Profile/OrderHistory/OrderHistory";
+import ViewCustomers from "./components/Admin/ViewCustomers";
 
 const Routes = (props) => {
-  const { loadInitialData, isLoggedIn } = props;
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { authUser, loadInitialData } = props;
+
+  const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-    // Check the token in local storage
     const checkToken = async () => {
-      await loadInitialData();
-
-      // Not sure what we get back here
-      // If we get something back, set logged in to true
+      const verified = await loadInitialData();
+      verified ? setAuthorized(true) : setAuthorized(false);
     };
 
     checkToken();
@@ -34,7 +33,7 @@ const Routes = (props) => {
   return (
     <Router>
       <Switch>
-        <Navbar />
+        <Navbar authorized={authorized} />
         <Route exact path="/">
           <AllProducts />
         </Route>
@@ -51,12 +50,18 @@ const Routes = (props) => {
           <Complete />
         </Route>
         <Route path="/user/:userId">
-          <Profile />
+          <Profile user={authUser} />
         </Route>
         <Route
           path="/user/:userId/orders"
           render={(routeProps) => <OrderHistory {...routeProps} />}
         />
+        <Route path="/admin/users">
+          <ViewCustomers />
+        </Route>
+        <Route path="/admin/products">
+          <ManageProducts />
+        </Route>
       </Switch>
     </Router>
   );
@@ -67,14 +72,13 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
+    authUser: state.auth,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData: () => {
-      dispatch(me());
-    },
+    loadInitialData: () => dispatch(me()),
   };
 };
 
