@@ -6,14 +6,29 @@ const axios = require('axios');
 
 const SALT_ROUNDS = 5;
 
+//Do the front-end people want firstName and lastName on their forms?
+
 const User = db.define('user', {
-  username: {
+  email: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false
   },
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   password: {
     type: Sequelize.STRING,
+    allowNull: false
+  },
+  makeAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 
