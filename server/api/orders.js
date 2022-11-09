@@ -13,6 +13,8 @@ router.post('/', async (req, res, next) => {
       req.body.cart.map((elem) => OrderItem.create(elem))
     );
 
+    //front end has to include price to req.body.cart (referenced in line 13)
+
     await Promise.all(
       orderItems.map((item) => {
         order.addOrderItem(item);
