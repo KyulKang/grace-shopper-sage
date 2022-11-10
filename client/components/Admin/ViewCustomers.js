@@ -1,29 +1,31 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchUsers } from "../../store";
+import { fetchUsers, me } from "../../store";
 
 const ViewCustomers = (props) => {
-  const { getUsers, users } = props;
+  const { checkAdmin, getUsers, users } = props;
 
   useEffect(() => {
+
     const allUsers = async () => {
       try {
+
         await getUsers();
       } catch (err) {
         console.log(err);
       }
     };
-  }, [])
+  }, []);
 
-  return (
-    users.map((user) => {
-        <div>
-            <span>{user.firstName} {user.lastName}</span>
-        </div>
-    })
-  )
+  return users.map((user) => {
+    <div>
+      <span>
+        {user.firstName} {user.lastName}
+      </span>
+      <span>{user.email}</span>
+    </div>;
+  });
 };
-
 
 const mapState = (state) => {
   return {
@@ -34,6 +36,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getUsers: () => dispatch(fetchUsers()),
+    checkAdmin: () => dispatch(me())
   };
 };
 

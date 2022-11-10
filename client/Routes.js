@@ -8,13 +8,14 @@ import {
 } from "react-router-dom";
 import { me } from "./store";
 import Navbar from "./components/Navbar";
-import AllProducts from "./components/Pages/AllProducts";
+import { AllProducts } from "./components/Pages/AllProducts";
 import Login from "./components/UserProfile/Login/Login";
 import SignUp from "./components/UserProfile/SignUp/SignUp";
 import Complete from "./components/Pages/Complete/Complete";
 import Profile from "./components/UserProfile/Profile/Profile";
 import OrderHistory from "./components/UserProfile/Profile/OrderHistory/OrderHistory";
 import ViewCustomers from "./components/Admin/ViewCustomers";
+import { ManageProducts } from "./components/Admin/";
 
 const Routes = (props) => {
   const { authUser, loadInitialData } = props;

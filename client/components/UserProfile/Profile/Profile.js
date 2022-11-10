@@ -1,6 +1,4 @@
-import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import AdminProfile from "../../Admin/AdminProfile";
 
 const Profile = (props) => {
   const { user } = props;
