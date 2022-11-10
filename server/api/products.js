@@ -27,6 +27,3 @@ router.get("/:productId", async (req, res, next) => {
     next(err);
   }
 });
-
-//create, read, update, delete
-//post, get, put, delete

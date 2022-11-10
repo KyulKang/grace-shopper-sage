@@ -1,6 +1,15 @@
 const router = require("express").Router();
 module.exports = router;
 
+const requireToken = async (req, res, next) => {
+  try {
+    req.user = await User.byToken(req.headers.authorization);
+    next();
+  } catch (err) {
+    throw new Error("Bad credentials!");
+  }
+};
+
 // /api/users
 router.use("/users", require("./users"));
 
