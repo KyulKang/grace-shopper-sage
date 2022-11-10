@@ -36,10 +36,4 @@ const Profile = (props) => {
   }
 };
 
-const mapState = (state) => {
-  return {
-    user: state.users.user,
-  };
-};
-
-export default connect(mapState, null)(Profile);
+export default Profile;
