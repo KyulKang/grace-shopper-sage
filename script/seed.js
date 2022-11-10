@@ -23,28 +23,28 @@ async function seed() {
       makeAdmin: true,
     }),
     User.create({
-      email: "murphy@mail.com",
-      firstName: "murphy",
-      lastName: "tanner",
+      email: "jeanluc@mail.com",
+      firstName: "jean-luc",
+      lastName: "picard",
       password: "123",
       makeAdmin: true,
     }),
     User.create({
-      email: "john@mail.com",
-      firstName: "john",
-      lastName: "tanner",
+      email: "frank@mail.com",
+      firstName: "frank",
+      lastName: "sinatra",
       password: "123",
     }),
     User.create({
-      email: "james@mail.com",
-      firstName: "james",
-      lastName: "tanner",
+      email: "lucy@mail.com",
+      firstName: "lucy",
+      lastName: "liu",
       password: "123",
     }),
     User.create({
-      email: "jim@mail.com",
-      firstName: "jim",
-      lastName: "tanner",
+      email: "saul@mail.com",
+      firstName: "saul",
+      lastName: "goodman",
       password: "123",
     }),
   ]);
@@ -52,27 +52,27 @@ async function seed() {
   const products = await Promise.all([
     Product.create({
       title: "Shirt",
-      price: 5,
-      category: "Clothing",
-    }),
-    Product.create({
-      title: "Shirt Mug",
-      price: 5,
-      category: "Cups",
+      price: 15,
+      category: "Clothes",
     }),
     Product.create({
       title: "Pants",
-      price: 5,
-      category: "Clothing",
+      price: 15,
+      category: "Clothes",
     }),
     Product.create({
-      title: "Pants Mug...?",
-      price: 5,
-      category: "Cups",
+      title: "Mug",
+      price: 15,
+      category: "Utensils",
+    }),
+    Product.create({
+      title: "Beer Stein",
+      price: 15,
+      category: "Utensils",
     }),
   ]);
 
-  console.log(`seeded ${users.length} users`);
+  console.log(`seeded ${users.length} users and ${products.length} products`);
   console.log(`seeded successfully`);
   return {
     users: {
