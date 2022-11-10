@@ -18,7 +18,6 @@ import ViewCustomers from "./components/Admin/ViewCustomers";
 
 const Routes = (props) => {
   const { authUser, loadInitialData } = props;
-
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {

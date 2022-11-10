@@ -1,30 +1,13 @@
-import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchUser } from "../../../store";
+import { Redirect } from "react-router-dom";
 import AdminProfile from "../../Admin/AdminProfile";
-import Login from "../Login/Login";
 
 const Profile = (props) => {
-  const { getUser, user } = props;
+  const { user } = props;
 
-  const [admin, setAdmin] = useState(false);
-
-  useEffect(() => {
-    const checkAdmin = async () => {
-      if (user) {
-        try {
-          const user = await getUser(user.id);
-          user.isAdmin ? setAdmin(true) : setAdmin(false);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    };
-
-    checkAdmin();
-  }, []);
-
-  if (!admin) {
+  if (!user) {
+    <Redirect to="/login" />;
+  } else if (!user.isAdmin) {
     return (
       <div>
         <div>{user.imageUrl}</div>
@@ -36,10 +19,20 @@ const Profile = (props) => {
         <EditProfileButton />
       </div>
     );
-  } else if (admin) {
-    return <AdminProfile user={user} />;
-  } else {
-    return <Login />;
+  } else if (user.isAdmin) {
+    return (
+      <div>
+        <div>{user.imageUrl}</div>
+        <div>{user.firstName}</div>
+        <div>{user.lastName}</div>
+        <div>{user.email}</div>
+        <div>{user.username}</div>
+        <Link path={`/user/${user.id}/orders`}>Order History</Link>
+        <EditProfileButton />
+        <Link path={"/admin/users"}>View All Customers</Link>
+        <Link path={"/admin/products"}>View All Products</Link>
+      </div>
+    );
   }
 };
 
@@ -49,12 +42,4 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {
-  return {
-    getUser: (id) => {
-      dispatch(fetchUser(id));
-    },
-  };
-};
-
-export default connect(mapState, mapDispatch)(Profile);
+export default connect(mapState, null)(Profile);
