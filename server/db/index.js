@@ -1,15 +1,30 @@
 //this is the access point for all things database related!
 
-const db = require('./db')
+const db = require('./db');
 
-const User = require('./models/User')
-const Product = require('./models/Product')
-const CartItem = require('./models/CartItem')
-const Order = require('./models/Order')
-const OrderItem = require('./models/OrderItem')
+const User = require('./models/User');
+const Product = require('./models/Product');
+const CartItem = require('./models/CartItem');
+const Order = require('./models/Order');
+const OrderItem = require('./models/OrderItem');
 
-//associations could go here!
+// Product associations
+Product.hasMany(CartItem);
+CartItem.belongsTo(Product);
 
+Product.hasMany(OrderItem);
+OrderItem.belongsTo(Product);
+
+// User associations
+User.hasMany(CartItem);
+CartItem.belongsTo(User);
+
+User.hasMany(Order);
+Order.belongsTo(User);
+
+// Order associations
+Order.hasMany(OrderItem);
+OrderItem.belongsTo(Order);
 
 module.exports = {
   db,
@@ -18,6 +33,6 @@ module.exports = {
     Product,
     CartItem,
     Order,
-    OrderItem
+    OrderItem,
   },
-}
+};
