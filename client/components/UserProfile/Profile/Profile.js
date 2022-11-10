@@ -12,7 +12,6 @@ const Profile = (props) => {
         <div>{user.firstName}</div>
         <div>{user.lastName}</div>
         <div>{user.email}</div>
-        <div>{user.username}</div>
         <Link path={`/user/${user.id}/orders`}>Order History</Link>
         <EditProfileButton />
       </div>
@@ -24,11 +23,27 @@ const Profile = (props) => {
         <div>{user.firstName}</div>
         <div>{user.lastName}</div>
         <div>{user.email}</div>
-        <div>{user.username}</div>
-        <Link path={`/user/${user.id}/orders`}>Order History</Link>
-        <EditProfileButton />
-        <Link path={"/admin/users"}>View All Customers</Link>
-        <Link path={"/admin/products"}>View All Products</Link>
+
+        <div>
+          <Link to={`/user/${user.id}/orders`}>Order History</Link>
+          <EditProfileButton />
+          <Link
+            to={{
+              pathname: "/admin/users",
+              state: { user },
+            }}
+          >
+            View All Customers
+          </Link>
+          <Link
+            to={{
+              pathname: "/admina/products",
+              state: { user },
+            }}
+          >
+            View All Products
+          </Link>
+        </div>
       </div>
     );
   }

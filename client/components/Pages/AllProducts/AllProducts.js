@@ -1,11 +1,9 @@
 import React from "react";
 import ProductCard from "./ProductCard";
-import Navbar from "../Navbar";
 
 function AllProducts() {
   return (
     <React.Fragment>
-      <Navbar></Navbar>
       <main role="main">
         <div className="jumbotron">
           <div className="container">

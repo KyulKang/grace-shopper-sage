@@ -21,48 +21,51 @@ const Routes = (props) => {
   const { authUser, loadInitialData } = props;
   const [authorized, setAuthorized] = useState(false);
 
-  useEffect(() => {
-    const checkToken = async () => {
-      const verified = await loadInitialData();
-      verified ? setAuthorized(true) : setAuthorized(false);
-    };
+  // useEffect(() => {
+  //   const checkToken = async () => {
+  //     const verified = await loadInitialData();
+  //     verified ? setAuthorized(true) : setAuthorized(false);
+  //   };
 
-    checkToken();
-  }, []);
+  //   checkToken();
+  // }, []);
 
   return (
     <Router>
-      <Switch>
-        <Navbar authorized={authorized} />
-        <Route exact path="/">
-          <AllProducts />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/signup">
-          <SignUp />
-        </Route>
-        <Route path="/checkout">
-          {/* We should put a main "Checkout" component here (or potentially render children directly) */}
-        </Route>
-        <Route path="/complete">
-          <Complete />
-        </Route>
-        <Route path="/user/:userId">
-          <Profile user={authUser} />
-        </Route>
-        <Route
-          path="/user/:userId/orders"
-          render={(routeProps) => <OrderHistory {...routeProps} />}
-        />
-        <Route path="/admin/users">
-          <ViewCustomers />
-        </Route>
-        <Route path="/admin/products">
-          <ManageProducts />
-        </Route>
-      </Switch>
+      <Navbar authorized={authorized} />
+      <div>
+        <Switch>
+          <Route exact path="/" component={AllProducts} />
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup">
+            <SignUp />
+          </Route>
+          <Route path="/checkout">
+            {/* We should put a main "Checkout" component here (or potentially render children directly) */}
+          </Route>
+          <Route path="/complete">
+            <Complete />
+          </Route>
+          <Route path="/user/:userId">
+            <Profile user={authUser} />
+          </Route>
+          <Route
+            path="/user/:userId/orders"
+            render={(routeProps) => <OrderHistory {...routeProps} />}
+          />
+          <Route path="/admin/users">
+            <ViewCustomers />
+          </Route>
+          <Route path="/admin/products">
+            <ManageProducts />
+          </Route>
+          <Route path="*">
+            <AllProducts />
+          </Route>
+        </Switch>
+      </div>
     </Router>
   );
 };

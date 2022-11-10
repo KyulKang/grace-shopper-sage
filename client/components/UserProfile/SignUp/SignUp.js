@@ -53,7 +53,7 @@ const SignUp = (props) => {
         <label>password</label>
         <input
           name="password"
-          type="text"
+          type="password"
           value={formInfo.password}
           onChange={onChangeHandler}
           required
