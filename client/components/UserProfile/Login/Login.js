@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { authenticate } from "../../../store";
 
 const Login = (props) => {
-  const { authenticate } = props;
+  const { authenticate, user } = props;
 
   const [formInfo, setFormInfo] = useState({
     email: "",
@@ -25,6 +25,7 @@ const Login = (props) => {
     event.preventDefault();
     try {
       await authenticate(formInfo);
+      <Redirect to="`/user/${user.id}`" />;
     } catch (err) {
       console.log(err);
     }
@@ -36,12 +37,18 @@ const Login = (props) => {
         <label>Email</label>
         <input name="username" type="text" onChange={onChangeHandler} />
         <label>Password</label>
-        <input name="password" type="text" onChange={onChangeHandler} />
+        <input name="password" type="password" onChange={onChangeHandler} />
         <button type="submit">Login</button>
       </form>
     </div>
   );
 };
+
+const mapState = (state) => {
+  return {
+    user: state.auth.authUser,
+  }
+}
 
 const mapDispatch = (dispatch) => {
   return {
@@ -49,4 +56,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatch)(Login);
+export default connect(mapState, mapDispatch)(Login);

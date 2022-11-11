@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { addUser } from "../../../store";
 
 const SignUp = (props) => {
-  const { addUser } = props;
+  const { addUser, user } = props;
 
   const [formInfo, setFormInfo] = useState({
     name: "",
@@ -26,6 +27,7 @@ const SignUp = (props) => {
     event.preventDefault();
     try {
       await addUser(formInfo);
+      <Redirect to="`/user/${user.id}`" />;
     } catch (err) {
       console.log(err);
     }
@@ -53,7 +55,7 @@ const SignUp = (props) => {
         <label>password</label>
         <input
           name="password"
-          type="text"
+          type="password"
           value={formInfo.password}
           onChange={onChangeHandler}
           required
@@ -64,10 +66,16 @@ const SignUp = (props) => {
   );
 };
 
+const mapState = (state) => {
+  return {
+    user: state.singleUser.user,
+  };
+};
+
 const mapDispatch = (dispatch) => {
   return {
     addUser: (formInfo) => dispatch(addUser(formInfo)),
   };
 };
 
-export default connect(null, mapDispatch)(SignUp);
+export default connect(mapState, mapDispatch)(SignUp);
