@@ -1,9 +1,27 @@
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { me } from "../../../store";
 
 const Profile = (props) => {
-  const { user } = props;
+  const { loadInitialData, user } = props;
 
-  if (!user) {
+  const [authorized, setAuthorized] = useState(false);
+
+  useEffect(() => {
+    try {
+      const checkToken = async () => {
+        const verified = await loadInitialData();
+        verified ? setAuthorized(true) : setAuthorized(false);
+
+        checkToken();
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  if (!authorized) {
     <Redirect to="/login" />;
   } else if (!user.isAdmin) {
     return (
@@ -37,7 +55,7 @@ const Profile = (props) => {
           </Link>
           <Link
             to={{
-              pathname: "/admina/products",
+              pathname: "/admin/products",
               state: { user },
             }}
           >
@@ -49,4 +67,16 @@ const Profile = (props) => {
   }
 };
 
-export default Profile;
+const mapState = (state) => {
+  return {
+    user: state.auth.authUser,
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    loadInitialData: () => dispatch(me()),
+  };
+};
+
+export default connect(mapState, mapDispatch)(Profile);

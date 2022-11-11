@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchProducts } from "../../store/allProducts";
-import { addProduct } from "../../store/singleProduct";
+import { addProduct, fetchProducts, me } from "../../store/";
 
 const ManageProducts = (props) => {
-  const { addProduct, products, getProducts } = props;
+  const { addProduct, getProducts, loadInitialData, products, user } = props;
+
   const [productInfo, setProductInfo] = useState({
     title: "",
     price: "",
@@ -14,7 +14,18 @@ const ManageProducts = (props) => {
     category: "",
   });
 
+  const [authorized, setAuthorized] = useState(false);
+
   useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const verified = await loadInitialData();
+        verified ? setAuthorized(true) : setAuthorized(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     const loadProducts = async () => {
       try {
         await getProducts();
@@ -23,7 +34,11 @@ const ManageProducts = (props) => {
       }
     };
 
-    loadProducts();
+    checkToken();
+
+    if (user.isAdmin) {
+      loadProducts();
+    }
   }, []);
 
   const onChangeHandler = (event) => {
@@ -116,14 +131,16 @@ const ManageProducts = (props) => {
 
 const mapState = (state) => {
   return {
+    user: state.auth.authUser,
     products: state.allProducts.products,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    getProducts: () => dispatch(fetchProducts()),
     addProduct: (productInfo) => dispatch(addProduct(productInfo)),
+    getProducts: () => dispatch(fetchProducts()),
+    loadInitialData: () => dispatch(me()),
   };
 };
 

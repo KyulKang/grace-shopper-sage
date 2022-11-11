@@ -18,22 +18,26 @@ import ViewCustomers from "./components/Admin/ViewCustomers";
 import { ManageProducts } from "./components/Admin/";
 
 const Routes = (props) => {
-  const { authUser, loadInitialData } = props;
+  const { loadInitialData } = props;
   const [authorized, setAuthorized] = useState(false);
 
-  // useEffect(() => {
-  //   const checkToken = async () => {
-  //     const verified = await loadInitialData();
-  //     verified ? setAuthorized(true) : setAuthorized(false);
-  //   };
+  useEffect(() => {
+    try {
+      const checkToken = async () => {
+        const verified = await loadInitialData();
+        verified ? setAuthorized(true) : setAuthorized(false);
 
-  //   checkToken();
-  // }, []);
+        checkToken();
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
     <Router>
-      <Navbar authorized={authorized} />
       <div>
+        <Navbar authorized={authorized} />
         <Switch>
           <Route exact path="/" component={AllProducts} />
           <Route path="/login">
@@ -49,7 +53,7 @@ const Routes = (props) => {
             <Complete />
           </Route>
           <Route path="/user/:userId">
-            <Profile user={authUser} />
+            <Profile />
           </Route>
           <Route
             path="/user/:userId/orders"
@@ -75,7 +79,6 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
-    authUser: state.auth,
   };
 };
 
