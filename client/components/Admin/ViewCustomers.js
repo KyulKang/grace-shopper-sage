@@ -35,7 +35,7 @@ const ViewCustomers = (props) => {
 
   if (!user) {
     return <BackToProfile />;
-  } else if (user) {
+  } else if (user.makeAdmin && users.length > 0) {
     return (
       <div>
         <div>
@@ -58,8 +58,14 @@ const ViewCustomers = (props) => {
               </div>
             );
           })}
-          ;
         </div>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <BackToProfile id={user.id} />
+        No users found
       </div>
     );
   }

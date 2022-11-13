@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { addProduct, fetchProducts, me } from "../../store/";
+import BackToProfile from "../UserProfile/BackToProfile";
 
 const ManageProducts = (props) => {
   const { addProduct, getProducts, loadInitialData, products, user } = props;
@@ -14,13 +15,10 @@ const ManageProducts = (props) => {
     category: "",
   });
 
-  const [authorized, setAuthorized] = useState(false);
-
   useEffect(() => {
     const checkToken = async () => {
       try {
         const verified = await loadInitialData();
-        verified ? setAuthorized(true) : setAuthorized(false);
       } catch (err) {
         console.log(err);
       }
@@ -36,7 +34,7 @@ const ManageProducts = (props) => {
 
     checkToken();
 
-    if (user.isAdmin) {
+    if (user.makeAdmin) {
       loadProducts();
     }
   }, []);
@@ -61,72 +59,133 @@ const ManageProducts = (props) => {
     }
   };
 
-  return (
-    <div>
+  if (!user) {
+    return (
       <div>
-        {products.map((product) => {
-          return (
-            <div>
-              <span>product.title</span>
-              <span>product.price</span>
-              <span>product.category</span>
-              <Link
-                to={{
-                  pathname: `/admin/products/${product.id}`,
-                  state: { product },
-                }}
-              >
-                Edit Product
-              </Link>
-            </div>
-          );
-        })}
+        <BackToProfile id={user.id} />
       </div>
-      <hr />
-      <form onSubmit={onSubmitHandler}>
-        <label>Title</label>
-        <input
-          name="title"
-          type="text"
-          value={productInfo.title}
-          onChange={onChangeHandler}
-          required
-        />
-        <label>Price</label>
-        <input
-          name="price"
-          type="text"
-          value={productInfo.price}
-          onChange={onChangeHandler}
-          required
-        />
-        <label>Description</label>
-        <input
-          name="description"
-          type="textarea"
-          value={productInfo.description}
-          onChange={onChangeHandler}
-          required
-        />
-        <label>Image Link</label>
-        <input
-          name="description"
-          type="text"
-          value={productInfo.imageUrl}
-          onChange={onChangeHandler}
-          required
-        />
-        <label>Category</label>
-        <input
-          name="category"
-          type="text"
-          value={productInfo.category}
-          onChange={onChangeHandler}
-          required
-        />
-      </form>
-    </div>
-  );
+    );
+  } else if (user.makeAdmin && products.length > 0) {
+    return (
+      <div>
+        <BackToProfile id={user.id} />
+        <div>
+          {products.map((product) => {
+            return (
+              <div>
+                <span>product.title</span>
+                <span>product.price</span>
+                <span>product.category</span>
+                <Link
+                  to={{
+                    pathname: `/admin/products/${product.id}`,
+                    state: { product },
+                  }}
+                >
+                  Edit Product
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+        <hr />
+        <form onSubmit={onSubmitHandler}>
+          <label>Title</label>
+          <input
+            name="title"
+            type="text"
+            value={productInfo.title}
+            onChange={onChangeHandler}
+            required
+          />
+          <label>Price</label>
+          <input
+            name="price"
+            type="text"
+            value={productInfo.price}
+            onChange={onChangeHandler}
+            required
+          />
+          <label>Description</label>
+          <input
+            name="description"
+            type="textarea"
+            value={productInfo.description}
+            onChange={onChangeHandler}
+            required
+          />
+          <label>Image Link</label>
+          <input
+            name="description"
+            type="text"
+            value={productInfo.imageUrl}
+            onChange={onChangeHandler}
+            required
+          />
+          <label>Category</label>
+          <input
+            name="category"
+            type="text"
+            value={productInfo.category}
+            onChange={onChangeHandler}
+            required
+          />
+          <button type="submit">Add Product</button>
+        </form>
+      </div>
+    );
+  } else if (user.makeAdmin && products.length === 0) {
+    return (
+      <div>
+        <BackToProfile id={user.id} />
+        <div>No products found. Add a product to get started.</div>
+        <hr />
+        <form onSubmit={onSubmitHandler}>
+          <label>Title</label>
+          <input
+            name="title"
+            type="text"
+            value={productInfo.title}
+            onChange={onChangeHandler}
+            required
+          />
+          <label>Price</label>
+          <input
+            name="price"
+            type="text"
+            value={productInfo.price}
+            onChange={onChangeHandler}
+            required
+          />
+          <label>Description</label>
+          <input
+            name="description"
+            type="textarea"
+            value={productInfo.description}
+            onChange={onChangeHandler}
+            required
+          />
+          <label>Image Link</label>
+          <input
+            name="description"
+            type="text"
+            value={productInfo.imageUrl}
+            onChange={onChangeHandler}
+            required
+          />
+          <label>Category</label>
+          <input
+            name="category"
+            type="text"
+            value={productInfo.category}
+            onChange={onChangeHandler}
+            required
+          />
+          <button type="submit">Add Product</button>
+        </form>
+      </div>
+    );
+  }
 };
 
 const mapState = (state) => {
