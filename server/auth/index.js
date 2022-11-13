@@ -2,15 +2,19 @@ const router = require('express').Router()
 const { models: {User }} = require('../db')
 module.exports = router
 
+// /auth/login
+//checks { email, password } against database, return signed token
 router.post('/login', async (req, res, next) => {
   try {
-    res.send({ token: await User.authenticate(req.body)}); 
+    res.send({ token: await User.authenticate(req.body)});
   } catch (err) {
     next(err)
   }
 })
 
-
+// /auth/signup
+//guest user creates new account (then signs them in/aka returns token)
+//req.body will have {email, firstname, lastname, password}
 router.post('/signup', async (req, res, next) => {
   try {
     const user = await User.create(req.body)
