@@ -1,12 +1,12 @@
-const router = require('express').Router();
+const router = require("express").Router();
 const {
   models: { Order, OrderItem },
-} = require('../db');
+} = require("../db");
 module.exports = router;
 
 // /api/orders
 
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const order = await Order.create(req.body.order);
     const orderItems = await Promise.all(

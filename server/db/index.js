@@ -1,12 +1,12 @@
 //this is the access point for all things database related!
 
-const db = require('./db');
+const db = require("./db");
 
-const User = require('./models/User');
-const Product = require('./models/Product');
-const CartItem = require('./models/CartItem');
-const Order = require('./models/Order');
-const OrderItem = require('./models/OrderItem');
+const User = require("./models/User");
+const Product = require("./models/Product");
+const CartItem = require("./models/CartItem");
+const Order = require("./models/Order");
+const OrderItem = require("./models/OrderItem");
 
 // Product associations
 Product.hasMany(CartItem);

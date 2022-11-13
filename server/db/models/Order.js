@@ -16,7 +16,6 @@ const Order = db.define("order", {
   },
   shippingAddress2: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   shippingCity: {
     type: Sequelize.STRING,
@@ -48,7 +47,6 @@ const Order = db.define("order", {
   },
   billingAddress2: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   billingCity: {
     type: Sequelize.STRING,

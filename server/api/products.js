@@ -1,12 +1,12 @@
-const router = require('express').Router();
+const router = require("express").Router();
 const {
   models: { Product },
-} = require('../db');
+} = require("../db");
 module.exports = router;
 
 // /api/products
 
-router.get('/', async (_req, res, next) => {
+router.get("/", async (_req, res, next) => {
   try {
     const products = await Product.findAll();
     res.send(products);
@@ -15,7 +15,7 @@ router.get('/', async (_req, res, next) => {
   }
 });
 
-router.get('/:productId', async (req, res, next) => {
+router.get("/:productId", async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.productId);
     if (!product) {
@@ -27,6 +27,3 @@ router.get('/:productId', async (req, res, next) => {
     next(err);
   }
 });
-
-//create, read, update, delete
-//post, get, put, delete
