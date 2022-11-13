@@ -1,13 +1,13 @@
 const router = require("express").Router();
 module.exports = router;
 
-// /api/users
+// /admin/users
 router.use("/users", require("./users"));
 
-// /api/products
+// /admin/products
 router.use("/products", require("./products"));
 
-// /api/orders
+// /admin/orders
 router.use("/orders", require("./orders"));
 
 router.use((req, res, next) => {

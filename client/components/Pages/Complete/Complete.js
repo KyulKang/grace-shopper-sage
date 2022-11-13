@@ -1,5 +1,6 @@
-import logo from "../../../logo.svg";
-export function Complete() {
+
+// import logo from "../../../logo.svg"
+function Complete() {
   return (
     <main id="complete">
       <img src={logo} className="App-logo" alt="logo" />
@@ -7,3 +8,6 @@ export function Complete() {
     </main>
   );
 }
+
+export default Complete;
+

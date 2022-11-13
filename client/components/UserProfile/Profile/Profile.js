@@ -1,11 +1,27 @@
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import AdminProfile from "../../Admin/AdminProfile";
+import { me } from "../../../store";
 
 const Profile = (props) => {
-  const { user } = props;
+  const { loadInitialData, user } = props;
 
-  if (!user) {
+  const [authorized, setAuthorized] = useState(false);
+
+  useEffect(() => {
+    try {
+      const checkToken = async () => {
+        const verified = await loadInitialData();
+        verified ? setAuthorized(true) : setAuthorized(false);
+
+        checkToken();
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  if (!authorized) {
     <Redirect to="/login" />;
   } else if (!user.isAdmin) {
     return (
@@ -14,7 +30,6 @@ const Profile = (props) => {
         <div>{user.firstName}</div>
         <div>{user.lastName}</div>
         <div>{user.email}</div>
-        <div>{user.username}</div>
         <Link path={`/user/${user.id}/orders`}>Order History</Link>
         <EditProfileButton />
       </div>
@@ -26,14 +41,42 @@ const Profile = (props) => {
         <div>{user.firstName}</div>
         <div>{user.lastName}</div>
         <div>{user.email}</div>
-        <div>{user.username}</div>
-        <Link path={`/user/${user.id}/orders`}>Order History</Link>
-        <EditProfileButton />
-        <Link path={"/admin/users"}>View All Customers</Link>
-        <Link path={"/admin/products"}>View All Products</Link>
+
+        <div>
+          <Link to={`/user/${user.id}/orders`}>Order History</Link>
+          <EditProfileButton />
+          <Link
+            to={{
+              pathname: "/admin/users",
+              state: { user },
+            }}
+          >
+            View All Customers
+          </Link>
+          <Link
+            to={{
+              pathname: "/admin/products",
+              state: { user },
+            }}
+          >
+            View All Products
+          </Link>
+        </div>
       </div>
     );
   }
 };
 
-export default Profile;
+const mapState = (state) => {
+  return {
+    user: state.auth.authUser,
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    loadInitialData: () => dispatch(me()),
+  };
+};
+
+export default connect(mapState, mapDispatch)(Profile);

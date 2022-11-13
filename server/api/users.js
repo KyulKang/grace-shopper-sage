@@ -1,7 +1,5 @@
 const router = require("express").Router();
-const {
-  models: { User, CartItem, Order, OrderItem, Product },
-} = require("../db");
+const {models: { User, CartItem, Order, OrderItem, Product },} = require("../db");
 const requireToken = require("../requireToken.js");
 module.exports = router;
 
