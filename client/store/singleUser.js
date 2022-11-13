@@ -22,14 +22,20 @@ const _updateUser = (user) => {
 // Thunks
 export const addUser = (userInfo) => {
   return async (dispatch) => {
-    const { data } = await axios.post();
-    dispatch(_addUser(data));
+    const { data } = await axios.post("/auth/signup", {
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+      email: userInfo.email,
+      password: userInfo.password,
+    });
+    window.localStorage.setItem('token', data.token)
+    dispatch(_addUser(data.user));
   };
 };
 
 export const updateUser = (userInfo) => {
   return async (dispatch) => {
-    const { data } = await axios.put();
+    const { data } = await axios.put('');
     dispatch(_updateUser(data));
   };
 };
