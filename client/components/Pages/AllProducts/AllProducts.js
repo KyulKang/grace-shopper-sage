@@ -41,19 +41,11 @@ function AllProducts(props) {
       </main>
       <section>
         <div className="productCardGrid">
-          {products?.map((item) => {
+          {products?.map((item, id) => {
             console.log(item);
-            return <ProductCard {...item} />
+            return <ProductCard item={item} key={id} />
           })}
           {products.length > 0 && "There are products"}
-          {/* <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard /> */}
         </div>
       </section>
     </React.Fragment>
