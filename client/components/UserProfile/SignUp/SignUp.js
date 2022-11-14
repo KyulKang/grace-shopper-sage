@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { addUser } from "../../../store";
+import { addUser, me } from "../../../store";
 
 const SignUp = (props) => {
-  const { addUser, user } = props;
+  const { addUser, authUser, loadInitialData, newUser } = props;
 
   const [formInfo, setFormInfo] = useState({
     firstName: "",
@@ -16,10 +16,16 @@ const SignUp = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (user.id) {
-      history.push(`/user/${user.id}`)
-    }
-  }, [user])
+
+    const checkUser = async () => {
+      await loadInitialData();
+      if (authUser) {
+        history.push(`/user/${authUser.id}`);
+      }
+    };
+
+    checkUser();
+  }, []);
 
   const onChangeHandler = (event) => {
     const target = event.target;
@@ -33,11 +39,10 @@ const SignUp = (props) => {
   };
 
   const onSubmitHandler = async (event) => {
-
     event.preventDefault();
     try {
       await addUser(formInfo);
-      } catch (err) {
+    } catch (err) {
       console.log(err);
     }
   };
@@ -85,13 +90,15 @@ const SignUp = (props) => {
 
 const mapState = (state) => {
   return {
-    user: state.singleUser.user,
+   authUser: state.auth.authUser,
+   newUser: state.singleUser.user
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     addUser: (formInfo) => dispatch(addUser(formInfo)),
+    loadInitialData: () => dispatch(me()),
   };
 };
 
