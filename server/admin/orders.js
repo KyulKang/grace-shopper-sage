@@ -9,7 +9,7 @@ const requireToken = require("../requireToken");
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
-    if (req.user.dataValues.makeAdmin) {
+    if (req.user.makeAdmin) {
       // retrieve all orders with associated order items
       const order = await Order.findAll({ include: OrderItem });
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import BackToProfile from "../UserProfile/BackToProfile";
 import { fetchUsers, me } from "../../store";
@@ -6,13 +6,10 @@ import { fetchUsers, me } from "../../store";
 const ViewCustomers = (props) => {
   const { getUsers, loadInitialData, user, users } = props;
 
-  const [authorized, setAuthorized] = useState(false);
-
   useEffect(() => {
     const checkToken = async () => {
       try {
-        const verified = await loadInitialData();
-        verified ? setAuthorized(true) : setAuthorized(false);
+        await loadInitialData();
       } catch (err) {
         console.log(err);
       }
@@ -50,11 +47,8 @@ const ViewCustomers = (props) => {
                   {user.firstName} {user.lastName}
                 </span>
                 <span>{user.email}</span>
-                {authorized ? (
-                  <Link to="`/user/${user.id}/orders`" />
-                ) : (
-                  <Link to="/" />
-                )}
+
+                <Link to="`/user/${user.id}/orders`" />
               </div>
             );
           })}
