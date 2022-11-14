@@ -1,7 +1,24 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { fetchProducts } from "../../../store";
 import ProductCard from "./ProductCard";
 
-function AllProducts() {
+function AllProducts(props) {
+  const { fetchProducts, products } = props;
+  // const [products, setProducts] = useState(null);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        await fetchProducts();
+      }
+      catch (error) {
+        console.log(error)
+      }
+    }
+    getProducts();
+  }, [])
   return (
     <React.Fragment>
       <main role="main">
@@ -24,18 +41,33 @@ function AllProducts() {
       </main>
       <section>
         <div className="productCardGrid">
+          {products?.map((item) => {
+            console.log(item);
+            return <ProductCard {...item} />
+          })}
+          {products.length > 0 && "There are products"}
+          {/* <ProductCard />
           <ProductCard />
           <ProductCard />
           <ProductCard />
           <ProductCard />
           <ProductCard />
           <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <ProductCard /> */}
         </div>
       </section>
     </React.Fragment>
   );
 }
-
-export default AllProducts;
+const mapDispatch = (dispatch) => {
+  return {
+    fetchProducts: () => dispatch(fetchProducts())
+  }
+}
+const mapState = (state) => {
+  return {
+    products: state.allProducts.products,
+  }
+}
+// export default AllProducts;
+export default connect(mapState, mapDispatch)(AllProducts);
