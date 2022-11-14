@@ -47,6 +47,11 @@ const Routes = (props) => {
           <Route path="/signup">
             <SignUp />
           </Route>
+          <Route
+            exact
+            path="product/:id"
+            render={(routeProps) => <SingleProduct {...routeProps} />}
+          />
           <Route path="/checkout">
             {/* We should put a main "Checkout" component here (or potentially render children directly) */}
           </Route>
