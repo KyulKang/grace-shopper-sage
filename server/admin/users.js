@@ -9,7 +9,7 @@ const requireToken = require("../requireToken");
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
-    if (req.user.dataValues.makeAdmin) {
+    if (req.user.makeAdmin) {
       // get attributes for id and email for all users
       const users = await User.findAll({
         attributes: ["id", "email"],
@@ -25,7 +25,7 @@ router.get("/", requireToken, async (req, res, next) => {
 
 router.get("/:userId", requireToken, async (req, res, next) => {
   try {
-    if (req.user.dataValues.makeAdmin) {
+    if (req.user.makeAdmin) {
       // get all orders with associated order items for a single user
       const userOrders = await Order.findAll({
         where: { userId: req.params.userId },
