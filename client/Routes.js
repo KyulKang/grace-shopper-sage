@@ -16,6 +16,7 @@ import Profile from "./components/UserProfile/Profile/Profile";
 import OrderHistory from "./components/UserProfile/Profile/OrderHistory/OrderHistory";
 import ViewCustomers from "./components/Admin/ViewCustomers";
 import EditProfile from "./components/UserProfile/Profile/EditProfile";
+import SingleProduct from "./components/Pages/SingleProduct";
 import { ManageProducts } from "./components/Admin/";
 
 const Routes = (props) => {
@@ -27,7 +28,6 @@ const Routes = (props) => {
       const checkToken = async () => {
         const verified = await loadInitialData();
         verified ? setAuthorized(true) : setAuthorized(false);
-
       };
       checkToken();
     } catch (err) {
@@ -47,6 +47,11 @@ const Routes = (props) => {
           <Route path="/signup">
             <SignUp />
           </Route>
+          <Route
+            exact
+            path="product/:id"
+            render={(routeProps) => <SingleProduct {...routeProps} />}
+          />
           <Route path="/checkout">
             {/* We should put a main "Checkout" component here (or potentially render children directly) */}
           </Route>
