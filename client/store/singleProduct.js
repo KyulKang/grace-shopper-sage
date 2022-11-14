@@ -2,6 +2,7 @@ import axios from "axios";
 
 // Actions
 const ADD_PRODUCT = "ADD_PRODUCT";
+const GET_PRODUCT = "GET_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT  ";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 
@@ -12,6 +13,13 @@ const _addProduct = (product) => {
     product: product,
   };
 };
+const _getProduct = (product) => {
+  return {
+    type: GET_PRODUCT,
+    product: product,
+  };
+};
+
 
 const _updateProduct = (product) => {
   return {
@@ -31,6 +39,12 @@ export const addProduct = () => {
   return async (dispatch) => {
     const { data } = await axios.post();
     dispatch(_addProduct(data));
+  };
+};
+export const getProduct = (id) => {
+  return async (dispatch) => {
+    const { data } = await axios.get(`api/products/${id}`);
+    dispatch(_getProduct(data));
   };
 };
 
@@ -58,6 +72,12 @@ const initialState = {
 export default function singleProduct(state = initialState, action) {
   switch (action.type) {
     case ADD_PRODUCT: {
+      return (state = {
+        ...state,
+        product: action.product,
+      });
+    }
+    case GET_PRODUCT: {
       return (state = {
         ...state,
         product: action.product,

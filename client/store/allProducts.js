@@ -14,7 +14,7 @@ const _getProducts = (products) => {
 // Thunks
 export const fetchProducts = () => {
   return async (dispatch) => {
-    const { data } = await axios.get();
+    const { data } = await axios.get("/api/products");
     dispatch(_getProducts(data));
   };
 };
