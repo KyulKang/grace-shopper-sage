@@ -18,7 +18,7 @@ const ManageProducts = (props) => {
   useEffect(() => {
     const checkToken = async () => {
       try {
-        const verified = await loadInitialData();
+        await loadInitialData();
       } catch (err) {
         console.log(err);
       }

@@ -8,7 +8,6 @@ const EditProduct = (props) => {
   const product = useLocation().state.product;
   const { deleteProduct, loadInitialData, updateProduct, user } = props;
 
-  const [authorized, setAuthorized] = useState(false);
 
   const [productInfo, setProductInfo] = useState({
     id: product.id,
@@ -22,8 +21,7 @@ const EditProduct = (props) => {
   useEffect(() => {
     const checkToken = async () => {
       try {
-        const verified = await loadInitialData();
-        verified ? setAuthorized(true) : setAuthorized(false);
+        await loadInitialData();
       } catch (err) {
         console.log(err);
       }

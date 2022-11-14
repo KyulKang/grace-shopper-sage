@@ -9,7 +9,7 @@ const requireToken = require("../requireToken");
 
 router.post("/", requireToken, async (req, res, next) => {
   try {
-    if (req.user.dataValues.makeAdmin) {
+    if (req.user.makeAdmin) {
       const product = await Product.create(req.body);
       res.send(product);
     } else {
@@ -22,7 +22,7 @@ router.post("/", requireToken, async (req, res, next) => {
 
 router.put("/:productId", requireToken, async (req, res, next) => {
   try {
-    if (req.user.dataValues.makeAdmin) {
+    if (req.user.makeAdmin) {
       const product = await Product.findByPk(req.params.productId);
       if (!product) {
         res.sendStatus(404);
@@ -40,7 +40,7 @@ router.put("/:productId", requireToken, async (req, res, next) => {
 
 router.delete("/:productId", requireToken, async (req, res, next) => {
   try {
-    if (req.user.dataValues.makeAdmin) {
+    if (req.user.makeAdmin) {
       const product = await Product.findByPk(req.params.productId);
       if (!product) {
         res.sendStatus(404);
