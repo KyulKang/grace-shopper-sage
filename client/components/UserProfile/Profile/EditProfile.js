@@ -1,8 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { updateUser } from "../../../store";
+import BackToProfile from "../BackToProfile";
 
 const EditProfile = (props) => {
-  const { editUser, user } = props;
+  const { editUser } = props;
+
+  const user = useLocation().state.user;
 
   const [userInfo, setUserInfo] = useState({
     firstName: user.firstName,
@@ -33,6 +38,7 @@ const EditProfile = (props) => {
 
   return (
     <div>
+      <BackToProfile id={user.id} />
       <form onSubmit={onSubmitHandler}>
         <label>First Name</label>
         <input
@@ -77,4 +83,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default EditProfile;
+export default connect(null, mapDispatch)(EditProfile);

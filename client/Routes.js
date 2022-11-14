@@ -15,6 +15,7 @@ import Complete from "./components/Pages/Complete/Complete";
 import Profile from "./components/UserProfile/Profile/Profile";
 import OrderHistory from "./components/UserProfile/Profile/OrderHistory/OrderHistory";
 import ViewCustomers from "./components/Admin/ViewCustomers";
+import EditProfile from "./components/UserProfile/Profile/EditProfile";
 import { ManageProducts } from "./components/Admin/";
 
 const Routes = (props) => {
@@ -27,8 +28,8 @@ const Routes = (props) => {
         const verified = await loadInitialData();
         verified ? setAuthorized(true) : setAuthorized(false);
 
-        checkToken();
       };
+      checkToken();
     } catch (err) {
       console.log(err);
     }
@@ -52,13 +53,15 @@ const Routes = (props) => {
           <Route path="/complete">
             <Complete />
           </Route>
-          <Route path="/user/:userId">
+          <Route exact path="/user/:userId">
             <Profile />
           </Route>
-          <Route
-            path="/user/:userId/orders"
-            render={(routeProps) => <OrderHistory {...routeProps} />}
-          />
+          <Route exact path="/user/:userId/orders">
+            <OrderHistory />
+          </Route>
+          <Route exact path="/user/:userId/edit">
+            <EditProfile />
+          </Route>
           <Route path="/admin/users">
             <ViewCustomers />
           </Route>

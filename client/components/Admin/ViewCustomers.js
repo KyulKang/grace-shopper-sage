@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import BackToProfile from "../UserProfile/BackToProfile";
 import { fetchUsers, me } from "../../store";
 
 const ViewCustomers = (props) => {
@@ -27,20 +28,47 @@ const ViewCustomers = (props) => {
 
     checkToken();
 
-    if (user.isAdmin) {
+    if (user.makeAdmin) {
       allUsers();
     }
   }, []);
 
-  return users.map((user) => {
-    <div>
-      <span>
-        {user.firstName} {user.lastName}
-      </span>
-      <span>{user.email}</span>
-      {authorized ? <Link to="`/user/${user.id}/orders`" /> : <Link to="/" />}
-    </div>;
-  });
+  if (!user) {
+    return <BackToProfile />;
+  } else if (user.makeAdmin && users.length > 0) {
+    return (
+      <div>
+        <div>
+          <BackToProfile id={user.id} />
+          No orders found. Buy something!
+        </div>
+        <div>
+          {users.map((user) => {
+            return (
+              <div>
+                <span>
+                  {user.firstName} {user.lastName}
+                </span>
+                <span>{user.email}</span>
+                {authorized ? (
+                  <Link to="`/user/${user.id}/orders`" />
+                ) : (
+                  <Link to="/" />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <BackToProfile id={user.id} />
+        No users found
+      </div>
+    );
+  }
 };
 
 const mapState = (state) => {

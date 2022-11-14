@@ -1,17 +1,22 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useLocation } from "react-router-dom";
+import BackToProfile from "../../BackToProfile";
 import { fetchOrders } from "../../../../store/";
 
 const OrderHistory = (props) => {
-  const { fetchOrders, match, orders } = props;
+  const { fetchOrders, orders } = props;
 
-  const [userOrders, setUserOrders] = useState([]);
+  const user = useLocation().state.user;
+  const [userOrders, setUserOrders] = useState(null);
 
   useEffect(() => {
     const getOrders = async () => {
       try {
-        await fetchOrders(match.params.userId);
-        setUserOrders(orders);
+        const userOrders = await fetchOrders(user.id);
+        if (userOrders) {
+          setUserOrders(orders);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -20,18 +25,29 @@ const OrderHistory = (props) => {
     getOrders();
   }, []);
 
-  return (
-    <div>
-      {userOrders.map((order) => {
-        return (
-          <div>
-            <span>{order.orderId}</span>
-            <span>{order.date}</span>
-          </div>
-        );
-      })}
-    </div>
-  );
+  if (!orders) {
+    return (
+      <div>
+        <BackToProfile id={user.id} />
+        No orders found. Buy something!
+      </div>
+    );
+  } else if (orders) {
+    return (
+      <div>
+        <BackToProfile id={user.id} />
+
+        {/* {userOrders.map((order) => {
+          return (
+            <div>
+              <span>{order.orderId}</span>
+              <span>{order.date}</span>
+            </div>
+          );
+        })} */}
+      </div>
+    );
+  }
 };
 
 const mapDispatch = (dispatch) => {

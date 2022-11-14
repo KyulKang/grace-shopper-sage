@@ -1,62 +1,68 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { me } from "../../../store";
 
 const Profile = (props) => {
   const { loadInitialData, user } = props;
 
-  const [authorized, setAuthorized] = useState(false);
-
   useEffect(() => {
     try {
       const checkToken = async () => {
-        const verified = await loadInitialData();
-        verified ? setAuthorized(true) : setAuthorized(false);
-
-        checkToken();
+        await loadInitialData();
       };
+      checkToken();
     } catch (err) {
       console.log(err);
     }
   }, []);
 
-  if (!authorized) {
-    <Redirect to="/login" />;
-  } else if (!user.isAdmin) {
+  if (!user) {
+    return <div>'Please sign in'</div>;
+  } else if (!user.makeAdmin) {
     return (
       <div>
         <div>{user.imageUrl}</div>
         <div>{user.firstName}</div>
         <div>{user.lastName}</div>
         <div>{user.email}</div>
-        <Link path={`/user/${user.id}/orders`}>Order History</Link>
-        <EditProfileButton />
+        <div>
+          <Link to={{ pathname: `/user/${user.id}/orders`, state: { user } }}>
+            Order History
+          </Link>
+        </div>
+        <div>
+          <Link to={{ pathname: `/user/${user.id}/edit`, state: { user } }}>
+            Edit Profile
+          </Link>
+        </div>
       </div>
     );
-  } else if (user.isAdmin) {
+  } else if (user.makeAdmin) {
     return (
       <div>
         <div>{user.imageUrl}</div>
         <div>{user.firstName}</div>
         <div>{user.lastName}</div>
         <div>{user.email}</div>
-
         <div>
-          <Link to={`/user/${user.id}/orders`}>Order History</Link>
-          <EditProfileButton />
+          <Link to={{ pathname: `/user/${user.id}/orders`, state: { user } }}>
+            Order History
+          </Link>
+        </div>
+        <div>
           <Link
             to={{
               pathname: "/admin/users",
-              state: { user },
             }}
           >
             View All Customers
           </Link>
+        </div>
+        <div>
           <Link
             to={{
               pathname: "/admin/products",
-              state: { user },
             }}
           >
             View All Products

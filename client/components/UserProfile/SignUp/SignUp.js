@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { addUser } from "../../../store";
 
 const SignUp = (props) => {
   const { addUser, user } = props;
 
   const [formInfo, setFormInfo] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (user.id) {
+      history.push(`/user/${user.id}`)
+    }
+  }, [user])
 
   const onChangeHandler = (event) => {
     const target = event.target;
@@ -24,11 +33,11 @@ const SignUp = (props) => {
   };
 
   const onSubmitHandler = async (event) => {
+
     event.preventDefault();
     try {
       await addUser(formInfo);
-      <Redirect to="`/user/${user.id}`" />;
-    } catch (err) {
+      } catch (err) {
       console.log(err);
     }
   };
@@ -36,9 +45,17 @@ const SignUp = (props) => {
   return (
     <div>
       <form onSubmit={onSubmitHandler}>
-        <label>Name</label>
+        <label>First Name</label>
         <input
-          name="name"
+          name="firstName"
+          type="text"
+          value={formInfo.name}
+          onChange={onChangeHandler}
+          required
+        />
+        <label>Last Name</label>
+        <input
+          name="lastName"
           type="text"
           value={formInfo.name}
           onChange={onChangeHandler}

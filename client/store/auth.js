@@ -58,7 +58,8 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case SET_AUTH:
       return (state = {
-        authUser: action.auth,
+        ...state,
+        authUser: action.authUser,
         token: action.token,
       });
     default:
