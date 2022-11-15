@@ -5,14 +5,11 @@ import { authenticate, me } from "../../../store";
 
 const Login = (props) => {
   const { authenticate, loadInitialData, user } = props;
-  const token = window.localStorage.getItem("token");
 
   const [formInfo, setFormInfo] = useState({
     email: "",
     password: "",
   });
-
-  const history = useHistory();
 
   useEffect(() => {
     try {
@@ -24,7 +21,7 @@ const Login = (props) => {
     } catch (err) {
       console.log(err);
     }
-  }, [token]);
+  }, []);
 
   const onChangeHandler = (event) => {
     const target = event.target;
@@ -41,17 +38,26 @@ const Login = (props) => {
     event.preventDefault();
     try {
       await authenticate(formInfo.email, formInfo.password, "login");
-      console.log(user);
-      if (user == undefined) {
-        alert("please log in");
-      }
     } catch (err) {
       console.log(err);
     }
   };
 
-  if (user && user.id != undefined) {
+  if (user && user.id) {
     return <Redirect to={{ pathname: `/` }} />;
+  } else if (user && !user.id) {
+    return (
+      <div>
+        <h3>Login failed. Please try again.</h3>
+        <form onSubmit={onSubmitHandler}>
+          <label>Email</label>
+          <input name="email" type="text" onChange={onChangeHandler} />
+          <label>Password</label>
+          <input name="password" type="password" onChange={onChangeHandler} />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    );
   } else {
     return (
       <div>
@@ -66,6 +72,7 @@ const Login = (props) => {
     );
   }
 };
+
 const mapState = (state) => {
   return {
     user: state.auth.authUser,
