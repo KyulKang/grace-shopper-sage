@@ -16,7 +16,7 @@ import Profile from "./components/UserProfile/Profile/Profile";
 import OrderHistory from "./components/UserProfile/Profile/OrderHistory/OrderHistory";
 import ViewCustomers from "./components/Admin/ViewCustomers";
 import EditProfile from "./components/UserProfile/Profile/EditProfile";
-import SingleProduct from "./components/Pages/SingleProduct";
+import SingleProduct from "./components/Pages/SingleProduct/SingleProduct";
 import { ManageProducts } from "./components/Admin/";
 
 const Routes = (props) => {

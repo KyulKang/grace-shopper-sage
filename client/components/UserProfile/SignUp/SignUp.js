@@ -18,14 +18,13 @@ const SignUp = (props) => {
   useEffect(() => {
 
     const checkUser = async () => {
-      await loadInitialData();
       if (authUser) {
         history.push(`/user/${authUser.id}`);
       }
     };
 
     checkUser();
-  }, []);
+  }, [authUser]);
 
   const onChangeHandler = (event) => {
     const target = event.target;
@@ -42,6 +41,7 @@ const SignUp = (props) => {
     event.preventDefault();
     try {
       await addUser(formInfo);
+      await loadInitialData();
     } catch (err) {
       console.log(err);
     }
