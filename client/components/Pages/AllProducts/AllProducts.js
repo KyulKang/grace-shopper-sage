@@ -40,7 +40,7 @@ function AllProducts(props) {
         </div>
       </main>
       <section>
-        <div className="productCardGrid">
+        <div className="productCardGrid d-flex flex-row flex-wrap">
           {products?.map((item, id) => {
             return <ProductCard item={item} key={id} />
           })}
