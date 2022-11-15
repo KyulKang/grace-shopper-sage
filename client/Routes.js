@@ -21,7 +21,7 @@ import CheckOut from './components/Pages/Checkout/CheckOut'
 import SingleProduct from "./components/Pages/SingleProduct/SingleProduct";
 
 import { ManageProducts } from "./components/Admin/";
-
+import Checkout from "./components/Pages/Checkout/CheckOut";
 const Routes = (props) => {
   const { loadInitialData } = props;
 
@@ -54,7 +54,7 @@ const Routes = (props) => {
             render={(routeProps) => <SingleProduct {...routeProps} />}
           />
           <Route path="/checkout">
-            <CheckOut />
+            <Checkout />
           </Route>
           <Route path="/complete">
             <Complete />

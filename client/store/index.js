@@ -7,11 +7,13 @@ import orders from "./orders";
 import singleUser from "./singleUser";
 import users from "./allUsers";
 import allProducts from "./allProducts";
+import singleProduct from "./singleProduct"
 
 import adminProduct from "./adminProduct";
 
 const reducer = combineReducers({
   allProducts,
+  singleProduct,
   auth,
   orders,
   adminProduct,
@@ -33,3 +35,4 @@ export * from "./orders";
 export * from "./adminProduct";
 export * from "./singleUser";
 export * from "./cart";
+export * from "./singleProduct"

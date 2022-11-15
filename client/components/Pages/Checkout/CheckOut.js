@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-
+import { useHistory } from "react-router-dom";
 const Checkout = (props) => {
+  let history = useHistory();
   const [shipping, setShipping] = useState({
     firstName: "",
     lastName: "",
@@ -11,7 +12,7 @@ const Checkout = (props) => {
     zip: null,
     phone: "",
   });
-
+  const [toggleAddress, setToggleAddress] = useState(false);
   const [billing, setBilling] = useState({
     firstName: "",
     lastName: "",
@@ -22,48 +23,105 @@ const Checkout = (props) => {
     zip: null,
     phone: "",
   });
-
+  const onChangeHandler = (event) => {
+    if (event.target.name == "same") {
+      if (event.target.value == "off") {
+        setBilling({
+          ...shipping,
+        });
+        setToggleAddress(true);
+        return;
+      }
+      setToggleAddress(false);
+      setBilling({
+        firstName: "",
+        lastName: "",
+        address1: "",
+        address2: "",
+        city: "",
+        state: "",
+        zip: null,
+        phone: "",
+      });
+      return;
+    }
+    const target = event.target;
+    setShipping({
+      ...shipping,
+      [target.name]: target.value
+    })
+  };
+  const onChangeHandler2 = (event) => {
+    // console.log("TARGET:", event, "NAME:", event.target.name);
+    const target = event.target;
+    setBilling({
+      ...billing,
+      [target.name]: target.value
+    })
+  };
+  const submitHandler = (event) => {
+    event.preventDefault();
+    //whatever reducer we need after the checkout is submitted.
+    const obj = {
+      shipping,
+      billing
+    };
+    history.push("/complete")
+    console.log(obj);
+  }
   return (
     <div>
       <form>
-        <label>First Name</label>
-        <input
-          type="text"
-          name="firstName"
-          value={shipping.firstName}
-          required
-        />
-        <label>Last Name</label>
-        <input type="text" name="lastName" value={shipping.lastName} required />
-        <label>Address 1</label>
-        <input type="text" name="address1" value={shipping.address1} required />
-        <label>Address 2</label>
-        <input type="text" name="address2" value={shipping.address2} />
-        <label>City</label>
-        <input type="text" name="city" value={shipping.city} required />
-        <label>State</label>
-        <input type="text" name="state" value={shipping.state} required />
+
       </form>
       <div></div>
-      <form>
-        <label>First Name</label>
-        <input
-          type="text"
-          name="firstName"
-          value={billing.firstName}
-          required
-        />
-        <label>Last Name</label>
-        <input type="text" name="lastName" value={billing.lastName} required />
-        <label>Address 1</label>
-        <input type="text" name="address1" value={billing.address1} required />
-        <label>Address 2</label>
-        <input type="text" name="address2" value={billing.address2} />
-        <label>City</label>
-        <input type="text" name="city" value={billing.city} required />
-        <label>State</label>
-        <input type="text" name="state" value={billing.state} required />
+      <form onSubmit={submitHandler}>
+        <div>
+          <label>First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            value={shipping.firstName}
+            required
+            onChange={(event) => onChangeHandler(event)}
+          />
+          <label>Last Name</label>
+          <input type="text" name="lastName" value={shipping.lastName} required onChange={onChangeHandler} />
+          <label>Address 1</label>
+          <input type="text" name="address1" value={shipping.address1} required onChange={onChangeHandler} />
+          <label>Address 2</label>
+          <input type="text" name="address2" value={shipping.address2} onChange={onChangeHandler} />
+          <label>City</label>
+          <input type="text" name="city" value={shipping.city} required onChange={onChangeHandler} />
+          <label>State</label>
+          <input type="text" name="state" value={shipping.state} required onChange={onChangeHandler} />
+          <input type="checkbox" id="sameAddress" name="same" value={toggleAddress ? "on" : "off"} onChange={onChangeHandler} />
+          <label htmlFor="sameAddress" > Same Address</label>
+        </div>
+        <div>
+          <label>First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            value={billing.firstName}
+            required
+            onChange={onChangeHandler2}
+          />
+          <label>Last Name</label>
+          <input type="text" name="lastName" value={billing.lastName} required onChange={onChangeHandler2} />
+          <label>Address 1</label>
+          <input type="text" name="address1" value={billing.address1} required onChange={onChangeHandler2} />
+          <label>Address 2</label>
+          <input type="text" name="address2" value={billing.address2} onChange={onChangeHandler2} />
+          <label>City</label>
+          <input type="text" name="city" value={billing.city} required onChange={onChangeHandler2} />
+          <label>State</label>
+          <input type="text" name="state" value={billing.state} required onChange={onChangeHandler2} />
+        </div>
+
+        <button>Sumbit</button>
       </form>
+
     </div>
   );
 };
