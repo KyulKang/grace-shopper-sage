@@ -31,10 +31,6 @@ export function MyCart(props) {
         guestUpdateCart(Object.values(currentCart));
       }
     }
-    return () => {
-      console.log("unmounting, clearing cart");
-      clearCart();
-    };
   }, [user]);
   function handleToggleCart(event) {
     console.log("click");

@@ -1,8 +1,12 @@
+
+/* @import '../styles/style.css' */
+
 .cart-item-image{
   width:100px;
   height:100px;
   object-fit: cover;
 }
+
 #toggleCart{
     width: fit-content;
     align-self: flex-start;
