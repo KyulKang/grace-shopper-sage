@@ -32,7 +32,8 @@ const ViewCustomerOrders = (props) => {
                     return (
                       <div key={item.id}>
                         <span>
-                          Product: {item.product ? item.product.title : item.id}
+                          Product Name:
+                          {item.product ? item.product.title : item.id}
                         </span>
                         <span>Quantity: {item.quantity}</span>
                         <span>Price: {item.price}</span>
