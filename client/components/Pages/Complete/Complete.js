@@ -1,4 +1,3 @@
-
 // import logo from "../../../logo.svg"
 function Complete() {
   return (
@@ -10,4 +9,3 @@ function Complete() {
 }
 
 export default Complete;
-
