@@ -16,6 +16,7 @@ import Profile from "./components/UserProfile/Profile/Profile";
 import OrderHistory from "./components/UserProfile/Profile/OrderHistory/OrderHistory";
 import ViewCustomers from "./components/Admin/ViewCustomers";
 import EditProfile from "./components/UserProfile/Profile/EditProfile";
+import CheckOut from './components/Pages/Checkout/CheckOut'
 
 import SingleProduct from "./components/Pages/SingleProduct/SingleProduct";
 
@@ -23,13 +24,11 @@ import { ManageProducts } from "./components/Admin/";
 import Checkout from "./components/Pages/Checkout/CheckOut";
 const Routes = (props) => {
   const { loadInitialData } = props;
-  const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
     try {
       const checkToken = async () => {
-        const verified = await loadInitialData();
-        verified ? setAuthorized(true) : setAuthorized(false);
+        await loadInitialData();
       };
       checkToken();
     } catch (err) {
@@ -40,7 +39,7 @@ const Routes = (props) => {
   return (
     <Router>
       <div>
-        <Navbar authorized={authorized} />
+        <Navbar />
         <Switch>
           <Route exact path="/" component={AllProducts} />
           <Route path="/login">
@@ -51,14 +50,10 @@ const Routes = (props) => {
           </Route>
           <Route
             exact
-
             path="/product/:productId"
-
-
             render={(routeProps) => <SingleProduct {...routeProps} />}
           />
           <Route path="/checkout">
-            {/* We should put a main "Checkout" component here (or potentially render children directly) */}
             <Checkout />
           </Route>
           <Route path="/complete">
