@@ -13,8 +13,11 @@ const _getUsers = (users) => {
 
 // Thunks
 export const fetchUsers = () => {
+  const token = window.localStorage.getItem("token");
   return async (dispatch) => {
-    const { data } = await axios.get();
+    const { data } = await axios.get("/api/admin/users", {
+      headers: { authorization: token },
+    });
     dispatch(_getUsers(data));
   };
 };
