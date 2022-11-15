@@ -16,6 +16,7 @@ import Profile from "./components/UserProfile/Profile/Profile";
 import OrderHistory from "./components/UserProfile/Profile/OrderHistory/OrderHistory";
 import ViewCustomers from "./components/Admin/ViewCustomers";
 import EditProfile from "./components/UserProfile/Profile/EditProfile";
+import CheckOut from './components/Pages/Checkout/CheckOut'
 
 import SingleProduct from "./components/Pages/SingleProduct/SingleProduct";
 
@@ -53,7 +54,7 @@ const Routes = (props) => {
             render={(routeProps) => <SingleProduct {...routeProps} />}
           />
           <Route path="/checkout">
-            {/* We should put a main "Checkout" component here (or potentially render children directly) */}
+            <CheckOut />
           </Route>
           <Route path="/complete">
             <Complete />
