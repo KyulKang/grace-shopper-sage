@@ -1,30 +1,39 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import {
+  makeGuestOrder,
+  makeUserOrder,
+  fetchCart,
+  _getCart,
+  _clearCart,
+} from "../../../store";
+import { connect } from "react-redux";
+
 const Checkout = (props) => {
+  const { cart, makeGuestOrder, makeUserOrder, user } = props;
   let history = useHistory();
   const [shipping, setShipping] = useState({
-    firstName: "",
-    lastName: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    zip: null,
-    phone: "",
+    FirstName: "",
+    LastName: "",
+    Address1: "",
+    Address2: "",
+    City: "",
+    State: "",
+    Zip: "",
   });
   const [toggleAddress, setToggleAddress] = useState(false);
   const [billing, setBilling] = useState({
-    firstName: "",
-    lastName: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    zip: null,
-    phone: "",
+    FirstName: "",
+    LastName: "",
+    Address1: "",
+    Address2: "",
+    City: "",
+    State: "",
+    Zip: "",
   });
+  const [phoneNumber, setPhoneNumber] = useState("");
   const onChangeHandler = (event) => {
-    if (event.target.name == "same") {
+    if (event.target.name === "addressToggle") {
       if (event.target.value == "off") {
         setBilling({
           ...shipping,
@@ -34,14 +43,13 @@ const Checkout = (props) => {
       }
       setToggleAddress(false);
       setBilling({
-        firstName: "",
-        lastName: "",
-        address1: "",
-        address2: "",
-        city: "",
-        state: "",
-        zip: null,
-        phone: "",
+        FirstName: "",
+        LastName: "",
+        Address1: "",
+        Address2: "",
+        City: "",
+        State: "",
+        Zip: "",
       });
       return;
     }
@@ -58,204 +66,243 @@ const Checkout = (props) => {
       ...billing,
       [target.name]: target.value,
     });
+
+  };
+  const onChangeHandler3 = (event) => {
+    setPhoneNumber(event.target.value);
   };
   const submitHandler = (event) => {
     event.preventDefault();
-    //whatever reducer we need after the checkout is submitted.
-    const obj = {
-      shipping,
-      billing,
+    const orderSubmission = {
+      order: {
+        shippingFirstName: shipping.FirstName,
+        shippingLastName: shipping.LastName,
+        shippingAddress1: shipping.Address1,
+        shippingAddress2: shipping.Address2,
+        shippingCity: shipping.City,
+        shippingState: shipping.State,
+        shippingZip: +shipping.Zip,
+        phoneNumber: +phoneNumber,
+        billingFirstName: billing.FirstName,
+        billingLastName: billing.LastName,
+        billingAddress1: billing.Address1,
+        billingAddress2: billing.Address2,
+        billingCity: billing.City,
+        billingState: billing.State,
+        billingZip: +billing.Zip,
+      },
+      cart: cart.map((item) => {
+        return {
+          productId: item.product.id,
+          quantity: +item.quantity,
+          price: item.product.price,
+        };
+      }),
     };
+    try {
+      if (user?.id) {
+        makeUserOrder(orderSubmission, user.id)
+      } else {
+        makeGuestOrder(orderSubmission);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     history.push("/complete");
-    console.log(obj);
   };
   return (
     <div>
-      <div className="container">
-        <form onSubmit={submitHandler}>
-          <h2>Shipping Info</h2>
-          <div className="row">
-            <div className="col-sm">
-              <label>First Name</label>
-              <input
-                type="text"
-                name="firstName"
-                value={shipping.firstName}
-                required
-                onChange={(event) => onChangeHandler(event)}
-              />
-            </div>
-            <div className="col-sm">
-              <label>Last Name</label>
-              <input
-                type="text"
-                name="lastName"
-                value={shipping.lastName}
-                required
-                onChange={onChangeHandler}
-              />
-            </div>
-            <div className="col-sm"></div>
-          </div>
-          <div className="row">
-            <div className="col-sm">
-              <label>Address 1</label>
-              <input
-                type="text"
-                name="address1"
-                value={shipping.address1}
-                required
-                onChange={onChangeHandler}
-              />
-            </div>
-            <div className="col-sm">
-              <label>Address 2</label>
-              <input
-                type="text"
-                name="address2"
-                value={shipping.address2}
-                onChange={onChangeHandler}
-              />
-            </div>
-            <div className="col-sm"></div>
-          </div>
-          <div className="row">
-            <div className="col-sm">
-              <label>City</label>
-              <input
-                type="text"
-                name="city"
-                value={shipping.city}
-                required
-                onChange={onChangeHandler}
-              />
-            </div>
-            <div className="col-sm">
-              <label>State</label>
-              <input
-                type="text"
-                name="state"
-                value={shipping.state}
-                required
-                onChange={onChangeHandler}
-              />
-            </div>
-            <div className="col-sm">
-              <label>Zip</label>
-              <input
-                type="text"
-                name="zip"
-                value={shipping.zip}
-                required
-                onChange={onChangeHandler}
-              />
-            </div>
-          </div>
+      <form onSubmit={submitHandler}>
+        <div>
+          <div>Shipping Address:</div>
+          <label>First Name</label>
+          <input
+            type="text"
+            name="FirstName"
+            value={shipping.FirstName}
+            required
+            onChange={(event) => onChangeHandler(event)}
+          />
+          <label>Last Name</label>
+          <input
+            type="text"
+            name="LastName"
+            value={shipping.LastName}
+            required
+            onChange={onChangeHandler}
+          />
+          <label>Address 1</label>
+          <input
+            type="text"
+            name="Address1"
+            value={shipping.Address1}
+            required
+            onChange={onChangeHandler}
+          />
+          <label>Address 2</label>
+          <input
+            type="text"
+            name="Address2"
+            value={shipping.Address2}
+            onChange={onChangeHandler}
+          />
+          <label>City</label>
+          <input
+            type="text"
+            name="City"
+            value={shipping.City}
+            required
+            onChange={onChangeHandler}
+          />
+          <label>State</label>
+          <input
+            type="text"
+            name="State"
+            value={shipping.State}
+            required
+            onChange={onChangeHandler}
+          />
+          <label>Zip</label>
+          <input
+            type="text"
+            name="Zip"
+            value={shipping.Zip}
+            required
+            onChange={onChangeHandler}
+          />
+          <label>Phone Number</label>
+          <input
+            type="text"
+            name="phoneNumber"
+            value={phoneNumber}
+            required
+            onChange={onChangeHandler3}
+          />
+        </div>
+        <div>
+          <div>Billing Address:</div>
+          <label>First Name</label>
+          <input
+            type="text"
+            name="FirstName"
+            value={billing.FirstName}
+            required
+            onChange={onChangeHandler2}
+          />
+          <label>Last Name</label>
+          <input
+            type="text"
+            name="LastName"
+            value={billing.LastName}
+            required
+            onChange={onChangeHandler2}
+          />
+          <label>Address 1</label>
+          <input
+            type="text"
+            name="Address1"
+            value={billing.Address1}
+            required
+            onChange={onChangeHandler2}
+          />
+          <label>Address 2</label>
+          <input
+            type="text"
+            name="Address2"
+            value={billing.Address2}
+            onChange={onChangeHandler2}
+          />
+          <label>City</label>
+          <input
+            type="text"
+            name="City"
+            value={billing.City}
+            required
+            onChange={onChangeHandler2}
+          />
+          <label>State</label>
+          <input
+            type="text"
+            name="State"
+            value={billing.State}
+            required
+            onChange={onChangeHandler2}
+          />
+          <label>Zip</label>
+          <input
+            type="text"
+            name="Zip"
+            value={billing.Zip}
+            required
+            onChange={onChangeHandler2}
+          />
+
           <div>
             <input
               type="checkbox"
               id="sameAddress"
-              name="same"
+
+              name="addressToggle"
               value={toggleAddress ? "on" : "off"}
               onChange={onChangeHandler}
             />
-            <label htmlFor="sameAddress" className="checkoutLabel">
-              Same as billing address?
-            </label>
+            <label htmlFor="sameAddress"> Same as Shipping Address</label>
           </div>
-          <hr />
-          <h2>Billing Info</h2>
-          <div className="row">
-            <div className="col-sm">
-              <label className="checkoutLabel">First Name</label>
-              <input
-                type="text"
-                name="firstName"
-                value={billing.firstName}
-                required
-                onChange={onChangeHandler2}
-              />
-            </div>
-            <div className="col-sm">
-              <label>Last Name</label>
-              <input
-                type="text"
-                name="lastName"
-                value={billing.lastName}
-                required
-                onChange={onChangeHandler2}
-              />
-            </div>
-            <div className="col-sm"></div>
-          </div>
-          <div className="row">
-            <div className="col-sm">
-              <label>Address 1</label>
-              <input
-                type="text"
-                name="address1"
-                value={billing.address1}
-                required
-                onChange={onChangeHandler2}
-              />
-            </div>
-            <div className="col-sm">
-              <label>Address 2</label>
-              <input
-                type="text"
-                name="address2"
-                value={billing.address2}
-                onChange={onChangeHandler2}
-              />
-            </div>
-            <div className="col-sm"></div>
-          </div>
-          <div className="row">
-            <div className="col-sm">
-              <label>City</label>
-              <input
-                type="text"
-                name="city"
-                value={billing.city}
-                required
-                onChange={onChangeHandler2}
-              />
-            </div>
-            <div className="col-sm">
-              <label>State</label>
-              <input
-                type="text"
-                name="state"
-                value={billing.state}
-                required
-                onChange={onChangeHandler2}
-              />
-            </div>
-            <div className="col-sm">
-              <label>Zip</label>
-              <input
-                type="text"
-                name="zip"
-                value={billing.zip}
-                required
-                onChange={onChangeHandler2}
-              />
-            </div>
-          </div>
-        </form>
-      </div>
+        </div>
+
+        <button>Submit Order</button>
+      </form>
     </div>
 
-    //       </div>
-
-    //       <button>Sumbit</button>
-    //     </form>
-
-    // </div>
   );
 };
 
-export default Checkout;
+const mapDispatch = (dispatch) => {
+  return {
+    makeGuestOrder: (order) => dispatch(makeGuestOrder(order)),
+    makeUserOrder: (order, id) => dispatch(makeUserOrder(order, id))
+  };
+};
+const mapState = (state) => {
+  return {
+    cart: state.cart,
+    user: state.auth.authUser,
+  };
+};
+
+export default connect(mapState, mapDispatch)(Checkout);
+
+/* const [toggleAddress, setToggleAddress] = useState(false);
+const [billing, setBilling] = useState({
+  billingFirstName: "",
+  billingLastName: "",
+  billingAddress1: "",
+  billingAddress2: "",
+  billingCity: "",
+  billingState: "",
+  billingZip: "",
+});
+const [phoneNumber, setPhoneNumber]=useState("")
+const onChangeHandler = (event) => {
+  if (event.target.name === "addressToggle") {
+    if (event.target.value == "off") {
+      setBilling({
+        ...shipping,
+      });
+      setToggleAddress(true);
+      return;
+    }
+    setToggleAddress(false);
+    setBilling({
+      billingFirstName: "",
+      billingLastName: "",
+      billingAddress1: "",
+      billingAddress2: "",
+      billingCity: "",
+      billingState: "",
+      billingZip: "",
+    });
+    return; */
 
 // function CheckOut() {
 //     return (
