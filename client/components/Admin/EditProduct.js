@@ -1,138 +1,122 @@
-import { useEffect, useState } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link, Redirect, useLocation } from "react-router-dom";
-import { deleteProduct, me, updateProduct } from "../../store/";
+import { updateProduct } from "../../store/adminSingleProduct";
 
-const EditProduct = (props) => {
-  // This gets the state object from the Link state, and assigns the product value to a variable
-  const product = useLocation().state.product;
-  const { deleteProduct, loadInitialData, updateProduct, user } = props;
-
-
-  const [productInfo, setProductInfo] = useState({
-    id: product.id,
-    title: product.title,
-    price: product.price,
-    description: product.description,
-    imageUrl: product.imageUrl,
-    category: product.category,
-  });
-
-  useEffect(() => {
-    const checkToken = async () => {
-      try {
-        await loadInitialData();
-      } catch (err) {
-        console.log(err);
-      }
+class EditProduct extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      productInfo: props.product,
+      editMode: false,
     };
 
-    checkToken();
-  }, []);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onSubmitHandler = this.onSubmitHandler.bind(this);
+    this.onClickHandler = this.onClickHandler.bind(this);
+  }
 
-  const onChangeHandler = (event) => {
-    const target = event.target;
-    const fieldName = target.name;
-    const value = target.value;
-
-    setProductInfo({
-      ...productInfo,
-      [fieldName]: value,
-    });
-  };
-
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
-    try {
-      await updateProduct(productInfo);
-    } catch (err) {
-      console.log(err);
+  onChangeHandler = (event) => {
+    if (this.state.editMode) {
+      const { name, value } = event.target;
+      this.setState((prevState) => ({
+        ...prevState,
+        productInfo: { ...this.state.productInfo, [name]: value },
+      }));
     }
   };
 
-  const onDeleteHandler = async (event) => {
+  onSubmitHandler = (event) => {
     event.preventDefault();
-    try {
-      alert("Delete this product?");
-      await deleteProduct(productInfo.id);
-      <Redirect to="/admin/products" />;
-    } catch (err) {
-      console.log(err);
-    }
+    this.props.updateProduct(this.state.productInfo);
+    this.setState((prevState) => ({
+      ...prevState,
+      editMode: false,
+    }));
   };
 
-  if (user.isAdmin) {
+  onClickHandler = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      editMode: !this.state.editMode,
+    }));
+  };
+
+  render() {
+    const { title, price, description, imageUrl, category, id } =
+      this.state.productInfo;
+
     return (
       <div>
-        <Link
-          to={{
-            pathname: `/admin/product/products`,
-          }}
-        >
-          Back to Products
-        </Link>
-        <form onSubmit={onSubmitHandler}>
-          <label>Title</label>
+        <form onSubmit={this.onSubmitHandler}>
+          <label>{"#" + id}</label>
+          <label>&nbsp;Title:&nbsp;</label>
           <input
             name="title"
             type="text"
-            value={productInfo.title}
-            onChange={onChangeHandler}
+            value={title}
+            onChange={this.onChangeHandler}
             required
           />
-          <label>Price</label>
+          <label>&nbsp;Price:&nbsp;</label>
           <input
             name="price"
             type="text"
-            value={productInfo.price}
-            onChange={onChangeHandler}
+            value={price}
+            onChange={this.onChangeHandler}
             required
           />
-          <label>Description</label>
+          <label>&nbsp;Description:&nbsp;</label>
           <input
             name="description"
             type="textarea"
-            value={productInfo.description}
-            onChange={onChangeHandler}
+            value={description ? description : ""}
+            onChange={this.onChangeHandler}
             required
           />
-          <label>Image Link</label>
+          <label>&nbsp;Image Link:&nbsp;</label>
           <input
-            name="description"
+            name="imageUrl"
             type="text"
-            value={productInfo.imageUrl}
-            onChange={onChangeHandler}
-            required
+            value={imageUrl}
+            onChange={this.onChangeHandler}
           />
-          <label>Category</label>
+          <label>&nbsp;Category:&nbsp;</label>
           <input
             name="category"
             type="text"
-            value={productInfo.category}
-            onChange={onChangeHandler}
+            value={category}
+            onChange={this.onChangeHandler}
             required
           />
+          <button
+            value={this.props.product.id}
+            type="button"
+            onClick={this.onClickHandler}
+          >
+            Edit
+          </button>
+          <button
+            value={this.props.product.id}
+            type="button"
+            onClick={(event) => this.props.onDeleteHandler(event)}
+          >
+            Delete
+          </button>
+          {this.state.editMode ? (
+            <button type="submit">Submit Edit</button>
+          ) : (
+            ""
+          )}
         </form>
-        <button onClick={(id) => onDeleteHandler(product.id)}>
-          Delete Product
-        </button>
       </div>
     );
-  } else <Redirect to="/AllProducts" />;
-};
-
-const mapState = (state) => {
-  return {
-    user: state.auth.authUser
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    deleteProduct: (productId) => dispatch(deleteProduct(productId)),
-    loadInitialData: () => dispatch(me()),
     updateProduct: (productInfo) => dispatch(updateProduct(productInfo)),
   };
 };
 
-export default connect(mapState, mapDispatch)(EditProduct);
+export default connect(null, mapDispatch)(EditProduct);

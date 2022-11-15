@@ -1,11 +1,11 @@
 const router = require("express").Router();
 const {
   models: { User, Order, OrderItem },
-} = require("../db");
+} = require("../../db");
 module.exports = router;
-const requireToken = require("../requireToken");
+const requireToken = require("../../requireToken");
 
-// /admin/user
+// api/admin/user
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
