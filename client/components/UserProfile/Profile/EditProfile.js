@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { updateUser } from "../../../store";
@@ -10,6 +10,7 @@ const EditProfile = (props) => {
   const user = useLocation().state.user;
 
   const [userInfo, setUserInfo] = useState({
+    id: user.id,
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
@@ -79,7 +80,7 @@ const EditProfile = (props) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    editUser: (userInfo) => dispatch(updateUser(userInfo)),
+    editUser: (info) => dispatch(updateUser(info)),
   };
 };
 

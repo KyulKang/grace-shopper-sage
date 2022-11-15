@@ -7,14 +7,14 @@ module.exports = router;
 //login user edits profile, returns new token (because password could be different now)
 router.put("/:userId", requireToken, async (req, res, next) => {
   try {
-    const { id } = req.user;
+       const { id } = req.user;
     if (+req.params.userId === +id) {
       const updateUser = await User.findByPk(id);
       if (updateUser === null) {
         res.sendStatus(404);
       } else {
         const newUser = await updateUser.update(req.body);
-        res.send({ token: await newUser.generateToken() });
+        res.send({ user: newUser});
       }
     }
   } catch (error) {

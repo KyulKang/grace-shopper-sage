@@ -28,14 +28,20 @@ export const addUser = (userInfo) => {
       email: userInfo.email,
       password: userInfo.password,
     });
-    window.localStorage.setItem('token', data.token)
+    window.localStorage.setItem("token", data.token);
     dispatch(_addUser(data.user));
   };
 };
 
 export const updateUser = (userInfo) => {
+  const token = window.localStorage.getItem("token");
   return async (dispatch) => {
-    const { data } = await axios.put('');
+    const { data } = await axios.put(`/api/users/${userInfo.id}`, userInfo, {
+      headers: {
+        authorization: token,
+      },
+    });
+    console.log(data);
     dispatch(_updateUser(data));
   };
 };
