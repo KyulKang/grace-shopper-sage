@@ -63,26 +63,16 @@ export const deleteProduct = (id) => {
 };
 
 // Initial State
-const initialState = {
-  product: [],
-};
+const initialState = []
 
 // Reducer
 
-export default function singleProduct(state = initialState, action) {
+export default function adminProduct(state = initialState, action) {
   switch (action.type) {
     case ADD_PRODUCT: {
-      return (state = {
-        ...state,
-        product: action.product,
-      });
+      return [...state, action.product];
     }
-    case GET_PRODUCT: {
-      return (state = {
-        ...state,
-        product: action.product,
-      });
-    }
+  
     case UPDATE_PRODUCT: {
       return (state = {
         ...state,

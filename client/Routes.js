@@ -16,7 +16,9 @@ import Profile from "./components/UserProfile/Profile/Profile";
 import OrderHistory from "./components/UserProfile/Profile/OrderHistory/OrderHistory";
 import ViewCustomers from "./components/Admin/ViewCustomers";
 import EditProfile from "./components/UserProfile/Profile/EditProfile";
+
 import SingleProduct from "./components/Pages/SingleProduct/SingleProduct";
+
 import { ManageProducts } from "./components/Admin/";
 
 const Routes = (props) => {
@@ -49,7 +51,10 @@ const Routes = (props) => {
           </Route>
           <Route
             exact
-            path="/product/:id"
+
+            path="/product/:productId"
+
+
             render={(routeProps) => <SingleProduct {...routeProps} />}
           />
           <Route path="/checkout">
