@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchProducts } from "../../../store";
 import ProductCard from "./ProductCard";
-
+import  MyCart from "../Cart/MyCart";
 function AllProducts(props) {
   const { fetchProducts, products } = props;
   // const [products, setProducts] = useState(null);
@@ -42,12 +42,11 @@ function AllProducts(props) {
       <section>
         <div className="productCardGrid">
           {products?.map((item, id) => {
-            console.log(item);
             return <ProductCard item={item} key={id} />
           })}
-          {products.length > 0 && "There are products"}
         </div>
       </section>
+      <MyCart />
     </React.Fragment>
   );
 }
