@@ -5,6 +5,7 @@ import { authenticate, me } from "../../../store";
 
 const Login = (props) => {
   const { authenticate, loadInitialData, user } = props;
+  const token = window.localStorage.getItem("token");
 
   const [formInfo, setFormInfo] = useState({
     email: "",
@@ -23,7 +24,7 @@ const Login = (props) => {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [token]);
 
   const onChangeHandler = (event) => {
     const target = event.target;
@@ -40,20 +41,17 @@ const Login = (props) => {
     event.preventDefault();
     try {
       await authenticate(formInfo.email, formInfo.password, "login");
-      if (user) {
-        history.push(`/user/${user.id}`);
-      } else {
-        <Redirect to={{ pathname: `/login` }} />;
-        alert('Unable to log in.  Please try again.')
+      console.log(user);
+      if (user == undefined) {
+        alert("please log in");
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-
   if (user && user.id != undefined) {
-    return <Redirect to={{ pathname: `/user/${user.id}` }} />;
+    return <Redirect to={{ pathname: `/` }} />;
   } else {
     return (
       <div>
