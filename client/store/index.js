@@ -8,10 +8,11 @@ import singleUser from "./singleUser";
 import users from "./allUsers";
 import allProducts from "./allProducts";
 import singleProduct from "./singleProduct";
-
+import cart from "./cart";
 const reducer = combineReducers({
   allProducts,
   auth,
+  cart,
   orders,
   singleProduct,
   singleUser,
@@ -31,3 +32,4 @@ export * from "./auth";
 export * from "./orders";
 export * from "./singleProduct";
 export * from "./singleUser";
+export * from "./cart";
