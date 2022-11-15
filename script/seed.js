@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product },
+  models: { User, Product, Order, OrderItem},
 } = require("../server/db");
 
 /**
@@ -54,24 +54,104 @@ async function seed() {
       title: "Shirt",
       price: 15,
       category: "Clothes",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     }),
     Product.create({
       title: "Pants",
       price: 15,
       category: "Clothes",
+      description: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     }),
     Product.create({
       title: "Mug",
       price: 15,
       category: "Utensils",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
     }),
     Product.create({
       title: "Beer Stein",
       price: 15,
       category: "Utensils",
+      description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     }),
   ]);
-
+  const orders = await Promise.all([
+    Order.create({
+      userId: 1,
+      shippingFirstName: "cody",
+      shippingLastName: "johnston",
+      shippingAddress1: "123 Street",
+      shippingAddress2: "13th Ave",
+      shippingCity: "Hamilton",
+      shippingState: "New York",
+      shippingZip: "04780",
+      phoneNumber: "123-456-7890",
+      billingFirstName: "cody",
+      billingLastName: "johnston",
+      billingAddress1: "123 Street",
+      billingAddress2: "13th Ave",
+      billingCity: "Hamilton",
+      billingState: "New York",
+      billingZip: "04780",
+    }),
+    Order.create({
+      userId: 1,
+      shippingFirstName: "cody",
+      shippingLastName: "johnston",
+      shippingAddress1: "123 Street",
+      shippingAddress2: "13th Ave",
+      shippingCity: "Shakespeare",
+      shippingState: "New York",
+      shippingZip: "04780",
+      phoneNumber: "123-456-7890",
+      billingFirstName: "bill",
+      billingLastName: "johnston",
+      billingAddress1: "550 Street",
+      billingAddress2: "20th Ave",
+      billingCity: "London",
+      billingState: "New York",
+      billingZip: "04780",
+    }),
+    Order.create({
+      userId: 1,
+      shippingFirstName: "cody",
+      shippingLastName: "johnston",
+      shippingAddress1: "123 Street",
+      shippingAddress2: "13th Ave",
+      shippingCity: "Richtown",
+      shippingState: "Pennsylvania",
+      shippingZip: "04780",
+      phoneNumber: "123-456-7890",
+      billingFirstName: "cody",
+      billingLastName: "johnston",
+      billingAddress1: "123 Street",
+      billingAddress2: "13th Ave",
+      billingCity: "Ice Creak",
+      billingState: "Pennsylvania",
+      billingZip: "04780",
+    })
+  ]   
+  );
+  const orderItems = await Promise.all([
+    OrderItem.create({
+      orderId: 1, 
+      productId: 1,
+      quantity: 2, 
+      price: 50,
+    }),
+    OrderItem.create({
+      orderId: 1,
+      productId: 2,
+      quantity: 1,
+      price: 30,
+    }),
+    OrderItem.create({
+      orderId: 1,
+      productId: 3,
+      quantity: 4,
+      price: 12,
+    }),
+  ]);
   console.log(`seeded ${users.length} users and ${products.length} products`);
   console.log(`seeded successfully`);
   return {
