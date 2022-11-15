@@ -4,15 +4,8 @@ import axios from "axios";
 const ADD_PRODUCT = "ADD_PRODUCT";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const GET_PRODUCTS = "GET_PRODUCTS";
-const GET_PRODUCT = "GET_PRODUCT";
 
 // Action Creators
-const _getProduct = (product) => {
-  return {
-    type: GET_PRODUCT,
-    product: product,
-  };
-};
 
 const _addProduct = (product) => {
   return {
@@ -43,13 +36,6 @@ export const addProduct = (product) => {
       headers: { authorization: token },
     });
     dispatch(_addProduct(data));
-  };
-};
-
-export const getProduct = (id) => {
-  return async (dispatch) => {
-    const { data } = await axios.get(`/api/products/${id}`);
-    dispatch(_getProduct(data));
   };
 };
 
@@ -85,12 +71,6 @@ export default function adminProduct(state = initialState, action) {
       return [...state, action.product];
     }
 
-    case UPDATE_PRODUCT: {
-      return (state = {
-        ...state,
-        product: action.product,
-      });
-    }
     case DELETE_PRODUCT: {
       return state.filter((product) => product.id !== action.product.id);
     }

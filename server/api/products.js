@@ -6,7 +6,7 @@ module.exports = router;
 
 // /api/products
 
-router.get("/", async (_req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const products = await Product.findAll();
     res.send(products);
