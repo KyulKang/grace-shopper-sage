@@ -20,6 +20,22 @@ export const fetchOrders = () => {
   };
 };
 
+export const makeGuestOrder = (order) => {
+  return async (dispatch) => {
+    const { data } = await axios.post("/api/orders", order);
+  };
+};
+
+export const makeUserOrder = (order, id) => {
+  const token = window.localStorage.getItem("token");
+  return async (dispatch) => {
+    const { data } = await axios.post(`/api/users/${id}/orders`, order, {
+      headers: {
+        authorization: token,
+      },
+    });
+  }}
+
 // Initial State
 const initialState = {
   orders: [],
