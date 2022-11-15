@@ -14,14 +14,16 @@ import SignUp from "./components/UserProfile/SignUp/SignUp";
 import Complete from "./components/Pages/Complete/Complete";
 import Profile from "./components/UserProfile/Profile/Profile";
 import OrderHistory from "./components/UserProfile/Profile/OrderHistory/OrderHistory";
-import ViewCustomers from "./components/Admin/ViewCustomers";
 import EditProfile from "./components/UserProfile/Profile/EditProfile";
-import CheckOut from './components/Pages/Checkout/CheckOut'
-
+import CheckOut from "./components/Pages/Checkout/CheckOut";
 import SingleProduct from "./components/Pages/SingleProduct/SingleProduct";
-
-import { ManageProducts } from "./components/Admin/";
+import {
+  ManageProducts,
+  ViewCustomers,
+  ViewCustomerOrders,
+} from "./components/Admin/";
 import Checkout from "./components/Pages/Checkout/CheckOut";
+
 const Routes = (props) => {
   const { loadInitialData } = props;
 
@@ -68,9 +70,15 @@ const Routes = (props) => {
           <Route exact path="/user/:userId/edit">
             <EditProfile />
           </Route>
-          <Route path="/admin/users">
+          <Route exact path="/admin/users">
             <ViewCustomers />
           </Route>
+          <Route
+            exact
+            path="/admin/users/:userId/orders"
+            component={ViewCustomerOrders}
+          />
+
           <Route exact path="/admin/products">
             <ManageProducts />
           </Route>

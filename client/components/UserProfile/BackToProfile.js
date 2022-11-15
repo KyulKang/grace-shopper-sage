@@ -6,7 +6,7 @@ const BackToProfile = (props) => {
 
   return (
     <div>
-      <Link to={`/user/${id}`}>Back to Profile</Link>
+      <Link to={`/user/${id ? id : ""}`}>Back to Profile</Link>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import {
   deleteProduct,
 } from "../../store/";
 import EditProduct from "./EditProduct";
+import BackToProfile from "../UserProfile/BackToProfile";
 
 class ManageProducts extends React.Component {
   constructor(props) {
@@ -122,7 +123,7 @@ class ManageProducts extends React.Component {
           <div>No products found. Add a product to get started.</div>
           <hr />
           <form onSubmit={this.onSubmitHandler}>
-            <label>Title</label>
+            <label>&nbsp;Title:&nbsp;</label>
             <input
               name="title"
               type="text"
@@ -130,7 +131,7 @@ class ManageProducts extends React.Component {
               onChange={this.onChangeHandler}
               required
             />
-            <label>Price</label>
+            <label>&nbsp;Price:&nbsp;</label>
             <input
               name="price"
               type="text"
@@ -138,7 +139,7 @@ class ManageProducts extends React.Component {
               onChange={this.onChangeHandler}
               required
             />
-            <label>Description</label>
+            <label>&nbsp;Description:&nbsp;</label>
             <input
               name="description"
               type="textarea"
@@ -146,14 +147,14 @@ class ManageProducts extends React.Component {
               onChange={this.onChangeHandler}
               required
             />
-            <label>Image Link</label>
+            <label>&nbsp;Image Link:&nbsp;</label>
             <input
               name="description"
               type="text"
               value={this.state.imageUrl}
               onChange={this.onChangeHandler}
             />
-            <label>Category</label>
+            <label>&nbsp;Category:&nbsp;</label>
             <input
               name="category"
               type="text"
@@ -163,6 +164,17 @@ class ManageProducts extends React.Component {
             />
             <button type="submit">Add Product</button>
           </form>
+        </div>
+      );
+    } else if (!user.makeAdmin) {
+      return (
+        <div>
+          <h1>I can't let you do that, Star Fox.</h1>
+          <p>
+            It looks like you aren't meant to access this link! Please click on
+            the link below to return to your profile.
+          </p>
+          <BackToProfile id={user.id} />
         </div>
       );
     }

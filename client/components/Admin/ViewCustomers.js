@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import BackToProfile from "../UserProfile/BackToProfile";
 import { fetchUsers, me } from "../../store";
 
@@ -7,27 +8,8 @@ const ViewCustomers = (props) => {
   const { getUsers, loadInitialData, user, users } = props;
 
   useEffect(() => {
-    const checkToken = async () => {
-      try {
-        await loadInitialData();
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    const allUsers = async () => {
-      try {
-        await getUsers();
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    checkToken();
-
-    if (user.makeAdmin) {
-      allUsers();
-    }
+    loadInitialData();
+    getUsers();
   }, []);
 
   if (!user) {
@@ -36,22 +18,29 @@ const ViewCustomers = (props) => {
     return (
       <div>
         <div>
-          <BackToProfile id={user.id} />
-          No orders found. Buy something!
-        </div>
-        <div>
-          {users.map((user) => {
-            return (
-              <div>
-                <span>
-                  {user.firstName} {user.lastName}
-                </span>
-                <span>{user.email}</span>
+          {users
+            .sort((a, b) => a.id - b.id)
+            .map((user) => {
+              console.log(user);
+              return (
+                <div key={user.id}>
+                  <span>
+                    {"#" + user.id + "."} {user.firstName} {user.lastName}
+                  </span>
+                  <br />
 
-                <Link to="`/user/${user.id}/orders`" />
-              </div>
-            );
-          })}
+                  <Link to={`/admin/users/${user.id}/orders`}>
+                    <span>{user.email}</span>
+                  </Link>
+                  <br />
+                  <br />
+                </div>
+              );
+            })}
+        </div>
+        <hr />
+        <div>
+          <BackToProfile id={user.id} />
         </div>
       </div>
     );
