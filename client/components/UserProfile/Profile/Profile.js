@@ -18,7 +18,7 @@ const Profile = (props) => {
   }, []);
 
   if (!user) {
-    return <div>'Please sign in'</div>;
+    return <div>Please log in</div>;
   } else if (!user.makeAdmin) {
     return (
       <div>

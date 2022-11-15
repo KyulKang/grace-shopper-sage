@@ -11,8 +11,6 @@ const Login = (props) => {
     password: "",
   });
 
-  const history = useHistory();
-
   useEffect(() => {
     try {
       const checkToken = async () => {
@@ -40,13 +38,27 @@ const Login = (props) => {
     event.preventDefault();
     try {
       await authenticate(formInfo.email, formInfo.password, "login");
-      history.push(`/user/${user.id}`);
     } catch (err) {
       console.log(err);
     }
   };
 
-  if (!user) {
+  if (user && user.id) {
+    return <Redirect to={{ pathname: `/` }} />;
+  } else if (user && !user.id) {
+    return (
+      <div>
+        <h3>Login failed. Please try again.</h3>
+        <form onSubmit={onSubmitHandler}>
+          <label>Email</label>
+          <input name="email" type="text" onChange={onChangeHandler} />
+          <label>Password</label>
+          <input name="password" type="password" onChange={onChangeHandler} />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    );
+  } else {
     return (
       <div>
         <form onSubmit={onSubmitHandler}>
@@ -58,8 +70,6 @@ const Login = (props) => {
         </form>
       </div>
     );
-  } else {
-    return <Redirect to={`/user/${user.id}`} />;
   }
 };
 
