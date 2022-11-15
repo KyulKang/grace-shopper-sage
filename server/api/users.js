@@ -33,7 +33,7 @@ router.get("/:userId/cartItems", requireToken, async (req, res, next) => {
         include: { model: Product },
       });
       res.send(cartItems);
-    }
+    } else {res.sendStatus(403)}
   } catch (error) {
     next(error);
   }

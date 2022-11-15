@@ -1,74 +1,90 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { fetchCart } from "../../../store";
+import { fetchCart, _getCart, _clearCart } from "../../../store";
 import { connect } from "react-redux";
+import CartItem from "./CartItem"
+import {Link} from "react-router-dom"
 
 export function MyCart(props) {
-    const { fetchCart, cart } = props;
+  const { fetchCart, cart, user, guestUpdateCart, clearCart } = props;
 
-    console.log("MyCart props", props);
-    useEffect(() => {
-        console.log(fetchCart);
-        const getCart = async () => {
-            try {
-                await fetchCart();
-            }
-            catch (error) {
-                console.log(error)
-            }
+  console.log("MyCart props", props);
+  useEffect(() => {
+    const token = window.localStorage.getItem("token") || null;
+    if (token && user) {
+        console.log("user", user)
+      const getCart = async () => {
+        try {
+          console.log("mount logged in fetch");
+          await fetchCart(user.id);
+        } catch (error) {
+          console.log(error);
         }
-        getCart();
-    }, [])
-    return (
-        <section id="cart" className="d-flex flex-row">
-            <div className="cart-left mr-md-5 ">
-                <div className="cart-header d-flex flex-row align-items-center">
-                    <h2 className="mr-md-5">Shopping Cart</h2>
-                    <span>3 items</span>
-                </div>
-                <div className="cart-item-list">
-                    <hr />
-                    <CartItem />
-                    <hr />
-                </div>
-            </div>
-            <div className="cart-right">
-                <h3>Summary</h3>
-                <hr />
-                <h5>ITEMS 3 <span>$132.00</span></h5>
-                <h5>TOTAL PRICE $137.00</h5>
-                <button type="button" className="btn btn-primary btn-lg">Large button</button>
-            </div>
-        </section>
-    );
+      };
+      getCart();
+    } else {
+      console.log("unlogged in fetch");
+      let currentCart = {};
+      if (localStorage.getItem("cart")) {
+        currentCart = JSON.parse(localStorage.getItem("cart"));
+        guestUpdateCart(Object.values(currentCart));
+      }
+    }
+    return () => {
+      console.log("unmounting, clearing cart");
+      clearCart();
+    };
+  }, [user]);
+
+  return (
+    <section id="cart" className="d-flex flex-row">
+      <div className="cart-left mr-md-5 ">
+        <div className="cart-header d-flex flex-row align-items-center">
+          <h2 className="mr-md-5">Shopping Cart</h2>
+          <span>{cart.length} items</span>
+        </div>
+        <div className="cart-item-list">
+          <hr />
+          {cart.sort((a,b)=>{a.product.title.length - b.product.title.length}).map((item, index)=>{
+            return <CartItem item={item} key={index}/>
+          })}
+          <hr />
+        </div>
+      </div>
+      <div className="cart-right">
+        <h3>Summary</h3>
+        <hr />
+        <h5>
+          ITEMS:{cart.length} {cart.sort((a,b)=>{a.product.title.length - b.product.title.length}).map((item, index)=>{
+            return <div key={index}><span >{item.quantity} X ${item.product.price}</span></div>
+          })}
+        </h5>
+        <h5>TOTAL PRICE ${cart.reduce((prev, curr)=>{return prev + (curr.quantity*curr.product.price)},0)}</h5>
+        <Link to={"/checkout"}>
+        <button type="button" className="btn btn-primary btn-lg">
+          Checkout
+        </button>
+        </Link>
+
+      </div>
+    </section>
+  );
 }
 const mapDispatch = (dispatch) => {
-    return {
-        fetchCart: () => dispatch(fetchCart())
-    }
-}
+  return {
+    fetchCart: (id) => dispatch(fetchCart(id)),
+    guestUpdateCart: (item) => dispatch(_getCart(item)),
+    clearCart: () => dispatch(_clearCart()),
+  };
+};
 const mapState = (state) => {
-    return {
-        cart: state.cart,
-    }
-}
+  return {
+    cart: state.cart,
+    user: state.auth.authUser,
+  };
+};
 
 export default connect(mapState, mapDispatch)(MyCart);
 
-function CartItem() {
-    return (
-        <div className="cart-item d-flex flex-row align-items-center">
-            <img src="." alt="images" className="cart-item-image" />
-            <div className="item-description">
-                <p>Shirt</p>
-                <b>Cotton T-shirt</b>
-            </div>
-            <input type="number" placeholder="1" min="1"/>
-            <h5>$44.00</h5>
-            <button>Remove Item</button>
-        </div>
-    );
-}
-function CartSummary(){
 
-}
+

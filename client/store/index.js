@@ -8,12 +8,14 @@ import singleUser from "./singleUser";
 import users from "./allUsers";
 import allProducts from "./allProducts";
 import singleProduct from "./singleProduct"
+import cart from "./cart"
 
 import adminProduct from "./adminProduct";
 
 const reducer = combineReducers({
   allProducts,
   singleProduct,
+  cart,
   auth,
   orders,
   adminProduct,
