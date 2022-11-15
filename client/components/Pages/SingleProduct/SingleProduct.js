@@ -4,7 +4,9 @@ import { connect } from "react-redux"
 
 function SingleProduct(props) {
 
-    const { getProduct, product } = props
+    const { getProduct, product, user } = props
+
+    const [quantity, setQuantity]=useState(1)
 
     useEffect(()=>{
         const getSingleProduct = async() => {
@@ -17,6 +19,20 @@ function SingleProduct(props) {
         getSingleProduct()
     }, [])
 
+    const onChangeHandler = (event) => {
+        setQuantity(event.target.value);
+      };
+
+      const onSubmitHandler = async (event) => {
+        event.preventDefault();
+        try {
+          if (user.id){}else {}
+
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
     return (
         <div className={"card"} style={{ width: "18rem" }}>
             <img className={"card-img-top"} src={product.imageUrl} alt="Card cap" />
@@ -27,7 +43,8 @@ function SingleProduct(props) {
                 <p className={"card-text"}>
                     {product.description}
                 </p>
-                <button>Add to Cart</button>
+                <input type="number" placeholder="1" min="1" onChange={onChangeHandler}/>
+                <button onClick={onSubmitHandler}>Add to Cart</button>
             </div>
         </div>
     );
@@ -41,6 +58,7 @@ const mapDispatch = (dispatch) => {
   const mapState = (state) => {
     return {
       product: state.singleProduct,
+      user: state.auth.authUser
     }
   }
   export default connect(mapState, mapDispatch)(SingleProduct);
