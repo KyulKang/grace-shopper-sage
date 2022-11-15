@@ -21,7 +21,9 @@ function SingleProduct(props) {
         <div className={"card"} style={{ width: "18rem" }}>
             <img className={"card-img-top"} src="./logo512.png" alt="Card cap" />
             <div className={"card-body"}>
+
                 <h5 className={"card-title"}>{product.title}</h5>
+
                 <p className={"card-text"}>
                     {product.description}
                 </p>
