@@ -31,7 +31,22 @@ const EditProfile = (props) => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      await editUser(userInfo);
+      if (!userInfo.password) {
+        await editUser({
+          id: userInfo.id,
+          firstName: userInfo.firstName,
+          lastName: userInfo.lastName,
+          email: userInfo.email,
+        });
+      } else {
+        await editUser({
+          id: userInfo.id,
+          firstName: userInfo.firstName,
+          lastName: userInfo.lastName,
+          email: userInfo.email,
+          password: userInfo.password,
+        });
+      }
     } catch (err) {
       console.log(err);
     }

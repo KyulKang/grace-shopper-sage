@@ -85,6 +85,12 @@ export default function adminProduct(state = initialState, action) {
       return [...state, action.product];
     }
 
+    case UPDATE_PRODUCT: {
+      return (state = {
+        ...state,
+        product: action.product,
+      });
+    }
     case DELETE_PRODUCT: {
       return state.filter((product) => product.id !== action.product.id);
     }

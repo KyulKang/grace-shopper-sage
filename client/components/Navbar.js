@@ -1,47 +1,64 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout, me } from "../store";
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>FS-App-Template</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-)
+const Navbar = (props) => {
+  const { authorized, loadInitialData, logout, user } = props;
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      loadInitialData();
+    };
+
+    checkLogin();
+  }, []);
+
+  return (
+    <div>
+      <h1>Sage</h1>
+      <nav>
+        {user?.id ? (
+          <div>
+            <Link to="/">Home</Link>
+            <Link
+              to={{
+                pathname: `/user/${user.id}`,
+              }}
+            >
+              Profile
+            </Link>
+            <a href="#" onClick={logout}>
+              Logout
+            </a>
+          </div>
+        ) : (
+          <div>
+            <Link to="/">Home</Link>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+          </div>
+        )}
+      </nav>
+      <hr />
+    </div>
+  );
+};
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
-    isLoggedIn: !!state.auth.id
-  }
-}
+    user: state.auth.authUser,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+    loadInitialData: () => dispatch(me()),
+    logout: () => dispatch(logout()),
+  };
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar);

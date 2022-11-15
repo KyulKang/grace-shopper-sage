@@ -20,17 +20,16 @@ export function MyCart(props) {
         getCart();
     }, [])
     return (
-        <section id="cart">
-            <div className="cart-left">
-                <div className="cart-header">
-                    <h2>Shopping Cart</h2>
+        <section id="cart" className="d-flex flex-row">
+            <div className="cart-left mr-md-5 ">
+                <div className="cart-header d-flex flex-row align-items-center">
+                    <h2 className="mr-md-5">Shopping Cart</h2>
                     <span>3 items</span>
                 </div>
                 <div className="cart-item-list">
                     <hr />
                     <CartItem />
                     <hr />
-                    <a>Back to Shop</a>
                 </div>
             </div>
             <div className="cart-right">
@@ -58,7 +57,7 @@ export default connect(mapState, mapDispatch)(MyCart);
 
 function CartItem() {
     return (
-        <div className="cart-item">
+        <div className="cart-item d-flex flex-row align-items-center">
             <img src="." alt="images" className="cart-item-image" />
             <div className="item-description">
                 <p>Shirt</p>
