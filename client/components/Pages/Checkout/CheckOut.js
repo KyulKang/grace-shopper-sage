@@ -66,6 +66,7 @@ const Checkout = (props) => {
       ...billing,
       [target.name]: target.value,
     });
+
   };
   const onChangeHandler3 = (event) => {
     setPhoneNumber(event.target.value);
@@ -235,10 +236,12 @@ const Checkout = (props) => {
             required
             onChange={onChangeHandler2}
           />
+
           <div>
             <input
               type="checkbox"
               id="sameAddress"
+
               name="addressToggle"
               value={toggleAddress ? "on" : "off"}
               onChange={onChangeHandler}
@@ -250,6 +253,7 @@ const Checkout = (props) => {
         <button>Submit Order</button>
       </form>
     </div>
+
   );
 };
 
