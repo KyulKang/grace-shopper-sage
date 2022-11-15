@@ -16,9 +16,8 @@ const SignUp = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-
     const checkUser = async () => {
-      if (authUser) {
+      if (authUser && authUser.id) {
         history.push(`/user/${authUser.id}`);
       }
     };
