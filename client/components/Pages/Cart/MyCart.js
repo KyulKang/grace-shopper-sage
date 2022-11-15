@@ -3,16 +3,17 @@ import { useEffect, useState } from "react";
 import { fetchCart, _getCart, _clearCart } from "../../../store";
 import { connect } from "react-redux";
 import CartItem from "./CartItem"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
 export function MyCart(props) {
+  const [toggleCart, setToggleCart] = useState(false);
   const { fetchCart, cart, user, guestUpdateCart, clearCart } = props;
 
   console.log("MyCart props", props);
   useEffect(() => {
     const token = window.localStorage.getItem("token") || null;
     if (token && user) {
-        console.log("user", user)
+      console.log("user", user)
       const getCart = async () => {
         try {
           console.log("mount logged in fetch");
@@ -35,39 +36,51 @@ export function MyCart(props) {
       clearCart();
     };
   }, [user]);
-
+  function handleToggleCart(event) {
+    console.log("click");
+    setToggleCart(!toggleCart);
+  }
   return (
-    <section id="cart" className="d-flex flex-row">
-      <div className="cart-left mr-md-5 ">
-        <div className="cart-header d-flex flex-row align-items-center">
-          <h2 className="mr-md-5">Shopping Cart</h2>
-          <span>{cart.length} items</span>
-        </div>
-        <div className="cart-item-list">
-          <hr />
-          {cart.sort((a,b)=>{a.product.title.length - b.product.title.length}).map((item, index)=>{
-            return <CartItem item={item} key={index}/>
-          })}
-          <hr />
-        </div>
-      </div>
-      <div className="cart-right">
-        <h3>Summary</h3>
-        <hr />
-        <h5>
-          ITEMS:{cart.length} {cart.sort((a,b)=>{a.product.title.length - b.product.title.length}).map((item, index)=>{
-            return <div key={index}><span >{item.quantity} X ${item.product.price}</span></div>
-          })}
-        </h5>
-        <h5>TOTAL PRICE ${cart.reduce((prev, curr)=>{return prev + (curr.quantity*curr.product.price)},0)}</h5>
-        <Link to={"/checkout"}>
-        <button type="button" className="btn btn-primary btn-lg">
-          Checkout
-        </button>
-        </Link>
+    <React.Fragment>
+      <button id="toggleCart" className={`btn ${toggleCart ? "btn-secondary" : "btn-warning"}`} onClick={handleToggleCart}>Show</button>
+      {toggleCart && (
+        <React.Fragment>
+          <section id="cart" className="d-flex fix-cart">
+            <div className="cart-left">
+              <div className="cart-header d-flex flex-row align-items-center">
+                <h2 className="mr-md-5">Shopping Cart</h2>
+                <span>{cart.length} items</span>
+              </div>
+              <div className="cart-item-list">
+                <hr />
+                {cart.sort((a, b) => { a.product.title.length - b.product.title.length }).map((item, index) => {
+                  return <CartItem item={item} key={index} />
+                })}
+                <hr />
+              </div>
+            </div>
+            <div className="cart-right">
+              <h3>Summary</h3>
+              <hr />
+              <h5>
+                ITEMS:{cart.length} {cart.sort((a, b) => { a.product.title.length - b.product.title.length }).map((item, index) => {
+                  return <div key={index}><span >{item.quantity} X ${item.product.price}</span></div>
+                })}
+              </h5>
+              <h5>TOTAL PRICE ${cart.reduce((prev, curr) => { return prev + (curr.quantity * curr.product.price) }, 0)}</h5>
+              <Link to={"/checkout"}>
+                <button type="button" className="btn btn-primary btn-lg">
+                  Checkout
+                </button>
+              </Link>
+            </div>
+          </section>
+        </React.Fragment>
 
-      </div>
-    </section>
+      )}
+
+    </React.Fragment>
+
   );
 }
 const mapDispatch = (dispatch) => {

@@ -20,7 +20,7 @@ const Navbar = (props) => {
 
   }
   return (
-    <div>
+    <div className="navbar">
       <h1>Sage</h1>
       <nav>
         {user?.id ? (
