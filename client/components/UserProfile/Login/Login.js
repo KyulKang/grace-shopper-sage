@@ -40,13 +40,21 @@ const Login = (props) => {
     event.preventDefault();
     try {
       await authenticate(formInfo.email, formInfo.password, "login");
-      history.push(`/user/${user.id}`);
+      if (user) {
+        history.push(`/user/${user.id}`);
+      } else {
+        <Redirect to={{ pathname: `/login` }} />;
+        alert('Unable to log in.  Please try again.')
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
-  if (!user) {
+
+  if (user && user.id != undefined) {
+    return <Redirect to={{ pathname: `/user/${user.id}` }} />;
+  } else {
     return (
       <div>
         <form onSubmit={onSubmitHandler}>
@@ -58,11 +66,8 @@ const Login = (props) => {
         </form>
       </div>
     );
-  } else {
-    return <Redirect to={`/user/${user.id}`} />;
   }
 };
-
 const mapState = (state) => {
   return {
     user: state.auth.authUser,

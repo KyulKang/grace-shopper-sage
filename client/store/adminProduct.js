@@ -41,12 +41,12 @@ export const addProduct = () => {
     dispatch(_addProduct(data));
   };
 };
-export const getProduct = (id) => {
-  return async (dispatch) => {
-    const { data } = await axios.get(`/api/products/${id}`);
-    dispatch(_getProduct(data));
-  };
-};
+// export const getProduct = (id) => {
+//   return async (dispatch) => {
+//     const { data } = await axios.get(`/api/products/${id}`);
+//     dispatch(_getProduct(data));
+//   };
+// };
 
 export const updateProduct = () => {
   return async (dispatch) => {

@@ -1,1 +1,1 @@
-// import {AllProducts} from "./AllProducts/AllProducts";
+import { AllProducts } from "./AllProducts";
