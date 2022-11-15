@@ -4,21 +4,25 @@ import axios from "axios";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 
 // Action creator
-const _getProduct = (product) => {
+const _updateProduct = (product) => {
   return {
     type: UPDATE_PRODUCT,
     product: product,
   };
 };
 
-// Thunks
+// Thunk
 export const updateProduct = (product) => {
   const token = window.localStorage.getItem("token");
   return async (dispatch) => {
-    const { data } = await axios.put("/api/admin/products", product, {
-      headers: { authorization: token },
-    });
-    dispatch(_getProduct(data));
+    const { data } = await axios.put(
+      `/api/admin/products/${product.id}`,
+      product,
+      {
+        headers: { authorization: token },
+      }
+    );
+    dispatch(_updateProduct(data));
   };
 };
 

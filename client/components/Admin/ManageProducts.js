@@ -54,39 +54,23 @@ class ManageProducts extends React.Component {
 
   render() {
     const { user, products } = this.props;
+
     if (!user) {
       return <div></div>;
     } else if (user.makeAdmin && products.length > 0) {
       return (
         <div>
-          <table>
-            <tbody>
-              <tr>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Category</th>
-              </tr>
-
-              {products.map((product) => {
-                return (
-                  <tr key={product.id}>
-                    <td>{product.title}</td>
-                    <td>{product.price}</td>
-                    <td>{product.category}</td>
-                    <td>
-                      <button
-                        value={product.id}
-                        type="button"
-                        onClick={this.onDeleteHandler}
-                      >
-                        Delete Product
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          {products
+            .sort((a, b) => a.id - b.id)
+            .map((product) => {
+              return (
+                <EditProduct
+                  key={product.id}
+                  product={product}
+                  onDeleteHandler={(event) => this.onDeleteHandler(event)}
+                />
+              );
+            })}
           <hr />
           <form onSubmit={this.onSubmitHandler}>
             <label>Title</label>
