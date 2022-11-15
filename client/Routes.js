@@ -18,7 +18,7 @@ import ViewCustomers from "./components/Admin/ViewCustomers";
 import EditProfile from "./components/UserProfile/Profile/EditProfile";
 import SingleProduct from "./components/Pages/SingleProduct/SingleProduct";
 import { ManageProducts } from "./components/Admin/";
-
+import Checkout from "./components/Pages/Checkout/CheckOut";
 const Routes = (props) => {
   const { loadInitialData } = props;
   const [authorized, setAuthorized] = useState(false);
@@ -54,6 +54,7 @@ const Routes = (props) => {
           />
           <Route path="/checkout">
             {/* We should put a main "Checkout" component here (or potentially render children directly) */}
+            <Checkout />
           </Route>
           <Route path="/complete">
             <Complete />
