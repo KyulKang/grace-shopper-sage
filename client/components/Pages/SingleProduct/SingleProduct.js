@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getProduct } from "../../../store";
+import { fetchProduct } from "../../../store";
 import { connect } from "react-redux"
 
 function SingleProduct(props) {
@@ -9,7 +9,7 @@ function SingleProduct(props) {
     useEffect(()=>{
         const getSingleProduct = async() => {
             try {
-              await getProduct(this.props.match.params.productId)
+              await getProduct(props.match.params.productId)
             } catch (error) {
                console.log(error)
             }
@@ -19,7 +19,7 @@ function SingleProduct(props) {
 
     return (
         <div className={"card"} style={{ width: "18rem" }}>
-            <img className={"card-img-top"} src="./logo512.png" alt="Card cap" />
+            <img className={"card-img-top"} src={product.imageUrl} alt="Card cap" />
             <div className={"card-body"}>
 
                 <h5 className={"card-title"}>{product.title}</h5>
@@ -35,15 +35,13 @@ function SingleProduct(props) {
 
 const mapDispatch = (dispatch) => {
     return {
-      getProduct: (id) => dispatch(getProduct(id))
+      getProduct: (id) => dispatch(fetchProduct(id))
     }
   }
   const mapState = (state) => {
     return {
       product: state.singleProduct,
-      ///LOOK AT THIS
     }
   }
-  // export default AllProducts;
   export default connect(mapState, mapDispatch)(SingleProduct);
 

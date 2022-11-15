@@ -43,7 +43,7 @@ export const addProduct = () => {
 };
 export const getProduct = (id) => {
   return async (dispatch) => {
-    const { data } = await axios.get(`api/products/${id}`);
+    const { data } = await axios.get(`/api/products/${id}`);
     dispatch(_getProduct(data));
   };
 };
@@ -72,7 +72,7 @@ export default function adminProduct(state = initialState, action) {
     case ADD_PRODUCT: {
       return [...state, action.product];
     }
-  
+
     case UPDATE_PRODUCT: {
       return (state = {
         ...state,
