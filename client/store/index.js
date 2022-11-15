@@ -13,7 +13,6 @@ import adminProduct from "./adminProduct";
 const reducer = combineReducers({
   allProducts,
   auth,
-  cart,
   orders,
   adminProduct,
   singleUser,
