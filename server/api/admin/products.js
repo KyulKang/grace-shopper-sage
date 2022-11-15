@@ -1,14 +1,15 @@
 const router = require("express").Router();
 const {
   models: { Product },
-} = require("../db");
+} = require("../../db");
 module.exports = router;
-const requireToken = require("../requireToken");
+const requireToken = require("../../requireToken");
 
-// /admin/products
+// api/admin/products
 
 router.post("/", requireToken, async (req, res, next) => {
   try {
+    console.log("post route accessed");
     if (req.user.makeAdmin) {
       const product = await Product.create(req.body);
       res.send(product);
@@ -42,14 +43,8 @@ router.delete("/:productId", requireToken, async (req, res, next) => {
   try {
     if (req.user.makeAdmin) {
       const product = await Product.findByPk(req.params.productId);
-      if (!product) {
-        res.sendStatus(404);
-      } else {
-        await product.destroy();
-        res.sendStatus(204);
-      }
-    } else {
-      res.sendStatus(401);
+      await product.destroy();
+      res.send(product);
     }
   } catch (err) {
     next(err);

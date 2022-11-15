@@ -71,7 +71,7 @@ const Routes = (props) => {
           <Route path="/admin/users">
             <ViewCustomers />
           </Route>
-          <Route path="/admin/products">
+          <Route exact path="/admin/products">
             <ManageProducts />
           </Route>
           <Route path="*">

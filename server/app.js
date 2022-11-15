@@ -14,9 +14,6 @@ app.use(express.json());
 app.use("/auth", require("./auth"));
 app.use("/api", require("./api"));
 
-//admin route
-app.use("/admin", require("./admin"));
-
 app.get("/", (req, res) =>
   res.sendFile(path.join(__dirname, "..", "public/index.html"))
 );
