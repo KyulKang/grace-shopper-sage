@@ -15,26 +15,26 @@ function CartItem(props) {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-        if (user?.id) {
-          updateCart(
-            { quantity, productId: item.product.id, price: item.product.price },
-            user.id
-          );
-        } else {
-          let currentCart = {};
-          if (localStorage.getItem("cart")) {
-            currentCart = JSON.parse(localStorage.getItem("cart"));
-          }
-          currentCart = {
-            ...currentCart,
-            [item.product.id]: { quantity, product: item.product },
-          };
-          localStorage.setItem("cart", JSON.stringify(currentCart));
-          guestUpdateCart(Object.values(currentCart));
+      if (user?.id) {
+        updateCart(
+          { quantity, productId: item.product.id, price: item.product.price },
+          user.id
+        );
+      } else {
+        let currentCart = {};
+        if (localStorage.getItem("cart")) {
+          currentCart = JSON.parse(localStorage.getItem("cart"));
         }
-      } catch (err) {
-        console.log(err);
+        currentCart = {
+          ...currentCart,
+          [item.product.id]: { quantity, product: item.product },
+        };
+        localStorage.setItem("cart", JSON.stringify(currentCart));
+        guestUpdateCart(Object.values(currentCart));
       }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
 
@@ -47,17 +47,18 @@ function CartItem(props) {
         className="cart-item-image"
       />
       <div className="item-description">
-        <p>{item.product.title}</p>
+        <h4 className="no-margin">{item.product.title}</h4>
       </div>
       <input
+        className="cart-input"
         type="number"
         value={+quantity}
         min="1"
         onChange={onChangeHandler}
       />
-      <button onClick={onSubmitHandler}>Update Item</button>
+      <button onClick={onSubmitHandler} className="btn btn-secondary">Update Item</button>
       <h5>{item.product.price}</h5>
-      <button>Remove Item</button>
+      <button className="btn btn-danger">Remove Item</button>
     </div>
   );
 }

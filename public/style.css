@@ -3,5 +3,69 @@
 
 .cart-item-image{
   width:100px;
-  height:100px
+  height:100px;
+  object-fit: cover;
+}
+
+#toggleCart{
+    width: fit-content;
+    align-self: flex-start;
+    position: absolute;
+    top: 15px;
+    right: 100px;
+}
+#cart{
+    position: absolute;
+    top: 100px;
+    right: 0;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+.cart-item-list{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    gap: 1rem;
+}
+.cart-item{
+    border: 1px solid rgba(0, 0, 0, 0.582);
+    padding: .5rem;
+    border-radius: 10px;
+}
+.product-card{
+    border-radius: 50%;
+}
+.cart-input{
+    width: 50px;
+}
+.cart-item{
+    display: flex;
+    align-items: center;
+    
+    justify-content: space-between;
+}
+.fix-cart{
+    display: flex;
+    background-color: #fcfcfc;
+    padding: 1.5rem;
+    width: 30vw;
+    flex-direction: column;
+}
+.product-card-image{
+    height: 250px;
+    object-fit: cover;
+}
+.no-margin{
+    margin: 0;
+}
+.navbar{
+    
+}
+nav{
+    padding: 1rem;
+}
+nav > div{
+    width: fit-content;
+    display: flex;
+    gap: 1rem;
 }

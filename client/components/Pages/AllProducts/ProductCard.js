@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 function ProductCard(props) {
   return (
-    <div className={"card"} style={{ width: "18rem" }}>
+    <div className={"card product-card"} style={{ width: "18rem" }}>
       <Link to={`/product/${props.item.id}`}>
-        <img className={"card-img-top"} src={props.item.imageUrl} alt="Card cap" />
+        <img className={"card-img-top product-card-image"} src={props.item.imageUrl} alt="Card cap" />
       </Link>
       <div className={"card-body"}>
         <h5 className={"card-title"}>{props.item.title}</h5>

@@ -52,6 +52,7 @@ async function seed() {
   const products = await Promise.all([
     Product.create({
       title: "Shirt",
+      imageUrl: "https://imgprd19.hobbylobby.com/9/5f/26/95f264323ae49e65b2a53a909fcd7d9ee659f3c7/1400Wx1400H-422519-0320.jpg",
       price: 15,
       category: "Clothes",
       description:
@@ -60,6 +61,7 @@ async function seed() {
     Product.create({
       title: "Pants",
       price: 15,
+      imageUrl: "https://cdn.shopify.com/s/files/1/0532/2725/8017/files/05_Straight_08785555-50ec-48b5-afc2-e352e451c269.jpg?v=1644619080",
       category: "Clothes",
       description:
         "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
@@ -72,6 +74,7 @@ async function seed() {
     }),
     Product.create({
       title: "Beer Stein",
+      imageUrl: "https://www.amoca.org/wp-content/uploads/2021/07/BSL-Top-2.jpg",
       price: 15,
       category: "Utensils",
       description:
@@ -296,6 +299,7 @@ async function seed() {
       billingZip: "07654",
     }),
   ]);
+  
   const orderItems = await Promise.all([
     OrderItem.create({
       orderId: 1,
