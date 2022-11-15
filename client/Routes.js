@@ -23,13 +23,11 @@ import { ManageProducts } from "./components/Admin/";
 
 const Routes = (props) => {
   const { loadInitialData } = props;
-  const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
     try {
       const checkToken = async () => {
-        const verified = await loadInitialData();
-        verified ? setAuthorized(true) : setAuthorized(false);
+        await loadInitialData();
       };
       checkToken();
     } catch (err) {
@@ -40,7 +38,7 @@ const Routes = (props) => {
   return (
     <Router>
       <div>
-        <Navbar authorized={authorized} />
+        <Navbar />
         <Switch>
           <Route exact path="/" component={AllProducts} />
           <Route path="/login">
@@ -51,10 +49,7 @@ const Routes = (props) => {
           </Route>
           <Route
             exact
-
             path="/product/:productId"
-
-
             render={(routeProps) => <SingleProduct {...routeProps} />}
           />
           <Route path="/checkout">
