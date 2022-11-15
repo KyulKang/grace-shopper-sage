@@ -14,6 +14,11 @@ const Navbar = (props) => {
     checkLogin();
   }, []);
 
+  const onClickHandler = async () => {
+    await logout();
+
+
+  }
   return (
     <div>
       <h1>Sage</h1>
@@ -28,7 +33,7 @@ const Navbar = (props) => {
             >
               Profile
             </Link>
-            <a href="#" onClick={logout}>
+            <a href="#" onClick={onClickHandler}>
               Logout
             </a>
           </div>
