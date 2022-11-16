@@ -80,6 +80,7 @@
 
     justify-content: space-between;
 }
+
 .fix-cart{
     display: flex;
     background-color: #fcfcfc;
@@ -87,16 +88,20 @@
     width: 30vw;
     flex-direction: column;
 }
+
 .product-card-image{
     height: 250px;
     object-fit: cover;
 }
+
 .no-margin{
     margin: 0;
 }
+
 .navbar{
 
 }
+
 nav{
     padding: 1rem;
 }
@@ -139,4 +144,17 @@ nav > div{
 
 .card-img-top {
     object-fit: cover;
+}
+
+.profile-container {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(0, 0, 0, 0.1);
+    margin-left: 5%;
+}
+
+.profile-field {
+    margin: 5px 0 0 10px;
 }
