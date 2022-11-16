@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchProducts } from "../../../store";
 import ProductCard from "./ProductCard";
-import  MyCart from "../Cart/MyCart";
+import MyCart from "../Cart/MyCart";
 function AllProducts(props) {
   const { fetchProducts, products } = props;
   // const [products, setProducts] = useState(null);
-
+  const [filter, setFilter] = useState("All");
   useEffect(() => {
     const getProducts = async () => {
       try {
@@ -18,7 +18,11 @@ function AllProducts(props) {
       }
     }
     getProducts();
-  }, [])
+  }, []);
+
+  function handleFilter(event) {
+    setFilter(event.target.value);
+  }
   return (
     <React.Fragment>
       <main role="main">
@@ -40,8 +44,19 @@ function AllProducts(props) {
         </div>
       </main>
       <section>
+        <div className="filter">
+          <button className={`btn ${filter === "All" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="All">All</button>
+          <button className={`btn ${filter === "Clothes" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Clothes">Clothes</button>
+          <button className={`btn ${filter === "Utensils" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Utensils">Utensils</button>
+        </div>
+
+      </section>
+      <section>
         <div className="productCardGrid d-flex flex-row flex-wrap">
           {products?.map((item, id) => {
+            if (filter !== "All" && item.category !== filter) {
+              return;
+            }
             return <ProductCard item={item} key={id} />
           })}
         </div>

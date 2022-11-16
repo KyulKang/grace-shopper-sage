@@ -5,6 +5,12 @@
     background-position: center; /* Center the image */
     background-size: cover;
 }
+.filter{
+    display: flex;
+    width: 300px;
+    padding: 0rem 1rem;
+    justify-content: space-between;
+}
 .main-image-text{
     background: rgba(255, 255, 255, 0.8);
     padding: 1.5rem;
