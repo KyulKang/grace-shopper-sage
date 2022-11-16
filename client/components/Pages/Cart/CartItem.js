@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { fetchProduct, updateCart, _getCart } from "../../../store";
+import {
+  fetchProduct,
+  updateCart,
+  _getCart,
+  deleteUserItem,
+} from "../../../store";
 import { connect } from "react-redux";
 
 function CartItem(props) {
-  const { item, getProduct, updateCart, guestUpdateCart, product, user } =
-    props;
+  const {
+    item,
+    itemQuantity,
+    getProduct,
+    updateCart,
+    guestUpdateCart,
+    product,
+    user,
+    deleteUserItem,
+  } = props;
 
-  const [quantity, setQuantity] = useState(item.quantity);
+  const [quantity, setQuantity] = useState(itemQuantity);
+
+  useEffect(() => {
+    setQuantity(itemQuantity);
+  }, [itemQuantity]);
 
   const onChangeHandler = (event) => {
     setQuantity(event.target.value);
@@ -32,12 +49,34 @@ function CartItem(props) {
         localStorage.setItem("cart", JSON.stringify(currentCart));
         guestUpdateCart(Object.values(currentCart));
       }
-      alert("Updated Cart")
+      alert("Updated Cart");
     } catch (err) {
       console.log(err);
     }
   };
 
+  const deleteHandler = async (event) => {
+    event.preventDefault();
+    try {
+      if (user?.id) {
+        console.log("deleting logged in cart item");
+        deleteUserItem(+user.id, +item.product.id);
+      } else {
+        let currentCart = {};
+        if (localStorage.getItem("cart")) {
+          currentCart = JSON.parse(localStorage.getItem("cart"));
+        }
+        if (currentCart[item.product.id]) {
+          delete currentCart[item.product.id];
+        }
+        localStorage.setItem("cart", JSON.stringify(currentCart));
+        guestUpdateCart(Object.values(currentCart));
+      }
+      alert(`Deleted ${item.product.title} from cart`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   console.log("what is item", item);
   return (
@@ -57,9 +96,13 @@ function CartItem(props) {
         min="1"
         onChange={onChangeHandler}
       />
-      <button onClick={onSubmitHandler} className="btn btn-secondary">Update Item</button>
+      <button onClick={onSubmitHandler} className="btn btn-secondary">
+        Update Item
+      </button>
       <h5>{item.product.price}</h5>
-      <button className="btn btn-danger">Remove Item</button>
+      <button className="btn btn-danger" onClick={deleteHandler}>
+        Remove Item
+      </button>
     </div>
   );
 }
@@ -69,6 +112,8 @@ const mapDispatch = (dispatch) => {
     getProduct: (id) => dispatch(fetchProduct(id)),
     updateCart: (item, id) => dispatch(updateCart(item, id)),
     guestUpdateCart: (item) => dispatch(_getCart(item)),
+    deleteUserItem: (userid, itemid) =>
+      dispatch(deleteUserItem(userid, itemid)),
   };
 };
 const mapState = (state) => {
