@@ -172,13 +172,25 @@ nav > div{
     margin: 5px 0 0 10px;
 }
 
-.product-container {
-    max-width: 80%;
+.product-container-top {
+    max-width: 90%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(0, 0, 0, 0.1);
     margin-left: 5%;
+}
+
+.product-container {
+    max-width: 75%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 2;
+    align-items: flex-start;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(0, 0, 0, 0.1);
+    margin: 5px 0 0 10px;
+    padding: 5px;
 }
 
 .product-field {
