@@ -94,6 +94,7 @@ nav > div > a {
 
     justify-content: space-between;
 }
+
 .fix-cart{
     display: flex;
     background-color: #fcfcfc;
@@ -101,16 +102,20 @@ nav > div > a {
     width: 30vw;
     flex-direction: column;
 }
+
 .product-card-image{
     height: 250px;
     object-fit: cover;
 }
+
 .no-margin{
     margin: 0;
 }
-.navbar{
 
-}
+/* .navbar{
+
+} */
+
 nav{
     padding: 1rem;
 }
@@ -155,4 +160,54 @@ footer{
 
 .card-img-top {
     object-fit: cover;
+}
+
+.profile-container {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(0, 0, 0, 0.1);
+    margin-left: 5%;
+}
+
+.profile-field {
+    margin: 5px 0 0 10px;
+}
+
+.admin-container {
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(0, 0, 0, 0.1);
+    margin-left: 5%;
+}
+
+.admin-field {
+    margin: 5px 0 0 10px;
+}
+
+.product-container-top {
+    max-width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(0, 0, 0, 0.1);
+    margin-left: 5%;
+}
+
+.product-container {
+    max-width: 30%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(0, 0, 0, 0.1);
+    margin: 5px 0 0 10px;
+    padding: 5px;
+}
+
+.product-field {
+    margin: 5px 0 0 10px;
 }

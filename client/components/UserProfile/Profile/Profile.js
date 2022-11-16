@@ -21,17 +21,17 @@ const Profile = (props) => {
     return <div>Please log in</div>;
   } else if (!user.makeAdmin) {
     return (
-      <div>
-        <div>{user.imageUrl}</div>
-        <div>{user.firstName}</div>
-        <div>{user.lastName}</div>
-        <div>{user.email}</div>
-        <div>
+      <div className="profile-container">
+        <div className="profile-field">{user.imageUrl}</div>
+        <div className="profile-field">First Name: {user.firstName}</div>
+        <div className="profile-field">Last Name: {user.lastName}</div>
+        <div className="profile-field">Email: {user.email}</div>
+        <div className="profile-field">
           <Link to={{ pathname: `/user/${user.id}/orders`, state: { user } }}>
             Order History
           </Link>
         </div>
-        <div>
+        <div className="profile-field">
           <Link to={{ pathname: `/user/${user.id}/edit`, state: { user } }}>
             Edit Profile
           </Link>
@@ -40,17 +40,22 @@ const Profile = (props) => {
     );
   } else if (user.makeAdmin) {
     return (
-      <div>
-        <div>{user.imageUrl}</div>
-        <div>{user.firstName}</div>
-        <div>{user.lastName}</div>
-        <div>{user.email}</div>
-        <div>
+      <div className="profile-container">
+        <div className="profile-field">{user.imageUrl}</div>
+        <div className="profile-field">{user.firstName}</div>
+        <div className="profile-field">{user.lastName}</div>
+        <div className="profile-field">{user.email}</div>
+        <div className="profile-field">
           <Link to={{ pathname: `/user/${user.id}/orders`, state: { user } }}>
             Order History
           </Link>
         </div>
-        <div>
+        <div className="profile-field">
+          <Link to={{ pathname: `/user/${user.id}/edit`, state: { user } }}>
+            Edit Profile
+          </Link>
+        </div>
+        <div className="profile-field">
           <Link
             to={{
               pathname: "/admin/users",
@@ -59,7 +64,7 @@ const Profile = (props) => {
             View All Customers
           </Link>
         </div>
-        <div>
+        <div className="profile-field">
           <Link
             to={{
               pathname: "/admin/products",

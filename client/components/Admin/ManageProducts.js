@@ -61,60 +61,84 @@ class ManageProducts extends React.Component {
     } else if (user.makeAdmin && products.length > 0) {
       return (
         <div>
-          {products
-            .sort((a, b) => a.id - b.id)
-            .map((product) => {
-              return (
-                <EditProduct
-                  key={product.id}
-                  product={product}
-                  onDeleteHandler={(event) => this.onDeleteHandler(event)}
-                />
-              );
-            })}
-          <hr />
-          <form onSubmit={this.onSubmitHandler}>
-            <label>Title</label>
-            <input
-              name="title"
-              type="text"
-              value={this.state.title}
-              onChange={this.onChangeHandler}
-              required
-            />
-            <label>Price</label>
-            <input
-              name="price"
-              type="text"
-              value={this.state.price}
-              onChange={this.onChangeHandler}
-              required
-            />
-            <label>Description</label>
-            <input
-              name="description"
-              type="textarea"
-              value={this.state.description}
-              onChange={this.onChangeHandler}
-              required
-            />
-            <label>Image Link</label>
-            <input
-              name="description"
-              type="text"
-              value={this.state.imageUrl}
-              onChange={this.onChangeHandler}
-            />
-            <label>Category</label>
-            <input
-              name="category"
-              type="text"
-              value={this.state.category}
-              onChange={this.onChangeHandler}
-              required
-            />
-            <button type="submit">Add Product</button>
-          </form>
+          <div className="product-container-top">
+            <div className="product-container">
+              <h3>All Products</h3>
+              <span >
+                {products
+                  .sort((a, b) => a.id - b.id)
+                  .map((product) => {
+                    return (
+                      <EditProduct
+                        key={product.id}
+                        product={product}
+                        onDeleteHandler={(event) => this.onDeleteHandler(event)}
+                      />
+                    );
+                  })}
+              </span>
+            </div>
+            <div className="product-container">
+              <h3>Add New Product</h3>
+              <span >
+                <form onSubmit={this.onSubmitHandler}>
+                  <div className="product-field">
+                    <label>Title:</label>
+                    <input
+                      name="title"
+                      type="text"
+                      value={this.state.title}
+                      onChange={this.onChangeHandler}
+                      required
+                    />
+                  </div>
+                  <div className="product-field">
+                    <label>Price:</label>
+                    <input
+                      name="price"
+                      type="text"
+                      value={this.state.price}
+                      onChange={this.onChangeHandler}
+                      required
+                    />
+                  </div>
+                  <div className="product-field">
+                    <label>Description:</label>
+                    <input
+                      name="description"
+                      type="textarea"
+                      value={this.state.description}
+                      onChange={this.onChangeHandler}
+                      required
+                    />
+                  </div>
+                  <div className="product-field">
+                    <label>Image Link:</label>
+                    <input
+                      name="imageUrl"
+                      type="text"
+                      value={this.state.imageUrl}
+                      onChange={this.onChangeHandler}
+                    />
+                  </div>
+                  <div className="product-field">
+                    <label>Category:</label>
+                    <input
+                      name="category"
+                      type="text"
+                      value={this.state.category}
+                      onChange={this.onChangeHandler}
+                      required
+                    />
+                  </div>
+                  <br />
+                  <button className="btn btn-primary" type="submit">
+                    Add Product
+                  </button>
+                </form>
+              </span>
+            </div>
+          </div>
         </div>
       );
     } else if (user.makeAdmin && products.length === 0) {
@@ -122,48 +146,66 @@ class ManageProducts extends React.Component {
         <div>
           <div>No products found. Add a product to get started.</div>
           <hr />
-          <form onSubmit={this.onSubmitHandler}>
-            <label>&nbsp;Title:&nbsp;</label>
-            <input
-              name="title"
-              type="text"
-              value={this.state.title}
-              onChange={this.onChangeHandler}
-              required
-            />
-            <label>&nbsp;Price:&nbsp;</label>
-            <input
-              name="price"
-              type="text"
-              value={this.state.price}
-              onChange={this.onChangeHandler}
-              required
-            />
-            <label>&nbsp;Description:&nbsp;</label>
-            <input
-              name="description"
-              type="textarea"
-              value={this.state.description}
-              onChange={this.onChangeHandler}
-              required
-            />
-            <label>&nbsp;Image Link:&nbsp;</label>
-            <input
-              name="description"
-              type="text"
-              value={this.state.imageUrl}
-              onChange={this.onChangeHandler}
-            />
-            <label>&nbsp;Category:&nbsp;</label>
-            <input
-              name="category"
-              type="text"
-              value={this.state.category}
-              onChange={this.onChangeHandler}
-              required
-            />
-            <button type="submit">Add Product</button>
-          </form>
+          <span>
+            <h3>Add New Product</h3>
+            <span className="product-container">
+              <form onSubmit={this.onSubmitHandler}>
+                <div className="product-field">
+                  <label>Title:</label>
+                  <input
+                    name="title"
+                    type="text"
+                    value={this.state.title}
+                    onChange={this.onChangeHandler}
+                    required
+                  />
+                </div>
+                <div className="product-field">
+                  <label>Price:</label>
+                  <input
+                    name="price"
+                    type="text"
+                    value={this.state.price}
+                    onChange={this.onChangeHandler}
+                    required
+                  />
+                </div>
+                <div className="product-field">
+                  <label>Description:</label>
+                  <input
+                    name="description"
+                    type="textarea"
+                    value={this.state.description}
+                    onChange={this.onChangeHandler}
+                    required
+                  />
+                </div>
+                <div className="product-field">
+                  <label>Image Link:</label>
+                  <input
+                    name="imageUrl"
+                    type="text"
+                    value={this.state.imageUrl}
+                    onChange={this.onChangeHandler}
+                  />
+                </div>
+                <div className="product-field">
+                  <label>Category:</label>
+                  <input
+                    name="category"
+                    type="text"
+                    value={this.state.category}
+                    onChange={this.onChangeHandler}
+                    required
+                  />
+                </div>
+                <br />
+                <button classname="btn btn-primary" type="submit">
+                  Add Product
+                </button>
+              </form>
+            </span>
+          </span>
         </div>
       );
     } else if (!user.makeAdmin) {

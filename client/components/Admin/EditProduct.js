@@ -44,69 +44,94 @@ class EditProduct extends Component {
   render() {
     const { title, price, description, imageUrl, category, id } =
       this.state.productInfo;
+    const editMode = this.state.editMode;
 
     return (
       <div>
         <form onSubmit={this.onSubmitHandler}>
-          <label>{"#" + id}</label>
-          <label>&nbsp;Title:&nbsp;</label>
-          <input
-            name="title"
-            type="text"
-            value={title}
-            onChange={this.onChangeHandler}
-            required
-          />
-          <label>&nbsp;Price:&nbsp;</label>
-          <input
-            name="price"
-            type="text"
-            value={price}
-            onChange={this.onChangeHandler}
-            required
-          />
-          <label>&nbsp;Description:&nbsp;</label>
-          <input
-            name="description"
-            type="textarea"
-            value={description ? description : ""}
-            onChange={this.onChangeHandler}
-            required
-          />
-          <label>&nbsp;Image Link:&nbsp;</label>
-          <input
-            name="imageUrl"
-            type="text"
-            value={imageUrl}
-            onChange={this.onChangeHandler}
-          />
-          <label>&nbsp;Category:&nbsp;</label>
-          <input
-            name="category"
-            type="text"
-            value={category}
-            onChange={this.onChangeHandler}
-            required
-          />
-          <button
-            value={this.props.product.id}
-            type="button"
-            onClick={this.onClickHandler}
-          >
-            Edit
-          </button>
-          <button
-            value={this.props.product.id}
-            type="button"
-            onClick={(event) => this.props.onDeleteHandler(event)}
-          >
-            Delete
-          </button>
+          <div className="product-field">
+            <label>Product ID: {"#" + id}</label>
+          </div>
+          <div className="product-field">
+            <label>&nbsp;Title:&nbsp;</label>
+            <input
+              name="title"
+              type="text"
+              value={title}
+              onChange={this.onChangeHandler}
+              required
+            />
+          </div>
+          <div className="product-field">
+            <label>&nbsp;Price:&nbsp;</label>
+            <input
+              name="price"
+              type="text"
+              value={price}
+              onChange={this.onChangeHandler}
+              required
+            />
+          </div>
+          <div className="product-field">
+            <label>&nbsp;Description:&nbsp;</label>
+            <input
+              name="description"
+              type="textarea"
+              value={description ? description : ""}
+              onChange={this.onChangeHandler}
+              required
+            />
+          </div>
+          <div className="product-field">
+            <label>&nbsp;Image Link:&nbsp;</label>
+            <input
+              name="imageUrl"
+              type="text"
+              value={imageUrl}
+              onChange={this.onChangeHandler}
+            />
+          </div>
+          <div className="product-field">
+            <label>&nbsp;Category:&nbsp;</label>
+            <input
+              name="category"
+              type="text"
+              value={category}
+              onChange={this.onChangeHandler}
+              required
+            />
+          </div>
+          {!editMode ? (
+            <span className="product-field">
+              <button
+                className="btn btn-primary"
+                value={this.props.product.id}
+                type="button"
+                onClick={this.onClickHandler}
+              >
+                Click to Edit
+              </button>
+            </span>
+          ) : null}
+
           {this.state.editMode ? (
-            <button type="submit">Submit Edit</button>
+            <button className="btn btn-primary" type="submit">
+              Submit Changes
+            </button>
           ) : (
             ""
           )}
+          <span className="product-field">
+            <button
+              className="btn btn-primary"
+              value={this.props.product.id}
+              type="button"
+              onClick={(event) => this.props.onDeleteHandler(event)}
+            >
+              Delete
+            </button>
+          </span>
+          <hr />
         </form>
       </div>
     );

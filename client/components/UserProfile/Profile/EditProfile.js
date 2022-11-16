@@ -38,6 +38,7 @@ const EditProfile = (props) => {
           lastName: userInfo.lastName,
           email: userInfo.email,
         });
+        alert('Update complete.')
       } else {
         await editUser({
           id: userInfo.id,
@@ -46,6 +47,7 @@ const EditProfile = (props) => {
           email: userInfo.email,
           password: userInfo.password,
         });
+        alert('Update complete.')
       }
     } catch (err) {
       console.log(err);
@@ -55,39 +57,51 @@ const EditProfile = (props) => {
   return (
     <div>
       <BackToProfile id={user.id} />
-      <form onSubmit={onSubmitHandler}>
-        <label>First Name</label>
-        <input
-          name="firstName"
-          type="text"
-          value={userInfo.firstName}
-          onChange={onChangeHandler}
-          required
-        />
-        <label>Last Name</label>
-        <input
-          name="lastName"
-          type="text"
-          value={userInfo.lastName}
-          onChange={onChangeHandler}
-          required
-        />
-        <label>Email</label>
-        <input
-          name="email"
-          type="text"
-          value={userInfo.email}
-          onChange={onChangeHandler}
-          required
-        />
-        <label>password</label>
-        <input
-          name="password"
-          type="password"
-          value={userInfo.password}
-          onChange={onChangeHandler}
-        />
-        <button type="submit">submit</button>
+      <form onSubmit={onSubmitHandler} className="profile-container">
+        <span className="profile-field">
+          <label>First Name: </label>
+          <input
+            name="firstName"
+            type="text"
+            value={userInfo.firstName}
+            onChange={onChangeHandler}
+            required
+          />
+        </span>
+        <span className="profile-field">
+          <label>Last Name: </label>
+          <input
+            name="lastName"
+            type="text"
+            value={userInfo.lastName}
+            onChange={onChangeHandler}
+            required
+          />
+        </span>
+        <div className="product-field">
+          <label>Email: </label>
+          <input
+            name="email"
+            type="text"
+            value={userInfo.email}
+            onChange={onChangeHandler}
+            required
+          />
+        </div>
+        <div className="product-field">
+          <label>password</label>
+          <input
+            name="password"
+            type="password"
+            value={userInfo.password}
+            onChange={onChangeHandler}
+          />
+        </div>
+        <div className="product-field">
+          <button className="btn btn-primary" type="submit">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );
