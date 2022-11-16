@@ -104,6 +104,7 @@ class EditProduct extends Component {
           {!editMode ? (
             <span className="product-field">
               <button
+                className="btn btn-primary"
                 value={this.props.product.id}
                 type="button"
                 onClick={this.onClickHandler}
@@ -114,12 +115,15 @@ class EditProduct extends Component {
           ) : null}
 
           {this.state.editMode ? (
-            <button type="submit">Submit Changes</button>
+            <button className="btn btn-primary" type="submit">
+              Submit Changes
+            </button>
           ) : (
             ""
           )}
           <span className="product-field">
             <button
+              className="btn btn-primary"
               value={this.props.product.id}
               type="button"
               onClick={(event) => this.props.onDeleteHandler(event)}

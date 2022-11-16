@@ -62,9 +62,9 @@ class ManageProducts extends React.Component {
       return (
         <div>
           <div className="product-container-top">
-            <span>
+            <div className="product-container">
               <h3>All Products</h3>
-              <span className="product-container">
+              <span >
                 {products
                   .sort((a, b) => a.id - b.id)
                   .map((product) => {
@@ -77,10 +77,10 @@ class ManageProducts extends React.Component {
                     );
                   })}
               </span>
-            </span>
-            <span>
+            </div>
+            <div className="product-container">
               <h3>Add New Product</h3>
-              <span className="product-container">
+              <span >
                 <form onSubmit={this.onSubmitHandler}>
                   <div className="product-field">
                     <label>Title:</label>
@@ -115,7 +115,7 @@ class ManageProducts extends React.Component {
                   <div className="product-field">
                     <label>Image Link:</label>
                     <input
-                      name="description"
+                      name="imageUrl"
                       type="text"
                       value={this.state.imageUrl}
                       onChange={this.onChangeHandler}
@@ -132,12 +132,12 @@ class ManageProducts extends React.Component {
                     />
                   </div>
                   <br />
-                  <button classname="btn btn-primary" type="submit">
+                  <button className="btn btn-primary" type="submit">
                     Add Product
                   </button>
                 </form>
               </span>
-            </span>
+            </div>
           </div>
         </div>
       );
@@ -183,7 +183,7 @@ class ManageProducts extends React.Component {
                 <div className="product-field">
                   <label>Image Link:</label>
                   <input
-                    name="description"
+                    name="imageUrl"
                     type="text"
                     value={this.state.imageUrl}
                     onChange={this.onChangeHandler}
