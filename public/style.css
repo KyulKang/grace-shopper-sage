@@ -74,7 +74,7 @@
 .cart-item{
     display: flex;
     align-items: center;
-    
+
     justify-content: space-between;
 }
 .fix-cart{
@@ -92,7 +92,7 @@
     margin: 0;
 }
 .navbar{
-    
+
 }
 nav{
     padding: 1rem;
@@ -102,3 +102,35 @@ nav > div{
     display: flex;
     gap: 1rem;
 }
+
+.checkout-container {
+    max-width: 70%;
+    margin-left: 10px;
+}
+
+.checkout-row {
+    max-width: 90%;
+    display:flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.checkout-label {
+    margin-right: 3px;
+}
+
+.checkout-field {
+    margin: 5px 0 0 10px;
+}
+
+.checkout-checkbox {
+    margin: 3px;
+}
+.checkout-submit {
+    background-color: black;
+    color: white;
+    margin-top: 5px;
+}
+
+
