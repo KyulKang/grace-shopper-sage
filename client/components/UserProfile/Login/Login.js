@@ -47,26 +47,26 @@ const Login = (props) => {
     return <Redirect to={{ pathname: `/` }} />;
   } else if (user && !user.id) {
     return (
-      <div>
+      <div className="login-page">
         <h3>Login failed. Please try again.</h3>
-        <form onSubmit={onSubmitHandler}>
+        <form onSubmit={onSubmitHandler} className="login-form">
           <label>Email</label>
           <input name="email" type="text" onChange={onChangeHandler} />
           <label>Password</label>
           <input name="password" type="password" onChange={onChangeHandler} />
-          <button type="submit">Login</button>
+          <button type="submit" className="btn btn-primary">Login</button>
         </form>
       </div>
     );
   } else {
     return (
-      <div>
-        <form onSubmit={onSubmitHandler}>
+      <div className="login-page">
+        <form onSubmit={onSubmitHandler} className="login-form">
           <label>Email</label>
           <input name="email" type="text" onChange={onChangeHandler} />
           <label>Password</label>
           <input name="password" type="password" onChange={onChangeHandler} />
-          <button type="submit">Login</button>
+          <button type="submit" className="btn btn-primary">Login</button>
         </form>
       </div>
     );
