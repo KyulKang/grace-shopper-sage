@@ -51,32 +51,111 @@ async function seed() {
 
   const products = await Promise.all([
     Product.create({
-      title: "Shirt",
-      imageUrl: "https://imgprd19.hobbylobby.com/9/5f/26/95f264323ae49e65b2a53a909fcd7d9ee659f3c7/1400Wx1400H-422519-0320.jpg",
+      title: "Fika",
+      imageUrl:
+        "https://product-image.juniqe-production.juniqe.com/media/catalog/product/seo-cache/x800/7/6/768-38-MUG-HAN-1/Fika-daylight-design-studio-Mug.jpg",
       price: 15,
-      category: "Clothes",
+      category: "Words",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     }),
     Product.create({
-      title: "Pants",
+      title: "Hakuna Matata",
+      imageUrl:
+        "https://product-image.juniqe-production.juniqe.com/media/catalog/product/seo-cache/x800/7/6/768-43-MUG-HAN-1/Hakuna-Matata-daylight-design-studio-Mug.jpg",
       price: 15,
-      imageUrl: "https://cdn.shopify.com/s/files/1/0532/2725/8017/files/05_Straight_08785555-50ec-48b5-afc2-e352e451c269.jpg?v=1644619080",
-      category: "Clothes",
+      category: "Words",
+      description:
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    }),
+    Product.create({
+      title: "Rapper's Delight",
+      imageUrl:
+        "https://product-image.juniqe-production.juniqe.com/media/catalog/product/seo-cache/x800/68/5/68-5-MUG-1/Delight-JUNIQE-Mug.jpg",
+      price: 15,
+      category: "Words",
+      description:
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    }),
+    Product.create({
+      title: "Dinosaurs",
+      price: 15,
+      imageUrl:
+        "https://product-image.juniqe-production.juniqe.com/media/catalog/product/seo-cache/x800/1/6/164-7-MUG-HAN-1/Dinosaurs-Amy-Hamilton-Mug.jpg",
+      category: "Illustrated",
       description:
         "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     }),
     Product.create({
-      title: "Mug",
+      title: "Black Cat",
       price: 15,
-      category: "Utensils",
+      imageUrl:
+        "https://product-image.juniqe-production.juniqe.com/media/catalog/product/seo-cache/x800/7/8/780-122-MUG-HAN-1/Familiar-Pure-Mug.jpg",
+      category: "Illustrated",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
     }),
+
     Product.create({
-      title: "Beer Stein",
-      imageUrl: "https://www.amoca.org/wp-content/uploads/2021/07/BSL-Top-2.jpg",
+      title: "Gators",
+      imageUrl:
+        "https://product-image.juniqe-production.juniqe.com/media/catalog/product/seo-cache/x800/7/7/774-65-MUG-HAN-1/Roller-Crocs-Little-Flourishes-Mug.jpg",
       price: 15,
-      category: "Utensils",
+      category: "Illustrated",
+      description:
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    }),
+
+    Product.create({
+      title: "Big Bear",
+      imageUrl:
+        "https://cdn.shopify.com/s/files/1/0011/0418/3355/products/big-bear-lake_ca_united-states_Printed-Mug-15oz_left_8e8b1d85-01f7-4269-92a8-7d66b1234fa1_2000x.jpg?v=1598561055",
+      price: 15,
+      category: "Travel",
+      description:
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    }),
+    Product.create({
+      title: "Crater Lake",
+      imageUrl:
+        "https://cdn.shopify.com/s/files/1/0011/0418/3355/products/crater-lake_or_united-states_Printed-Mug-15oz_left_2000x.jpg?v=1621538012",
+      price: 15,
+      category: "Travel",
+      description:
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    }),
+    Product.create({
+      title: "Great Smoky Mountain",
+      imageUrl:
+        "https://cdn.shopify.com/s/files/1/0011/0418/3355/products/GreatSmoky-15ozMug-Gray-v2g-010001_2000x.jpg?v=1646242300",
+      price: 15,
+      category: "Words",
+      description:
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    }),
+    Product.create({
+      title: "Hugs",
+      imageUrl:
+        "https://product-image.juniqe-production.juniqe.com/media/catalog/product/seo-cache/x800/558/5/558-5-MUG-1/Hug-Wuukasch-Mug.jpg",
+      price: 15,
+      category: "Romance",
+      description:
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    }),
+    Product.create({
+      title: "Love Drug",
+      imageUrl:
+        "https://product-image.juniqe-production.juniqe.com/media/catalog/product/seo-cache/x800/4/7/471-322-MUG-HAN-1/Love-Is-the-Drug-typealive-Mug.jpg",
+      price: 15,
+      category: "Romance",
+      description:
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    }),
+    Product.create({
+      title: "Legs",
+      imageUrl:
+        "https://product-image.juniqe-production.juniqe.com/media/catalog/product/seo-cache/x800/558/1/558-1-MUG-1/Dance-Wuukasch-Mug.jpg",
+      price: 15,
+      category: "Romance",
       description:
         "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     }),
@@ -299,7 +378,7 @@ async function seed() {
       billingZip: "07654",
     }),
   ]);
-  
+
   const orderItems = await Promise.all([
     OrderItem.create({
       orderId: 1,
