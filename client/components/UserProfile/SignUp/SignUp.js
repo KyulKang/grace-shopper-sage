@@ -68,7 +68,7 @@ const SignUp = (props) => {
         <label>Email</label>
         <input
           name="email"
-          type="text"
+          type="email"
           value={formInfo.email}
           onChange={onChangeHandler}
           required

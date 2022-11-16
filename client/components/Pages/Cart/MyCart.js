@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { fetchCart, _getCart, _clearCart } from "../../../store";
 import { connect } from "react-redux";
 import CartItem from "./CartItem";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export function MyCart(props) {
   const [toggleCart, setToggleCart] = useState(false);
   const { fetchCart, cart, user, guestUpdateCart, clearCart } = props;
+  const location = useLocation();
 
   console.log("MyCart props", props);
   useEffect(() => {
@@ -43,7 +44,7 @@ export function MyCart(props) {
         className={`btn ${toggleCart ? "btn-secondary" : "btn-warning"}`}
         onClick={handleToggleCart}
       >
-        Show
+        Cart
       </button>
       {toggleCart && (
         <React.Fragment>
@@ -80,8 +81,8 @@ export function MyCart(props) {
                 }, 0)}
                 {cart
                   .sort((a, b) =>
-                  a.product.title.localeCompare(b.product.title)
-                )
+                    a.product.title.localeCompare(b.product.title)
+                  )
                   .map((item, index) => {
                     return (
                       <div key={index}>
@@ -98,11 +99,15 @@ export function MyCart(props) {
                   return prev + +curr.quantity * curr.product.price;
                 }, 0)}
               </h5>
-              <Link to={"/checkout"}>
-                <button type="button" className="btn btn-primary btn-lg" disabled={cart.length === 0} >
-                  Checkout
-                </button>
-              </Link>
+
+              {location.pathname !== "/checkout" ? (
+                <Link to={"/checkout"}>
+                  <button type="button" className="btn btn-primary btn-lg" disabled={cart.length === 0}>
+                    Checkout
+                  </button>
+                </Link>
+              ) : null}
+
             </div>
           </section>
         </React.Fragment>
