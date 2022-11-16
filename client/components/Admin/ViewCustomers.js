@@ -17,23 +17,24 @@ const ViewCustomers = (props) => {
   } else if (user.makeAdmin && users.length > 0) {
     return (
       <div>
-        <div>
+        <div className="admin-container">
           {users
             .sort((a, b) => a.id - b.id)
             .map((user) => {
               console.log(user);
               return (
-                <div key={user.id}>
-                  <span>
-                    {"#" + user.id + "."} {user.firstName} {user.lastName}
-                  </span>
-                  <br />
-
+                <div key={user.id} className="admin-field">
+                  <div>ID: {user.id}</div>
+                  <div>
+                    <span>
+                      Name: {user.firstName} {user.lastName}
+                    </span>
+                  </div>
                   <Link to={`/admin/users/${user.id}/orders`}>
-                    <span>{user.email}</span>
+                    <span>Email: {user.email}</span>
                   </Link>
                   <br />
-                  <br />
+                  <hr />
                 </div>
               );
             })}

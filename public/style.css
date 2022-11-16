@@ -158,3 +158,29 @@ nav > div{
 .profile-field {
     margin: 5px 0 0 10px;
 }
+
+.admin-container {
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(0, 0, 0, 0.1);
+    margin-left: 5%;
+}
+
+.admin-field {
+    margin: 5px 0 0 10px;
+}
+
+.product-container {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(0, 0, 0, 0.1);
+    margin-left: 5%;
+}
+
+.product-field {
+    margin: 5px 0 0 10px;
+}

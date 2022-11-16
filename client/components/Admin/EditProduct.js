@@ -46,7 +46,7 @@ class EditProduct extends Component {
       this.state.productInfo;
 
     return (
-      <div>
+      <div className="product-container">
         <form onSubmit={this.onSubmitHandler}>
           <label>{"#" + id}</label>
           <label>&nbsp;Title:&nbsp;</label>

@@ -51,6 +51,11 @@ const Profile = (props) => {
           </Link>
         </div>
         <div className="profile-field">
+          <Link to={{ pathname: `/user/${user.id}/edit`, state: { user } }}>
+            Edit Profile
+          </Link>
+        </div>
+        <div className="profile-field">
           <Link
             to={{
               pathname: "/admin/users",
