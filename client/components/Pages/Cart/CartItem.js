@@ -32,6 +32,7 @@ function CartItem(props) {
         localStorage.setItem("cart", JSON.stringify(currentCart));
         guestUpdateCart(Object.values(currentCart));
       }
+      alert("Updated Cart")
     } catch (err) {
       console.log(err);
     }

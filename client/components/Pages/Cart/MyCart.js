@@ -49,7 +49,7 @@ export function MyCart(props) {
               </div>
               <div className="cart-item-list">
                 <hr />
-                {cart.sort((a, b) => { a.product.title.length - b.product.title.length }).map((item, index) => {
+                {cart.sort((a, b) => a.product.title.localeCompare(b.product.title)).map((item, index) => {
                   return <CartItem item={item} key={index} />
                 })}
                 <hr />
