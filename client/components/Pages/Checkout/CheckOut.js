@@ -10,7 +10,7 @@ import {
 import { connect } from "react-redux";
 
 const Checkout = (props) => {
-  const { cart, makeGuestOrder, makeUserOrder, user } = props;
+  const { cart, makeGuestOrder, makeUserOrder, user, guestUpdateCart } = props;
   let history = useHistory();
   const [shipping, setShipping] = useState({
     FirstName: "",
@@ -32,32 +32,27 @@ const Checkout = (props) => {
     Zip: "",
   });
   const [phoneNumber, setPhoneNumber] = useState("");
+
+  console.log("shipping", shipping, "billing", billing)
   const onChangeHandler = (event) => {
     if (event.target.name === "addressToggle") {
+      setBilling({
+        ...shipping,
+      })
       if (event.target.value == "off") {
-        setBilling({
-          ...shipping,
-        });
         setToggleAddress(true);
         return;
       }
       setToggleAddress(false);
-      setBilling({
-        FirstName: "",
-        LastName: "",
-        Address1: "",
-        Address2: "",
-        City: "",
-        State: "",
-        Zip: "",
-      });
       return;
-    }
-    const target = event.target;
+    } else
+    {const target = event.target;
     setShipping({
       ...shipping,
       [target.name]: target.value,
-    });
+    })
+    if (!toggleAddress){setBilling({...billing, [target.name]: target.value})}
+  }
   };
   const onChangeHandler2 = (event) => {
     // console.log("TARGET:", event, "NAME:", event.target.name);
@@ -72,6 +67,7 @@ const Checkout = (props) => {
   };
   const submitHandler = (event) => {
     event.preventDefault();
+
     const orderSubmission = {
       order: {
         shippingFirstName: shipping.FirstName,
@@ -97,12 +93,17 @@ const Checkout = (props) => {
           price: item.product.price,
         };
       }),
-    };
+    }
+
+
     try {
       if (user?.id) {
         makeUserOrder(orderSubmission, user.id);
       } else {
-        makeGuestOrder(orderSubmission);
+        makeGuestOrder(orderSubmission)
+        let currentCart = {}
+        localStorage.setItem("cart", JSON.stringify(currentCart))
+        guestUpdateCart(Object.values(currentCart))
       }
     } catch (error) {
       console.log(error);
@@ -211,7 +212,7 @@ const Checkout = (props) => {
               onChange={onChangeHandler}
             />
             <label className="checkout-label" htmlFor="sameAddress">
-              Different billing address?
+              Use a different billing address
             </label>
           </div>
         </div>
@@ -306,6 +307,7 @@ const mapDispatch = (dispatch) => {
   return {
     makeGuestOrder: (order) => dispatch(makeGuestOrder(order)),
     makeUserOrder: (order, id) => dispatch(makeUserOrder(order, id)),
+    guestUpdateCart: (item) => dispatch(_getCart(item))
   };
 };
 const mapState = (state) => {
