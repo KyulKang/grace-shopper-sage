@@ -99,13 +99,15 @@ export function MyCart(props) {
                   return prev + +curr.quantity * curr.product.price;
                 }, 0)}
               </h5>
+
               {location.pathname !== "/checkout" ? (
                 <Link to={"/checkout"}>
-                  <button type="button" className="btn btn-primary btn-lg">
+                  <button type="button" className="btn btn-primary btn-lg" disabled={cart.length === 0}>
                     Checkout
                   </button>
                 </Link>
               ) : null}
+
             </div>
           </section>
         </React.Fragment>

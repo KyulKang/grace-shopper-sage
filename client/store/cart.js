@@ -80,6 +80,7 @@ export const deleteUserItem = (userid, itemid) => {
               authorization: token,
             },
           })
+          console.log("did i reach this code")
         const {data: newCart} = await axios.get(`/api/users/${userid}/cartItems`,{
             headers: {
               authorization: token,

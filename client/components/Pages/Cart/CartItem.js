@@ -60,7 +60,7 @@ function CartItem(props) {
     try {
       if (user?.id) {
         console.log("deleting logged in cart item");
-        deleteUserItem(+user.id, +item.product.id);
+        deleteUserItem(+user.id, +item.id);
       } else {
         let currentCart = {};
         if (localStorage.getItem("cart")) {

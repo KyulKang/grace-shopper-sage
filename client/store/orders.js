@@ -1,6 +1,8 @@
 import axios from "axios";
+import {_getCart} from "./cart.js"
 
 // Actions
+const GET_CART = "GET_CART"
 const GET_ORDERS = "GET_ORDERS";
 
 // Action Creators
@@ -36,7 +38,13 @@ export const makeUserOrder = (order, id) => {
       headers: {
         authorization: token,
       },
-    });
+    })
+    const {data: newCart} = await axios.get(`/api/users/${id}/cartItems`,{
+      headers: {
+        authorization: token,
+      },
+    } )
+  dispatch(_getCart(newCart))
   }}
 
 // Initial State
