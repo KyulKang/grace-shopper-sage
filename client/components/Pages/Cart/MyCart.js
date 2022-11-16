@@ -44,7 +44,7 @@ export function MyCart(props) {
         className={`btn ${toggleCart ? "btn-secondary" : "btn-warning"}`}
         onClick={handleToggleCart}
       >
-        Cart
+        {toggleCart ? "Hide Cart" : "Show Cart"}
       </button>
       {toggleCart && (
         <React.Fragment>

@@ -14,9 +14,9 @@ function ProductCard(props) {
 
         <Link to={`/product/${props.item.id}`}>
           <button className="btn btn-dark">
-            Buy Now
+            Learn More
           </button>
-          
+
         </Link>
       </div>
     </div>
