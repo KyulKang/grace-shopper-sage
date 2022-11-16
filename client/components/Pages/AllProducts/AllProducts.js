@@ -22,8 +22,8 @@ function AllProducts(props) {
   return (
     <React.Fragment>
       <main role="main">
-        <div className="jumbotron">
-          <div className="container">
+        <div className="jumbotron main-image">
+          <div className="container main-image-text">
             <h1 className="display-3">Hello, world!</h1>
             <p>
               This is a template for a simple marketing or informational
