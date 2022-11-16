@@ -6,6 +6,7 @@ const ADD_ITEM_TO_CART = "ADD_ITEM_TO_CART";
 const REMOVE_ITEM_FROM_CART = "REMOVE_ITEM_FROM_CART";
 const UPDATE_ITEM_IN_CART = "UPDATE_ITEM_IN_CART";
 const CLEAR_CART = "CLEAR_CART"
+const DELETE_ITEM = "DELETE_ITEM"
 
 
 // Action Creators]
@@ -63,6 +64,23 @@ export const updateCart = (item, id)=> {
             },
           })
         const {data: newCart} = await axios.get(`/api/users/${id}/cartItems`,{
+            headers: {
+              authorization: token,
+            },
+          } )
+        dispatch(_getCart(newCart))
+    }
+}
+
+export const deleteUserItem = (userid, itemid) => {
+    const token = window.localStorage.getItem("token")
+    return async (dispatch) => {
+         await axios.delete(`/api/users/${userid}/cartItems/${itemid}`, {
+            headers: {
+              authorization: token,
+            },
+          })
+        const {data: newCart} = await axios.get(`/api/users/${userid}/cartItems`,{
             headers: {
               authorization: token,
             },

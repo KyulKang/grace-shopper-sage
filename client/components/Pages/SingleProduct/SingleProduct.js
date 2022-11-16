@@ -33,7 +33,7 @@ function SingleProduct(props) {
         if (localStorage.getItem("cart")) {
           currentCart = JSON.parse(localStorage.getItem("cart"));
         }
-        currentCart = { ...currentCart, [product.id]: { quantity, product } };
+        currentCart = { ...currentCart, [product.id]: { quantity: +quantity, product } };
         localStorage.setItem("cart", JSON.stringify(currentCart));
         guestUpdateCart(Object.values(currentCart))
       }

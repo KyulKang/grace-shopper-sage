@@ -87,7 +87,7 @@ router.delete(
           res.send(req.params.cartItemId);
           //return the updated array or the deleted?
         }
-      }
+      } else {res.sendStatus(403)}
     } catch (error) {
       next(error);
     }
