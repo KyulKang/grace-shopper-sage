@@ -51,7 +51,7 @@ const Login = (props) => {
         <h3>Login failed. Please try again.</h3>
         <form onSubmit={onSubmitHandler} className="login-form">
           <label>Email</label>
-          <input name="email" type="text" onChange={onChangeHandler} />
+          <input name="email" type="email" onChange={onChangeHandler} />
           <label>Password</label>
           <input name="password" type="password" onChange={onChangeHandler} />
           <button type="submit" className="btn btn-primary">Login</button>
@@ -63,7 +63,7 @@ const Login = (props) => {
       <div className="login-page">
         <form onSubmit={onSubmitHandler} className="login-form">
           <label>Email</label>
-          <input name="email" type="text" onChange={onChangeHandler} />
+          <input name="email" type="email" onChange={onChangeHandler} />
           <label>Password</label>
           <input name="password" type="password" onChange={onChangeHandler} />
           <button type="submit" className="btn btn-primary">Login</button>
