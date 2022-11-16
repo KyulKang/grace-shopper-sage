@@ -106,7 +106,7 @@ router.delete("/:userId/cartItems", requireToken, async (req, res, next) => {
         },
       });
       res.status(204).end();
-    }
+    } else {res.sendStatus(403)}
   } catch (error) {
     next(error);
   }
@@ -132,7 +132,12 @@ router.post("/:userId/orders", requireToken, async (req, res, next) => {
         orderItems.map((item) => {
           order.addOrderItem(item);
         })
-      );
+      )
+      await CartItem.destroy({
+        where: {
+          userId: id,
+        },
+      })
       res.status(201).send(order);
     }
   } catch (error) {

@@ -99,7 +99,7 @@ export function MyCart(props) {
                 }, 0)}
               </h5>
               <Link to={"/checkout"}>
-                <button type="button" className="btn btn-primary btn-lg">
+                <button type="button" className="btn btn-primary btn-lg" disabled={cart.length === 0} >
                   Checkout
                 </button>
               </Link>
