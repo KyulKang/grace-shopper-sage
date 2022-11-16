@@ -8,11 +8,16 @@ function ProductCard(props) {
       </Link>
       <div className={"card-body"}>
         <h5 className={"card-title"}>{props.item.title}</h5>
-        <p className={"card-text"}>
+        {/* <p className={"card-text"}>
           {props.item.description}
-        </p>
+        </p> */}
 
-        <Link to={`/product/${props.item.id}`} >Buy Now</Link>
+        <Link to={`/product/${props.item.id}`}>
+          <button className="btn btn-dark">
+            Buy Now
+          </button>
+          
+        </Link>
       </div>
     </div>
   );
