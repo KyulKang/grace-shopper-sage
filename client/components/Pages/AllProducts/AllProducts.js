@@ -46,7 +46,7 @@ function AllProducts(props) {
           })}
         </div>
       </section>
-      <MyCart />
+      {/* <MyCart /> */}
     </React.Fragment>
   );
 }

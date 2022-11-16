@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout, me } from "../store";
-
+import MyCart from "./Pages/Cart/MyCart";
 const Navbar = (props) => {
   const { authorized, loadInitialData, logout, user } = props;
 
@@ -46,6 +46,7 @@ const Navbar = (props) => {
         )}
       </nav>
       <hr />
+      <MyCart />
     </div>
   );
 };
