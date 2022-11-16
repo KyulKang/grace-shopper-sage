@@ -3,7 +3,7 @@ import { fetchProduct, updateCart, _getCart } from "../../../store";
 import { connect } from "react-redux";
 
 function SingleProduct(props) {
-  const { getProduct, updateCart, guestUpdateCart, product, user } = props;
+  const { getProduct, updateCart, guestUpdateCart, product, user, cart } = props;
 
   const [quantity, setQuantity] = useState(1);
 
@@ -27,13 +27,18 @@ function SingleProduct(props) {
     try {
       if (user?.id) {
         console.log("ur logged in!")
-      updateCart({quantity, productId:product.id, price:product.price}, user.id)
+        let prevAmount = 0
+        let obj = cart.find(item => item.product.id === product.id)
+        if (obj){prevAmount = +obj.quantity}
+      updateCart({quantity: +quantity + prevAmount, productId:product.id, price:product.price}, user.id)
       } else {
         let currentCart = {};
         if (localStorage.getItem("cart")) {
           currentCart = JSON.parse(localStorage.getItem("cart"));
         }
-        currentCart = { ...currentCart, [product.id]: { quantity: +quantity, product } };
+        let prevQuantity = 0
+        if (currentCart[product.id]){prevQuantity = currentCart[product.id].quantity}
+        currentCart = { ...currentCart, [product.id]: { quantity: +quantity + prevQuantity, product } };
         localStorage.setItem("cart", JSON.stringify(currentCart));
         guestUpdateCart(Object.values(currentCart))
       }
@@ -73,6 +78,7 @@ const mapState = (state) => {
   return {
     product: state.singleProduct,
     user: state.auth.authUser,
+    cart: state.cart
   };
 };
 export default connect(mapState, mapDispatch)(SingleProduct);
