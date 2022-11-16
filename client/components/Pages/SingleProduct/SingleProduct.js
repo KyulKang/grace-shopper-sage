@@ -55,7 +55,7 @@ function SingleProduct(props) {
           min="1"
           onChange={onChangeHandler}
         />
-        <button onClick={onSubmitHandler}>Add to Cart</button>
+        <button onClick={onSubmitHandler} className="btn btn-success single-button">Add to Cart</button>
       </div>
     </div>
   );

@@ -47,8 +47,8 @@ const SignUp = (props) => {
   };
 
   return (
-    <div>
-      <form onSubmit={onSubmitHandler}>
+    <div className="sign-up-page">
+      <form onSubmit={onSubmitHandler} className="login-form">
         <label>First Name</label>
         <input
           name="firstName"
@@ -81,7 +81,7 @@ const SignUp = (props) => {
           onChange={onChangeHandler}
           required
         />
-        <button type="submit">submit</button>
+        <button type="submit" className="btn btn-primary">submit</button>
       </form>
     </div>
   );
