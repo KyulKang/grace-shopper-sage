@@ -78,6 +78,10 @@
     gap: 0.5rem;
     justify-content: flex-start;
 }
+nav > div > a {
+    color: black;
+    font-weight: 600;
+}
 .cart-input{
     width: 50px;
 }
@@ -117,7 +121,9 @@ nav > div{
     max-width: 70%;
     margin-left: 10px;
 }
-
+footer{
+    display: block;
+}
 .checkout-row {
     max-width: 90%;
     display:flex;
