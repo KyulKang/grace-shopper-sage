@@ -1,64 +1,81 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useLocation } from "react-router-dom";
 import BackToProfile from "../../BackToProfile";
-import { fetchOrders } from "../../../../store/";
+import { fetchUserOrders, me } from "../../../../store";
 
 const OrderHistory = (props) => {
-  const { fetchOrders, orders } = props;
-
-  const user = useLocation().state.user;
-  const [userOrders, setUserOrders] = useState(null);
+  const { getUserOrders, loadInitialData, user, orders } = props;
+  const id = props.match.params.userId;
 
   useEffect(() => {
-    const getOrders = async () => {
-      try {
-        const userOrders = await fetchOrders(user.id);
-        if (userOrders) {
-          setUserOrders(orders);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getOrders();
+    loadInitialData();
+    getUserOrders(id);
   }, []);
 
-  if (!orders) {
+  if (!user) {
+    return <BackToProfile id={id} />;
+  } else if (orders.length > 0) {
     return (
       <div>
-        <BackToProfile id={user.id} />
-        No orders found. Buy something!
+        <div>
+          <h3>
+            Orders for {user.firstName} {user.lastName}:
+          </h3>
+          {orders
+            .sort((a, b) => a.id - b.id)
+            .map((order) => {
+              let totalCost = 0;
+              let purchaseTime = order.createdAt;
+              return (
+                <div key={order.id}>
+                  {order.orderItems.map((item) => {
+                    totalCost += Number(item.quantity) * Number(item.price);
+                    return (
+                      <p key={item.id}>
+                        <span>
+                          Item: {item.product ? item.product.title : item.id}
+                        </span>
+                        <br />
+                        <span>Quantity: {item.quantity}</span>
+                        <br />
+                        <span>Price: {item.price}</span>
+                      </p>
+                    );
+                  })}
+                  <p>Purchased at: {new Date(purchaseTime).toLocaleString()}</p>
+                  <p>Total Cost: {totalCost}</p>
+                  <hr />
+                </div>
+              );
+            })}
+        </div>
+        <hr />
+        <div>
+          <BackToProfile id={user.id} />
+        </div>
       </div>
     );
-  } else if (orders) {
+  } else {
     return (
       <div>
+        <p>No orders found</p>
         <BackToProfile id={user.id} />
-
-        {/* {userOrders.map((order) => {
-          return (
-            <div>
-              <span>{order.orderId}</span>
-              <span>{order.date}</span>
-            </div>
-          );
-        })} */}
       </div>
     );
   }
 };
 
-const mapDispatch = (dispatch) => {
+const mapState = (state) => {
   return {
-    fetchOrders: (id) => dispatch(fetchOrders(id)),
+    user: state.auth.authUser,
+    orders: state.orders.orders,
   };
 };
 
-const mapState = (state) => {
+const mapDispatch = (dispatch) => {
   return {
-    orders: state.orders.orders,
+    getUserOrders: (userId) => dispatch(fetchUserOrders(userId)),
+    loadInitialData: () => dispatch(me()),
   };
 };
 

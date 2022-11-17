@@ -64,9 +64,7 @@ const Routes = (props) => {
           <Route exact path="/user/:userId">
             <Profile />
           </Route>
-          <Route exact path="/user/:userId/orders">
-            <OrderHistory />
-          </Route>
+          <Route exact path="/user/:userId/orders" component={OrderHistory} />
           <Route exact path="/user/:userId/edit">
             <EditProfile />
           </Route>
@@ -78,7 +76,6 @@ const Routes = (props) => {
             path="/admin/users/:userId/orders"
             component={ViewCustomerOrders}
           />
-
           <Route exact path="/admin/products">
             <ManageProducts />
           </Route>
