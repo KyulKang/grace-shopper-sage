@@ -98,13 +98,18 @@
     margin: 0;
 }
 
-/* .navbar{
-
-} */
-
-nav{
-    padding: 1rem;
+.navbar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
 }
+
+nav {
+    width: 100%;
+    /* padding: 1rem; */
+}
+
 nav > div{
     width: fit-content;
     display: flex;

@@ -16,12 +16,14 @@ const Navbar = (props) => {
 
   const onClickHandler = async () => {
     await logout();
-
-
-  }
+  };
   return (
     <div className="navbar">
-      <h1>Sage</h1>
+      <div>
+        <h1>Sage</h1>
+        <h4>Find your new favorite mug</h4>
+      </div>
+
       <nav>
         {user?.id ? (
           <div>
@@ -45,7 +47,7 @@ const Navbar = (props) => {
           </div>
         )}
       </nav>
-      <hr />
+
       <MyCart />
     </div>
   );

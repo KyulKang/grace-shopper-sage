@@ -26,7 +26,7 @@ function AllProducts(props) {
   return (
     <React.Fragment>
       <main role="main">
-        <div className="jumbotron main-image">
+        {/* <div className="jumbotron main-image">
           <div className="container main-image-text">
             <h1 className="display-3">Hello, world!</h1>
             <p>
@@ -35,19 +35,16 @@ function AllProducts(props) {
               supporting pieces of content. Use it as a starting point to create
               something more unique.
             </p>
-            <p>
-              <a className="btn btn-primary btn-lg" href="#" role="button">
-                Learn more &raquo;
-              </a>
-            </p>
           </div>
-        </div>
+        </div> */}
       </main>
       <section>
         <div className="filter">
           <button className={`btn ${filter === "All" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="All">All</button>
-          <button className={`btn ${filter === "Clothes" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Clothes">Clothes</button>
-          <button className={`btn ${filter === "Utensils" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Utensils">Utensils</button>
+          <button className={`btn ${filter === "Illustrated" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Illustrated">Illustrated</button>
+          <button className={`btn ${filter === "Words" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Words">Words</button>
+          <button className={`btn ${filter === "Travel" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Travel">Travel</button>
+          <button className={`btn ${filter === "Romance" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Romance">Romance</button>
         </div>
 
       </section>
