@@ -28,9 +28,9 @@ export function MyCart(props) {
       console.log("unlogged in fetch");
       let currentCart = {};
       if (localStorage.getItem("cart")) {
-        currentCart = JSON.parse(localStorage.getItem("cart"));
-        guestUpdateCart(Object.values(currentCart));
+        currentCart = JSON.parse(localStorage.getItem("cart"))
       }
+      guestUpdateCart(Object.values(currentCart))
     }
   }, [user]);
   function handleToggleCart(event) {

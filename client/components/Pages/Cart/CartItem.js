@@ -45,7 +45,7 @@ function CartItem(props) {
         }
         currentCart = {
           ...currentCart,
-          [item.product.id]: { quantity, product: item.product },
+          [item.product.id]: { quantity: +quantity, product: item.product },
         };
         localStorage.setItem("cart", JSON.stringify(currentCart));
         guestUpdateCart(Object.values(currentCart));
