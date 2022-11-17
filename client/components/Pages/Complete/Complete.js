@@ -6,12 +6,13 @@ function Complete() {
   useEffect(() => {
     setTimeout(() => {
       history.push("/");
-    }, 1000);
+    }, 3000);
   }, []);
   return (
     <main id="complete">
       {/* <img src={logo} className="App-logo" alt="logo" /> */}
-      <h1>Payment Complete.</h1>
+      <h1>Your order is confirmed!</h1>
+      <h3>Thanks for shopping</h3>
     </main>
   );
 }

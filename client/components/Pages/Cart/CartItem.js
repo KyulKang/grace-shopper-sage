@@ -6,6 +6,7 @@ import {
   deleteUserItem,
 } from "../../../store";
 import { connect } from "react-redux";
+import swal from 'sweetalert'
 
 function CartItem(props) {
   const {
@@ -49,7 +50,7 @@ function CartItem(props) {
         localStorage.setItem("cart", JSON.stringify(currentCart));
         guestUpdateCart(Object.values(currentCart));
       }
-      alert("Updated Cart");
+      swal("Success!", "Cart updated", "success");
     } catch (err) {
       console.log(err);
     }
@@ -72,7 +73,7 @@ function CartItem(props) {
         localStorage.setItem("cart", JSON.stringify(currentCart));
         guestUpdateCart(Object.values(currentCart));
       }
-      alert(`Deleted ${item.product.title} from cart`);
+      swal("", `Deleted ${item.product.title} from cart`, "info")
     } catch (err) {
       console.log(err);
     }

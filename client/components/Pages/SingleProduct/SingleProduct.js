@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchProduct, updateCart, _getCart } from "../../../store";
 import { connect } from "react-redux";
+import swal from 'sweetalert'
 
 function SingleProduct(props) {
   const { getProduct, updateCart, guestUpdateCart, product, user, cart } = props;
@@ -42,7 +43,7 @@ function SingleProduct(props) {
         localStorage.setItem("cart", JSON.stringify(currentCart));
         guestUpdateCart(Object.values(currentCart))
       }
-      alert(`Added ${product.title} to cart`)
+      swal("Success!", `Added ${product.title} to cart`, "success")
     } catch (err) {
       console.log(err);
     }
