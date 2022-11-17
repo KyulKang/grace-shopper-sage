@@ -101,9 +101,8 @@ const Checkout = (props) => {
         makeUserOrder(orderSubmission, user.id);
       } else {
         makeGuestOrder(orderSubmission)
-        let currentCart = {}
-        localStorage.setItem("cart", JSON.stringify(currentCart))
-        guestUpdateCart(Object.values(currentCart))
+        localStorage.removeItem("cart")
+        guestUpdateCart([])
       }
     } catch (error) {
       console.log(error);

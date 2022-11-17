@@ -1,40 +1,61 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { fetchCart, _getCart, _clearCart } from "../../../store";
+import { fetchCart, _getCart, _clearCart, updateCart } from "../../../store";
 import { connect } from "react-redux";
 import CartItem from "./CartItem";
 import { Link, useLocation } from "react-router-dom";
 
 export function MyCart(props) {
   const [toggleCart, setToggleCart] = useState(false);
-  const { fetchCart, cart, user, guestUpdateCart, clearCart } = props;
+  const { fetchCart, cart, user, guestUpdateCart, clearCart, updateCart } = props;
   const location = useLocation();
 
-  console.log("MyCart props", props);
   useEffect(() => {
     const token = window.localStorage.getItem("token") || null;
     if (token && user) {
       console.log("user", user);
       const getCart = async () => {
         try {
-          console.log("mount logged in fetch");
-          await fetchCart(user.id);
-        } catch (error) {
+          await fetchCart(user.id)
+} catch (error) {
           console.log(error);
         }
       };
-      getCart();
+      getCart()
     } else {
-      console.log("unlogged in fetch");
       let currentCart = {};
       if (localStorage.getItem("cart")) {
         currentCart = JSON.parse(localStorage.getItem("cart"))
       }
       guestUpdateCart(Object.values(currentCart))
     }
-  }, [user]);
+  }, [user])
+
+  useEffect(()=>{
+    const token = window.localStorage.getItem("token") || null;
+    if (token && user) {
+    const convertCart = ()=> {try {
+      if (localStorage.getItem("cart")) {
+        let currentCart = JSON.parse(localStorage.getItem("cart"))
+        Object.entries(currentCart).forEach(async ([productId, {quantity, product}])=>{
+          console.log("lookie", cart)
+          let obj = cart.find(item => +item.product.id === +productId)
+
+          if (obj){
+            let prevAmount = +obj.quantity
+            await updateCart({quantity: +quantity + prevAmount, productId:+productId, price:+product.price}, user.id)
+          } else {await updateCart({quantity: +quantity, productId:+productId, price:+product.price}, user.id) }
+        })
+        localStorage.removeItem("cart")
+      }
+    } catch (error) {
+      console.log(error)
+    }}
+   convertCart()
+  }
+  }, [cart])
+
   function handleToggleCart(event) {
-    console.log("click");
     setToggleCart(!toggleCart);
   }
   return (
@@ -120,6 +141,7 @@ const mapDispatch = (dispatch) => {
     fetchCart: (id) => dispatch(fetchCart(id)),
     guestUpdateCart: (item) => dispatch(_getCart(item)),
     clearCart: () => dispatch(_clearCart()),
+    updateCart: (item, id) => dispatch(updateCart(item, id))
   };
 };
 const mapState = (state) => {
