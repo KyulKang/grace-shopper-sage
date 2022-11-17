@@ -7,7 +7,8 @@
 }
 .filter{
     display: flex;
-    width: 300px;
+    width: max-content;
+    gap: 1rem;
     padding: 0rem 1rem;
     justify-content: space-between;
 }
@@ -70,6 +71,19 @@
 
 .product-card{
     border-radius: 50%;
+    height: max-content;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+.productCardGrid{
+    height: 50vh;
+    padding: 1rem;
+    gap: 0.5rem;
+    justify-content: flex-start;
+}
+nav > div > a {
+    color: black;
+    font-weight: 600;
 }
 .cart-input{
     width: 50px;
@@ -120,7 +134,9 @@ nav > div{
     max-width: 70%;
     margin-left: 10px;
 }
-
+footer{
+    display: block;
+}
 .checkout-row {
     max-width: 90%;
     display:flex;

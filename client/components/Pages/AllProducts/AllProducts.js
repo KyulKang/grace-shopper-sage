@@ -43,7 +43,9 @@ function AllProducts(props) {
           <button className={`btn ${filter === "All" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="All">All</button>
           <button className={`btn ${filter === "Illustrated" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Illustrated">Illustrated</button>
           <button className={`btn ${filter === "Words" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Words">Words</button>
+
           <button className={`btn ${filter === "Travel" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Travel">Travel</button>
+
           <button className={`btn ${filter === "Romance" ? "btn-primary" : "btn-secondary"}`} onClick={handleFilter} value="Romance">Romance</button>
         </div>
 
