@@ -4,7 +4,7 @@ import axios from "axios";
 const GET_PRODUCT = "GET_PRODUCT";
 
 // Action Creators
-const _getProduct = (product) => {
+export const _getProduct = (product) => {
   return {
     type: GET_PRODUCT,
     product,
