@@ -128,7 +128,7 @@ async function seed() {
       imageUrl:
         "https://cdn.shopify.com/s/files/1/0011/0418/3355/products/GreatSmoky-15ozMug-Gray-v2g-010001_2000x.jpg?v=1646242300",
       price: 15,
-      category: "Words",
+      category: "Travel",
       description:
         "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     }),
