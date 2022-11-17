@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { updateUser } from "../../../store";
 import BackToProfile from "../BackToProfile";
+import swal from 'sweetalert'
 
 const EditProfile = (props) => {
   const { editUser } = props;
@@ -38,7 +39,7 @@ const EditProfile = (props) => {
           lastName: userInfo.lastName,
           email: userInfo.email,
         });
-        alert('Update complete.')
+        swal("", "Update complete", "success")
       } else {
         await editUser({
           id: userInfo.id,
@@ -47,7 +48,7 @@ const EditProfile = (props) => {
           email: userInfo.email,
           password: userInfo.password,
         });
-        alert('Update complete.')
+        swal("", "Update complete", "success")
       }
     } catch (err) {
       console.log(err);
