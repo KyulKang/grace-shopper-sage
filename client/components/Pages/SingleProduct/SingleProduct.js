@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { fetchProduct, updateCart, _getCart } from "../../../store";
+import { fetchProduct, updateCart, _getCart, _getProduct } from "../../../store";
 import { connect } from "react-redux";
 import swal from 'sweetalert'
 
 function SingleProduct(props) {
-  const { getProduct, updateCart, guestUpdateCart, product, user, cart } = props;
+  const { getProduct, updateCart, guestUpdateCart, product, user, cart, removeProduct } = props;
 
   const [quantity, setQuantity] = useState(1);
 
@@ -17,6 +17,7 @@ function SingleProduct(props) {
       }
     };
     getSingleProduct();
+    return ()=>{removeProduct()}
   }, []);
 
   const onChangeHandler = (event) => {
@@ -72,7 +73,8 @@ const mapDispatch = (dispatch) => {
   return {
     getProduct: (id) => dispatch(fetchProduct(id)),
     updateCart: (item, id) => dispatch(updateCart(item, id)),
-    guestUpdateCart:(item) => dispatch(_getCart(item))
+    guestUpdateCart:(item) => dispatch(_getCart(item)),
+    removeProduct: ()=> dispatch(_getProduct({}))
   };
 };
 const mapState = (state) => {
