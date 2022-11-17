@@ -1,10 +1,18 @@
 import axios from "axios";
 
 // Actions
+const GET_USER = "GET_USER";
 const ADD_USER = "ADD_USER";
 const UPDATE_USER = "UPDATE_USER";
 
 // Action Creators
+const _getUser = (user) => {
+  return {
+    type: GET_USER,
+    user: user,
+  };
+};
+
 const _addUser = (user) => {
   return {
     type: ADD_USER,
@@ -41,10 +49,23 @@ export const updateUser = (userInfo) => {
         authorization: token,
       },
     });
-    console.log(data);
     dispatch(_updateUser(data));
   };
 };
+
+export const getUser = (userId) => {
+  const token = window.localStorage.getItem("token");
+  return async (dispatch) => {
+    const { data } = await axios.get(`/api/admin/users/${userId}`, {
+      headers: {
+        authorization: token,
+      },
+    });
+    console.log(data);
+    dispatch(_getUser(data));
+  };
+};
+
 // Initial State
 const initialState = {
   user: {},
@@ -54,6 +75,11 @@ const initialState = {
 
 export default function userReducer(state = initialState, action) {
   switch (action.type) {
+    case GET_USER:
+      return (state = {
+        ...state,
+        user: action.user,
+      });
     case ADD_USER:
       return (state = {
         ...state,

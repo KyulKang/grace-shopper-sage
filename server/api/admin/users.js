@@ -31,7 +31,9 @@ router.get("/:userId", requireToken, async (req, res, next) => {
         where: { userId: req.params.userId },
         include: { model: OrderItem, include: Product },
       });
-      res.send(userOrders);
+      const user = await User.findByPk(req.params.userId);
+
+      res.send({ userOrders, user });
     } else {
       res.sendStatus(401);
     }

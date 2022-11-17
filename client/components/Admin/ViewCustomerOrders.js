@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import BackToProfile from "../UserProfile/BackToProfile";
 import { fetchOrders, me } from "../../store";
 
@@ -12,14 +11,16 @@ const ViewCustomerOrders = (props) => {
     loadInitialData();
     getOrders(id);
   }, []);
-
   if (!user) {
     return <BackToProfile id={id} />;
-  } else if (user.makeAdmin && orders.length > 0) {
+  } else if (user.makeAdmin && orders.userOrders) {
     return (
       <div>
         <div>
-          {orders
+          <h3>
+            Orders for {orders.user.firstName} {orders.user.lastName}:
+          </h3>
+          {orders.userOrders
             .sort((a, b) => a.id - b.id)
             .map((order) => {
               let totalCost = 0;
@@ -28,19 +29,20 @@ const ViewCustomerOrders = (props) => {
                 <div key={order.id}>
                   {order.orderItems.map((item) => {
                     totalCost += Number(item.quantity) * Number(item.price);
-                    console.log(item);
                     return (
-                      <div key={item.id}>
+                      <p key={item.id}>
                         <span>
-                          Product Name:
-                          {item.product ? item.product.title : item.id}
+                          Item: {item.product ? item.product.title : item.id}
                         </span>
+                        <br />
                         <span>Quantity: {item.quantity}</span>
+                        <br />
                         <span>Price: {item.price}</span>
-                      </div>
+                        <br />
+                      </p>
                     );
                   })}
-                  <br />
+
                   <p>Purchased at: {new Date(purchaseTime).toLocaleString()}</p>
                   <p>Total Cost: {totalCost}</p>
                   <hr />

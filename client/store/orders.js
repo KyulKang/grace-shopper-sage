@@ -1,8 +1,8 @@
 import axios from "axios";
-import {_getCart} from "./cart.js"
+import { _getCart } from "./cart.js";
 
 // Actions
-const GET_CART = "GET_CART"
+const GET_CART = "GET_CART";
 const GET_ORDERS = "GET_ORDERS";
 
 // Action Creators
@@ -25,6 +25,16 @@ export const fetchOrders = (userId) => {
   };
 };
 
+export const fetchUserOrders = (userId) => {
+  const token = window.localStorage.getItem("token");
+  return async (dispatch) => {
+    const { data } = await axios.get(`/api/users/${userId}/orders`, {
+      headers: { authorization: token },
+    });
+    dispatch(_getOrders(data));
+  };
+};
+
 export const makeGuestOrder = (order) => {
   return async (dispatch) => {
     const { data } = await axios.post("/api/orders", order);
@@ -38,14 +48,15 @@ export const makeUserOrder = (order, id) => {
       headers: {
         authorization: token,
       },
-    })
-    const {data: newCart} = await axios.get(`/api/users/${id}/cartItems`,{
+    });
+    const { data: newCart } = await axios.get(`/api/users/${id}/cartItems`, {
       headers: {
         authorization: token,
       },
-    } )
-  dispatch(_getCart(newCart))
-  }}
+    });
+    dispatch(_getCart(newCart));
+  };
+};
 
 // Initial State
 const initialState = {

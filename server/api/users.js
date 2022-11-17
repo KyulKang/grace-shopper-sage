@@ -1,5 +1,7 @@
 const router = require("express").Router();
-const {models: { User, CartItem, Order, OrderItem, Product },} = require("../db");
+const {
+  models: { User, CartItem, Order, OrderItem, Product },
+} = require("../db");
 const requireToken = require("../requireToken.js");
 module.exports = router;
 
@@ -7,14 +9,14 @@ module.exports = router;
 //login user edits profile, returns new token (because password could be different now)
 router.put("/:userId", requireToken, async (req, res, next) => {
   try {
-       const { id } = req.user;
+    const { id } = req.user;
     if (+req.params.userId === +id) {
       const updateUser = await User.findByPk(id);
       if (updateUser === null) {
         res.sendStatus(404);
       } else {
         const newUser = await updateUser.update(req.body);
-        res.send({ user: newUser});
+        res.send({ user: newUser });
       }
     }
   } catch (error) {
@@ -33,7 +35,9 @@ router.get("/:userId/cartItems", requireToken, async (req, res, next) => {
         include: { model: Product },
       });
       res.send(cartItems);
-    } else {res.sendStatus(403)}
+    } else {
+      res.sendStatus(403);
+    }
   } catch (error) {
     next(error);
   }
@@ -87,7 +91,9 @@ router.delete(
           res.send(req.params.cartItemId);
           //return the updated array or the deleted?
         }
-      } else {res.sendStatus(403)}
+      } else {
+        res.sendStatus(403);
+      }
     } catch (error) {
       next(error);
     }
@@ -106,7 +112,9 @@ router.delete("/:userId/cartItems", requireToken, async (req, res, next) => {
         },
       });
       res.status(204).end();
-    } else {res.sendStatus(403)}
+    } else {
+      res.sendStatus(403);
+    }
   } catch (error) {
     next(error);
   }
@@ -132,12 +140,12 @@ router.post("/:userId/orders", requireToken, async (req, res, next) => {
         orderItems.map((item) => {
           order.addOrderItem(item);
         })
-      )
+      );
       await CartItem.destroy({
         where: {
           userId: id,
         },
-      })
+      });
       res.status(201).send(order);
     }
   } catch (error) {
@@ -153,7 +161,7 @@ router.get("/:userId/orders", requireToken, async (req, res, next) => {
     if (+req.params.userId === +id) {
       const orders = await Order.findAll({
         where: { userId: id },
-        include: { model: OrderItem },
+        include: { model: OrderItem, include: Product },
       });
       res.send(orders);
     }
