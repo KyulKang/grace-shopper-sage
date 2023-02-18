@@ -6,7 +6,6 @@ const seed = require("../script/seed.js");
 const init = async () => {
   try {
     if (process.env.SEED === "true") {
-      console.log("seed script called");
       await seed();
     } else {
       await db.sync();
